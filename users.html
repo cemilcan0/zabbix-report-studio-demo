@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
 <script src="demo.js"></script>
   <meta charset="UTF-8">
+  <script src="static/i18n.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kullanıcı Yönetimi — Zabbix Report Studio</title>
+  <title>User Management — Zabbix Report Studio</title>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -209,28 +210,28 @@
     <div><div style="font-size:14px;font-weight:700;letter-spacing:-.01em;line-height:1.1;color:#f3efe6">Zabbix Report</div><div style="font-size:10.5px;color:#726c5e;letter-spacing:.05em;text-transform:uppercase;margin-top:2px">Studio</div></div>
   </div>
   <nav style="padding:6px 14px;flex:1;overflow-y:auto">
-    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">Genel</div>
-    <a href="index.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>Genel Bakış</a>
-    <a href="servers.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>Zabbix Sunucuları</a>
-    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">Raporlar</div>
-    <a href="alarm-report.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Alarm Raporu</a>
-    <a href="ack.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>ACK Raporu</a>
-    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">Nöbet</div>
-    <a href="nobet.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Nöbet Listesi</a>
-    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">Envanter</div>
-    <a href="tkodu.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>T-Kodu</a>
-    <a href="envanter.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V3a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v4"/></svg>Envanter</a>
+    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">General</div>
+    <a href="index.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>Overview</a>
+    <a href="servers.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>Zabbix Servers</a>
+    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">Reports</div>
+    <a href="alarm-report.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Alarm Report</a>
+    <a href="ack.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>ACK Report</a>
+    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">On-call</div>
+    <a href="nobet.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>On-call Roster</a>
+    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">Inventory</div>
+    <a href="tkodu.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>T-Code</a>
+    <a href="envanter.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V3a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v4"/></svg>Inventory</a>
     <a href="cache.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>Cache</a>
     
-    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">Yönetim</div>
-    <a href="users.html" data-on=1 style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;background:rgba(245,158,11,.14);color:#fbbf24;box-shadow:inset 2px 0 0 #f59e0b;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Kullanıcılar</a>
+    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">Management</div>
+    <a href="users.html" data-on=1 style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;background:rgba(245,158,11,.14);color:#fbbf24;box-shadow:inset 2px 0 0 #f59e0b;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Users</a>
     
   </nav>
   <div style="padding:14px;border-top:1px solid rgba(240,230,200,.1)">
     <div style="display:flex;align-items:center;gap:11px;padding:8px 10px;border-radius:10px;background:#1b1810;border:1px solid rgba(240,230,200,.1)">
       <div style="width:34px;height:34px;border-radius:9px;background:linear-gradient(150deg,#f59e0b,#d97d06);display:flex;align-items:center;justify-content:center;color:#2a1e05;font-weight:700;font-size:13px;flex-shrink:0">A</div>
       <div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#f3efe6">admin</div><div style="font-size:10.5px;color:#726c5e">Admin</div></div>
-      <a href="login.html" title="Çıkış" style="color:#726c5e;padding:6px;border-radius:7px;display:flex;text-decoration:none" onmouseover="this.style.color='#fb7a3c';this.style.background='rgba(251,122,60,.12)'" onmouseout="this.style.color='#726c5e';this.style.background='transparent'"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></a>
+      <a href="login.html" title="Sign out" style="color:#726c5e;padding:6px;border-radius:7px;display:flex;text-decoration:none" onmouseover="this.style.color='#fb7a3c';this.style.background='rgba(251,122,60,.12)'" onmouseout="this.style.color='#726c5e';this.style.background='transparent'"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></a>
     </div>
   </div>
 </aside>
@@ -239,7 +240,7 @@
 <header class="app-header">
   <div class="logo">
     <div class="logo-icon">👥</div>
-    <span class="logo-text">Kullanıcı Yönetimi</span>
+    <span class="logo-text">User Management</span>
   </div>
   <div style="display:flex;gap:0.75rem;">
     <a class="nav-btn" href="index.html">
@@ -253,15 +254,15 @@
         <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
         <polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>
       </svg>
-      Çıkış
+      Sign out
     </a>
   </div>
 </header>
 
 <div class="main">
 
-  <div class="page-title">Kullanıcı Yönetimi</div>
-  <div class="page-sub">Sisteme erişebilecek kullanıcıları buradan yönetin.</div>
+  <div class="page-title">User Management</div>
+  <div class="page-sub">Manage the users who can access the system.</div>
 
   
     
@@ -270,7 +271,7 @@
   <!-- STATS -->
   <div class="stats">
     <div class="stat-card">
-      <div class="stat-label">Toplam Kullanıcı</div>
+      <div class="stat-label">Total Users</div>
       <div class="stat-value">5</div>
     </div>
     <div class="stat-card">
@@ -291,20 +292,20 @@
         <circle cx="8.5" cy="7" r="4"/>
         <line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/>
       </svg>
-      Yeni Kullanıcı Oluştur
+      Create User
     </h2>
     <form method="POST" action="#">
       <div class="form-row">
         <div class="form-group">
-          <label>Kullanıcı Adı</label>
-          <input type="text" name="username" placeholder="kullanici_adi" required>
+          <label>Username</label>
+          <input type="text" name="username" placeholder="username" required>
         </div>
         <div class="form-group">
-          <label>Şifre</label>
-          <input type="text" name="password" placeholder="güçlü bir şifre" required>
+          <label>Password</label>
+          <input type="text" name="password" placeholder="a strong password" required>
         </div>
         <div class="form-group" style="max-width:150px;">
-          <label>Rol</label>
+          <label>Role</label>
           <select name="role">
             <option value="user">User</option>
             <option value="admin">Admin</option>
@@ -314,7 +315,7 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
             <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
           </svg>
-          Oluştur
+          Create
         </button>
       </div>
     </form>
@@ -330,13 +331,13 @@
           <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
           <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
         </svg>
-        Kullanıcı Listesi
+        User List
       </h2>
       <div class="search-wrap">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
         </svg>
-        <input type="text" id="searchInput" placeholder="Kullanıcı ara..." oninput="filterTable()">
+        <input type="text" id="searchInput" placeholder="Search users..." oninput="filterTable()">
       </div>
     </div>
 
@@ -344,11 +345,11 @@
       <thead>
         <tr>
           <th>#</th>
-          <th>Kullanıcı</th>
-          <th>Şifre</th>
-          <th>Rol</th>
-          <th>Oluşturulma</th>
-          <th>İşlem</th>
+          <th>User</th>
+          <th>Password</th>
+          <th>Role</th>
+          <th>Created</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
@@ -370,14 +371,14 @@
           <td style="color:var(--text-muted);font-size:0.8rem;">06.05.2026 16:22</td>
           <td>
             
-            <form method="POST" action="#" style="display:inline;" onsubmit="return confirm('s.celik silinsin mi?')">
+            <form method="POST" action="#" style="display:inline;" onsubmit="return confirm(I18N.t('Delete the user {0}?', 's.celik'))">
               <button type="submit" class="btn-danger-sm">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13">
                   <polyline points="3 6 5 6 21 6"/>
                   <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
                   <path d="M10 11v6"/><path d="M14 11v6"/>
                 </svg>
-                Sil
+                Delete
               </button>
             </form>
             
@@ -401,14 +402,14 @@
           <td style="color:var(--text-muted);font-size:0.8rem;">18.03.2026 11:40</td>
           <td>
             
-            <form method="POST" action="#" style="display:inline;" onsubmit="return confirm('e.demir silinsin mi?')">
+            <form method="POST" action="#" style="display:inline;" onsubmit="return confirm(I18N.t('Delete the user {0}?', 'e.demir'))">
               <button type="submit" class="btn-danger-sm">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13">
                   <polyline points="3 6 5 6 21 6"/>
                   <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
                   <path d="M10 11v6"/><path d="M14 11v6"/>
                 </svg>
-                Sil
+                Delete
               </button>
             </form>
             
@@ -432,14 +433,14 @@
           <td style="color:var(--text-muted);font-size:0.8rem;">03.02.2026 14:12</td>
           <td>
             
-            <form method="POST" action="#" style="display:inline;" onsubmit="return confirm('m.kaya silinsin mi?')">
+            <form method="POST" action="#" style="display:inline;" onsubmit="return confirm(I18N.t('Delete the user {0}?', 'm.kaya'))">
               <button type="submit" class="btn-danger-sm">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13">
                   <polyline points="3 6 5 6 21 6"/>
                   <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
                   <path d="M10 11v6"/><path d="M14 11v6"/>
                 </svg>
-                Sil
+                Delete
               </button>
             </form>
             
@@ -463,14 +464,14 @@
           <td style="color:var(--text-muted);font-size:0.8rem;">03.02.2026 14:05</td>
           <td>
             
-            <form method="POST" action="#" style="display:inline;" onsubmit="return confirm('a.yilmaz silinsin mi?')">
+            <form method="POST" action="#" style="display:inline;" onsubmit="return confirm(I18N.t('Delete the user {0}?', 'a.yilmaz'))">
               <button type="submit" class="btn-danger-sm">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13">
                   <polyline points="3 6 5 6 21 6"/>
                   <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
                   <path d="M10 11v6"/><path d="M14 11v6"/>
                 </svg>
-                Sil
+                Delete
               </button>
             </form>
             
@@ -494,7 +495,7 @@
           <td style="color:var(--text-muted);font-size:0.8rem;">12.01.2026 09:30</td>
           <td>
             
-            <span class="protected">🔒 Korumalı</span>
+            <span class="protected">🔒 Protected</span>
             
           </td>
         </tr>

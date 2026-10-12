@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
 <script src="demo.js"></script>
   <meta charset="UTF-8">
+  <script src="static/i18n.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zabbix Report Studio — Giriş</title>
+  <title>Zabbix Report Studio — Sign in</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -64,7 +65,7 @@
         <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h3l2.5-7 5 14 2.5-7H21"/></svg>
       </div>
       <h1>Zabbix Report Studio</h1>
-      <p>Devam etmek için giriş yapın</p>
+      <p>Sign in to continue</p>
     </div>
 
     <div class="card">
@@ -74,21 +75,21 @@
 
       <form method="POST" action="login.html">
         <div class="field">
-          <label>Kullanıcı Adı</label>
+          <label>Username</label>
           <div class="inp">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#726c5e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
             <input type="text" name="username" placeholder="admin" required autofocus>
           </div>
         </div>
         <div class="field">
-          <label>Şifre</label>
+          <label>Password</label>
           <div class="inp">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#726c5e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
             <input type="password" name="password" placeholder="••••••••" required>
           </div>
         </div>
         <button type="submit" class="btn">
-          Giriş Yap
+          Sign in
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </button>
       </form>

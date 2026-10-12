@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
 <script src="demo.js"></script>
   <meta charset="UTF-8">
+  <script src="static/i18n.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>T-Kodu Trigger'lari — Zabbix Report Studio</title>
+  <title>T-Code Triggers — Zabbix Report Studio</title>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -185,28 +186,28 @@
     <div><div style="font-size:14px;font-weight:700;letter-spacing:-.01em;line-height:1.1;color:#f3efe6">Zabbix Report</div><div style="font-size:10.5px;color:#726c5e;letter-spacing:.05em;text-transform:uppercase;margin-top:2px">Studio</div></div>
   </div>
   <nav style="padding:6px 14px;flex:1;overflow-y:auto">
-    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">Genel</div>
-    <a href="index.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>Genel Bakış</a>
-    <a href="servers.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>Zabbix Sunucuları</a>
-    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">Raporlar</div>
-    <a href="alarm-report.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Alarm Raporu</a>
-    <a href="ack.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>ACK Raporu</a>
-    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">Nöbet</div>
-    <a href="nobet.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Nöbet Listesi</a>
-    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">Envanter</div>
-    <a href="tkodu.html" data-on=1 style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;background:rgba(245,158,11,.14);color:#fbbf24;box-shadow:inset 2px 0 0 #f59e0b;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>T-Kodu</a>
-    <a href="envanter.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V3a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v4"/></svg>Envanter</a>
+    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">General</div>
+    <a href="index.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>Overview</a>
+    <a href="servers.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>Zabbix Servers</a>
+    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">Reports</div>
+    <a href="alarm-report.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Alarm Report</a>
+    <a href="ack.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>ACK Report</a>
+    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">On-call</div>
+    <a href="nobet.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>On-call Roster</a>
+    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">Inventory</div>
+    <a href="tkodu.html" data-on=1 style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;background:rgba(245,158,11,.14);color:#fbbf24;box-shadow:inset 2px 0 0 #f59e0b;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>T-Code</a>
+    <a href="envanter.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V3a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v4"/></svg>Inventory</a>
     <a href="cache.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>Cache</a>
     
-    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">Yönetim</div>
-    <a href="users.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Kullanıcılar</a>
+    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">Management</div>
+    <a href="users.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Users</a>
     
   </nav>
   <div style="padding:14px;border-top:1px solid rgba(240,230,200,.1)">
     <div style="display:flex;align-items:center;gap:11px;padding:8px 10px;border-radius:10px;background:#1b1810;border:1px solid rgba(240,230,200,.1)">
       <div style="width:34px;height:34px;border-radius:9px;background:linear-gradient(150deg,#f59e0b,#d97d06);display:flex;align-items:center;justify-content:center;color:#2a1e05;font-weight:700;font-size:13px;flex-shrink:0">A</div>
       <div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#f3efe6">admin</div><div style="font-size:10.5px;color:#726c5e">Admin</div></div>
-      <a href="login.html" title="Çıkış" style="color:#726c5e;padding:6px;border-radius:7px;display:flex;text-decoration:none" onmouseover="this.style.color='#fb7a3c';this.style.background='rgba(251,122,60,.12)'" onmouseout="this.style.color='#726c5e';this.style.background='transparent'"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></a>
+      <a href="login.html" title="Sign out" style="color:#726c5e;padding:6px;border-radius:7px;display:flex;text-decoration:none" onmouseover="this.style.color='#fb7a3c';this.style.background='rgba(251,122,60,.12)'" onmouseout="this.style.color='#726c5e';this.style.background='transparent'"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></a>
     </div>
   </div>
 </aside>
@@ -214,22 +215,22 @@
 
 <header class="app-header">
   <div class="logo">
-    <div class="logo-icon">??</div>
-    <span class="logo-text">T-Kodu Trigger'lari</span>
+    <div class="logo-icon">🏷️</div>
+    <span class="logo-text">T-Code Triggers</span>
   </div>
   <div style="display:flex;gap:0.75rem;align-items:center;">
     <div class="search-wrap" style="flex:none;min-width:0;width:240px;padding:0.5rem 0.9rem;">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/>
       </svg>
-      <input type="text" id="codeInput" placeholder="Aranacak kod (örn. T-Kodu)" autocomplete="off"
+      <input type="text" id="codeInput" placeholder="Code to search (e.g. T-Code)" autocomplete="off"
              onkeydown="if(event.key==='Enter')fetchTkodu()">
     </div>
     <button class="btn btn-primary" id="fetchBtn" onclick="fetchTkodu()">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15">
         <polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
       </svg>
-      Verileri Çek
+      Fetch Data
     </button>
     <a class="nav-btn" href="index.html">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15">
@@ -241,13 +242,13 @@
 </header>
 
 <div class="main">
-  <div class="page-title">T-Kodu Trigger'lari</div>
-  <div class="page-sub">Adında yazdığınız kod geçen tüm Zabbix trigger'ları — durum ve host bilgileri ile.</div>
+  <div class="page-title">T-Code Triggers</div>
+  <div class="page-sub">Every Zabbix trigger whose name contains the code you type — with status and host details.</div>
 
   <!-- STATS -->
   <div class="stats" id="statsRow" style="display:none;">
     <div class="stat-card stat-total">
-      <div class="stat-label">Toplam Trigger</div>
+      <div class="stat-label">Total Triggers</div>
       <div class="stat-value" id="statTotal">0</div>
     </div>
     <div class="stat-card stat-enabled">
@@ -266,15 +267,15 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
       </svg>
-      <input type="text" id="searchInput" placeholder="Trigger adi veya host ara..." oninput="applyFilters()">
+      <input type="text" id="searchInput" placeholder="Search trigger name or host..." oninput="applyFilters()">
     </div>
     <select class="filter-select" id="statusFilter" onchange="applyFilters()">
-      <option value="">Tüm Durumlar</option>
+      <option value="">All Statuses</option>
       <option value="Enabled">Enabled</option>
       <option value="Disabled">Disabled</option>
     </select>
     <select class="filter-select" id="priorityFilter" onchange="applyFilters()">
-      <option value="">Tüm Öncelikler</option>
+      <option value="">All Priorities</option>
       <option value="5">Disaster</option>
       <option value="4">High</option>
       <option value="3">Average</option>
@@ -282,7 +283,7 @@
       <option value="1">Information</option>
       <option value="0">Not Classified</option>
     </select>
-    <span class="result-info">Gösterilen: <span id="shownCount">0</span> / <span id="totalCount">0</span></span>
+    <span class="result-info">Showing: <span id="shownCount">0</span> / <span id="totalCount">0</span></span>
   </div>
 
   <!-- TABLE -->
@@ -291,10 +292,10 @@
       <table>
         <thead>
           <tr>
-            <th onclick="sortTable('description')">Trigger Adi <span class="sort-icon">?</span></th>
-            <th onclick="sortTable('status')">Durum <span class="sort-icon">?</span></th>
-            <th onclick="sortTable('priority')">Öncelik <span class="sort-icon">?</span></th>
-            <th>Host(lar)</th>
+            <th onclick="sortTable('description')">Trigger Name <span class="sort-icon">↕</span></th>
+            <th onclick="sortTable('status')">Status <span class="sort-icon">↕</span></th>
+            <th onclick="sortTable('priority')">Priority <span class="sort-icon">↕</span></th>
+            <th>Host(s)</th>
           </tr>
         </thead>
         <tbody id="tableBody"></tbody>
@@ -304,9 +305,9 @@
 
   <!-- EMPTY -->
   <div id="emptyState" class="empty-state">
-    <div class="icon">??</div>
-    <p style="color:var(--text-secondary);margin-bottom:0.5rem;">Henüz veri yok</p>
-    <p style="font-size:0.85rem;">Aranacak kodu yazın (örn. T-Kodu) ve "Verileri Çek" butonuna tıklayın.</p>
+    <div class="icon">📭</div>
+    <p style="color:var(--text-secondary);margin-bottom:0.5rem;">No data yet</p>
+    <p style="font-size:0.85rem;">Type the code to search (e.g. T-Code) and click "Fetch Data".</p>
   </div>
 </div>
 
@@ -314,7 +315,7 @@
 <div id="loadingOverlay" class="loading-overlay hidden">
   <div class="loading-box">
     <div class="spinner"></div>
-    <p>Trigger'lar çekiliyor...</p>
+    <p>Fetching triggers...</p>
   </div>
 </div>
 
@@ -329,7 +330,7 @@ let sortAsc = true;
 async function fetchTkodu() {
   const codeInput = document.getElementById('codeInput');
   const code = codeInput.value.trim();
-  if (!code) { showToast('Lütfen aranacak kodu yazın', 'error'); codeInput.focus(); return; }
+  if (!code) { showToast('Please enter a code to search', 'error'); codeInput.focus(); return; }
   document.getElementById('fetchBtn').disabled = true;
   document.getElementById('loadingOverlay').classList.remove('hidden');
   try {
@@ -352,9 +353,9 @@ async function fetchTkodu() {
     document.getElementById('emptyState').style.display = 'none';
 
     applyFilters();
-    showToast(`${allData.length} trigger bulundu`, 'success');
+    showToast(I18N.t('{0} triggers found', allData.length), 'success');
   } catch(e) {
-    showToast('Hata: ' + e.message, 'error');
+    showToast('Error: ' + e.message, 'error');
   } finally {
     document.getElementById('loadingOverlay').classList.add('hidden');
     document.getElementById('fetchBtn').disabled = false;
@@ -396,7 +397,7 @@ function sortTable(key) {
 function renderTable(data) {
   if (!data.length) {
     document.getElementById('tableBody').innerHTML = `
-      <tr><td colspan="4" style="text-align:center;padding:3rem;color:var(--text-muted);">Filtre kriterlerine uyan trigger bulunamadi</td></tr>
+      <tr><td colspan="4" style="text-align:center;padding:3rem;color:var(--text-muted);">No triggers match the filters</td></tr>
     `;
     return;
   }

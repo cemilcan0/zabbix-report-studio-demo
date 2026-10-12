@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
 <script src="demo.js"></script>
 <meta charset="UTF-8">
+<script src="static/i18n.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nöbet Listesi - Zabbix Report Studio</title>
+<title>On-call Roster - Zabbix Report Studio</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{--bg-primary:#100e0a;--bg-secondary:#16140e;--bg-tertiary:#211d14;--bg-card:rgba(28,25,17,0.9);--text-primary:#fff;--text-secondary:#a59f91;--text-muted:#726c5e;--accent-primary:#f59e0b;--accent-secondary:#d97d06;--accent-gradient:linear-gradient(135deg,#f59e0b 0%,#d97d06 100%);--success:#10b981;--danger:#ef4444;--border-color:rgba(255,255,255,0.08);--border-radius:12px;--transition:0.15s ease}
@@ -71,28 +72,28 @@ td input{width:100%}
     <div><div style="font-size:14px;font-weight:700;letter-spacing:-.01em;line-height:1.1;color:#f3efe6">Zabbix Report</div><div style="font-size:10.5px;color:#726c5e;letter-spacing:.05em;text-transform:uppercase;margin-top:2px">Studio</div></div>
   </div>
   <nav style="padding:6px 14px;flex:1;overflow-y:auto">
-    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">Genel</div>
-    <a href="index.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>Genel Bakış</a>
-    <a href="servers.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>Zabbix Sunucuları</a>
-    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">Raporlar</div>
-    <a href="alarm-report.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Alarm Raporu</a>
-    <a href="ack.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>ACK Raporu</a>
-    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">Nöbet</div>
-    <a href="nobet.html" data-on=1 style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;background:rgba(245,158,11,.14);color:#fbbf24;box-shadow:inset 2px 0 0 #f59e0b;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Nöbet Listesi</a>
-    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">Envanter</div>
-    <a href="tkodu.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>T-Kodu</a>
-    <a href="envanter.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V3a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v4"/></svg>Envanter</a>
+    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">General</div>
+    <a href="index.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>Overview</a>
+    <a href="servers.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>Zabbix Servers</a>
+    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">Reports</div>
+    <a href="alarm-report.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Alarm Report</a>
+    <a href="ack.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>ACK Report</a>
+    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">On-call</div>
+    <a href="nobet.html" data-on=1 style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;background:rgba(245,158,11,.14);color:#fbbf24;box-shadow:inset 2px 0 0 #f59e0b;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>On-call Roster</a>
+    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">Inventory</div>
+    <a href="tkodu.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>T-Code</a>
+    <a href="envanter.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V3a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v4"/></svg>Inventory</a>
     <a href="cache.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>Cache</a>
     
-    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">Yönetim</div>
-    <a href="users.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Kullanıcılar</a>
+    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">Management</div>
+    <a href="users.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Users</a>
     
   </nav>
   <div style="padding:14px;border-top:1px solid rgba(240,230,200,.1)">
     <div style="display:flex;align-items:center;gap:11px;padding:8px 10px;border-radius:10px;background:#1b1810;border:1px solid rgba(240,230,200,.1)">
       <div style="width:34px;height:34px;border-radius:9px;background:linear-gradient(150deg,#f59e0b,#d97d06);display:flex;align-items:center;justify-content:center;color:#2a1e05;font-weight:700;font-size:13px;flex-shrink:0">A</div>
       <div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#f3efe6">admin</div><div style="font-size:10.5px;color:#726c5e">Admin</div></div>
-      <a href="login.html" title="Çıkış" style="color:#726c5e;padding:6px;border-radius:7px;display:flex;text-decoration:none" onmouseover="this.style.color='#fb7a3c';this.style.background='rgba(251,122,60,.12)'" onmouseout="this.style.color='#726c5e';this.style.background='transparent'"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></a>
+      <a href="login.html" title="Sign out" style="color:#726c5e;padding:6px;border-radius:7px;display:flex;text-decoration:none" onmouseover="this.style.color='#fb7a3c';this.style.background='rgba(251,122,60,.12)'" onmouseout="this.style.color='#726c5e';this.style.background='transparent'"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></a>
     </div>
   </div>
 </aside>
@@ -100,39 +101,39 @@ td input{width:100%}
 <div class="wrap">
   <div class="page-head">
     <div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
-    <h1>Nöbet Listesi</h1>
+    <h1>On-call Roster</h1>
   </div>
-  <p class="sub">ACK raporunda her alarmın <b>oluştuğu andaki nöbetçiyi</b> gösterir. Tekrar eden döngüyü bir kez tanımlarsın, sistem tarihe göre otomatik ilerletir. Gece vardiyası gece yarısını geçince (00:00–gündüz başlangıcı arası) bir önceki günün gecesine sayılır.</p>
+  <p class="sub">The ACK report shows <b>who was on call when each alarm fired</b> — define the repeating cycle once and the system advances it by date automatically. After midnight (00:00 until the day shift starts) the night shift counts as the previous day's night.</p>
 
-  <div id="roNote" class="readonly-note" style="display:none">Bu listeyi yalnızca <b>admin</b> düzenleyebilir. Görüntüleme modundasın.</div>
+  <div id="roNote" class="readonly-note" style="display:none">Only <b>admin</b> can edit this list. You are in view-only mode.</div>
 
   <div class="preview" id="preview">
-    <div><div class="lbl">Şu an nöbette</div><div class="who" id="pvWho">—</div></div>
-    <div style="margin-left:auto;text-align:right"><div class="lbl">Vardiya</div><div id="pvShift" style="font-weight:600;margin-top:2px">—</div></div>
+    <div><div class="lbl">On call now</div><div class="who" id="pvWho">—</div></div>
+    <div style="margin-left:auto;text-align:right"><div class="lbl">Shift</div><div id="pvShift" style="font-weight:600;margin-top:2px">—</div></div>
   </div>
 
   <div class="card" style="margin-top:1.4rem">
-    <h2>Vardiya Saatleri</h2>
-    <p class="hint">Mesai kayması bu saatlere göre hesaplanır. Gündüz vardiyası [gündüz başlangıcı – gece başlangıcı) arası, gece vardiyası kalan saatlerdir.</p>
+    <h2>Shift Hours</h2>
+    <p class="hint">Shifts are computed from these hours. The day shift runs [day start – night start); the night shift covers the remaining hours.</p>
     <div class="grid">
-      <div class="fld"><label>Gündüz başlangıcı</label><input type="time" id="dayStart" step="3600" value="08:00"></div>
-      <div class="fld"><label>Gece başlangıcı</label><input type="time" id="nightStart" step="3600" value="20:00"></div>
-      <div class="fld"><label>Döngü başlangıç tarihi (1. gün)</label><input type="date" id="cycleStart"></div>
+      <div class="fld"><label>Day shift start</label><input type="time" id="dayStart" step="3600" value="08:00"></div>
+      <div class="fld"><label>Night shift start</label><input type="time" id="nightStart" step="3600" value="20:00"></div>
+      <div class="fld"><label>Cycle start date (day 1)</label><input type="date" id="cycleStart"></div>
     </div>
   </div>
 
   <div class="card">
-    <h2>Döngü Tablosu</h2>
-    <p class="hint">Her satır döngüdeki bir gündür. Bu tablo başlangıç tarihinden itibaren sırayla, sonsuza kadar tekrarlar.</p>
+    <h2>Cycle Table</h2>
+    <p class="hint">Each row is one day of the cycle. The table repeats in order, indefinitely, from the start date.</p>
     <table>
-      <thead><tr><th>Gün</th><th>Gündüzcü <span class="shift-tag tag-day">GÜNDÜZ</span></th><th>Gececi <span class="shift-tag tag-night">GECE</span></th><th></th></tr></thead>
+      <thead><tr><th>Day</th><th>Day shift <span class="shift-tag tag-day">DAY</span></th><th>Night shift <span class="shift-tag tag-night">NIGHT</span></th><th></th></tr></thead>
       <tbody id="cycleBody"></tbody>
     </table>
-    <div style="margin-top:1rem"><button class="btn btn-ghost" id="addRow"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Gün ekle</button></div>
+    <div style="margin-top:1rem"><button class="btn btn-ghost" id="addRow"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add day</button></div>
   </div>
 
   <div class="actions">
-    <button class="btn btn-primary" id="saveBtn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>Kaydet</button>
+    <button class="btn btn-primary" id="saveBtn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>Save</button>
     <span id="cycleInfo" style="color:var(--text-muted);font-size:.82rem"></span>
   </div>
 </div>
@@ -153,15 +154,15 @@ function addRow(gunduz,gece){
   const tr=document.createElement('tr');
   const n=tb.children.length+1;
   tr.innerHTML=`<td class="dayno">${n}</td>
-    <td><input type="text" class="g-gunduz" placeholder="Gündüzcü adı" value="${esc(gunduz||'')}"></td>
-    <td><input type="text" class="g-gece" placeholder="Gececi adı" value="${esc(gece||'')}"></td>
-    <td><button class="rm" title="Sil"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></td>`;
+    <td><input type="text" class="g-gunduz" placeholder="Day shift name" value="${esc(gunduz||'')}"></td>
+    <td><input type="text" class="g-gece" placeholder="Night shift name" value="${esc(gece||'')}"></td>
+    <td><button class="rm" title="Delete"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></td>`;
   tr.querySelector('.rm').onclick=()=>{tr.remove();renumber();updatePreview()};
   tr.querySelectorAll('input').forEach(i=>{i.disabled=!canEdit;i.addEventListener('input',updatePreview)});
   tb.appendChild(tr);
   renumber();
 }
-function renumber(){[...document.getElementById('cycleBody').children].forEach((tr,i)=>tr.querySelector('.dayno').textContent=i+1);document.getElementById('cycleInfo').textContent=document.getElementById('cycleBody').children.length+' günlük döngü'}
+function renumber(){[...document.getElementById('cycleBody').children].forEach((tr,i)=>tr.querySelector('.dayno').textContent=i+1);document.getElementById('cycleInfo').textContent=I18N.t('{0}-day cycle',document.getElementById('cycleBody').children.length)}
 
 function collectCycle(){
   return [...document.getElementById('cycleBody').children].map(tr=>({
@@ -196,12 +197,12 @@ function updatePreview(){
   const cfg=currentCfg();
   const r=nobetciFor(new Date(),cfg);
   document.getElementById('pvWho').textContent=r&&r.who?r.who:'—';
-  document.getElementById('pvShift').textContent=r?(r.vardiya==='gunduz'?'Gündüz ('+pad(cfg.dayStartHour)+':00–'+pad(cfg.nightStartHour)+':00)':'Gece ('+pad(cfg.nightStartHour)+':00–'+pad(cfg.dayStartHour)+':00)'):'—';
+  document.getElementById('pvShift').textContent=r?(r.vardiya==='gunduz'?I18N.t('Day ({0}:00–{1}:00)',pad(cfg.dayStartHour),pad(cfg.nightStartHour)):I18N.t('Night ({0}:00–{1}:00)',pad(cfg.nightStartHour),pad(cfg.dayStartHour))):'—';
 }
 
 async function load(){
   const j=await (await fetch('/api/nobet')).json();
-  if(!j.success){toast('Yüklenemedi',false);return}
+  if(!j.success){toast('Could not load',false);return}
   canEdit=j.canEdit;
   const c=j.config;
   document.getElementById('cycleStart').value=c.cycleStart||'';
@@ -221,12 +222,12 @@ async function load(){
 
 async function save(){
   const cfg=currentCfg();
-  if(cfg.nightStartHour<=cfg.dayStartHour){toast('Gece başlangıcı gündüzden sonra olmalı',false);return}
+  if(cfg.nightStartHour<=cfg.dayStartHour){toast('Night start must be after day start',false);return}
   const btn=document.getElementById('saveBtn');btn.disabled=true;
   const res=await (await fetch('/api/nobet',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(cfg)})).json();
   btn.disabled=false;
-  if(res.success){toast('Nöbet listesi kaydedildi ✓',true)}
-  else{toast(res.error||'Kaydedilemedi',false)}
+  if(res.success){toast('On-call roster saved ✓',true)}
+  else{toast(res.error||'Could not save',false)}
 }
 
 document.getElementById('addRow').onclick=()=>{addRow('','');updatePreview()};

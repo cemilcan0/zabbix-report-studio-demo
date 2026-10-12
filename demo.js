@@ -153,8 +153,8 @@
 
   // ── ACK report rows ──────────────────────────────────────
   const OPERATORS = ['a.yilmaz', 'm.kaya', 'e.demir', 's.celik', 'z.arslan'];
-  const ACK_NOTES = ['İnceleniyor', 'İlgili ekibe iletildi', 'Planlı çalışma kapsamında', 'Servis yeniden başlatıldı',
-                     'Disk temizliği yapıldı', 'Geçici dalgalanma, izleniyor', 'Üretici kaydı açıldı', ''];
+  const ACK_NOTES = ['Investigating', 'Forwarded to the owning team', 'Part of planned work', 'Service restarted',
+                     'Disk cleaned up', 'Transient flap, monitoring', 'Vendor case opened', ''];
   function ackRow(e) {
     const r = mulberry32(Number(e.eventid));
     const acks = [];
@@ -164,7 +164,7 @@
       if (e.clock + delay <= NOW) {
         acks.push({ clock: e.clock + delay, username: OPERATORS[rint(r, 0, OPERATORS.length - 1)], message: ACK_NOTES[rint(r, 0, ACK_NOTES.length - 1)] });
         const later = e.clock + delay + rint(r, 600, 3600);
-        if (r() < 0.2 && later <= NOW) acks.push({ clock: later, username: OPERATORS[rint(r, 0, OPERATORS.length - 1)], message: 'Sorun giderildi' });
+        if (r() < 0.2 && later <= NOW) acks.push({ clock: later, username: OPERATORS[rint(r, 0, OPERATORS.length - 1)], message: 'Issue resolved' });
       }
     }
     const first = acks[0];
@@ -202,7 +202,7 @@
     };
   }
 
-  const ALL_CAT = 'Tüm Cihazlar';
+  const ALL_CAT = 'All Devices';
   function inventoryRows() {
     return HOSTS.filter(h => h.serial).map(h => ({
       lokasyon: h.group, serial: h.serial, name: h.name, hostname: h.hostname,
@@ -217,7 +217,7 @@
     return {
       triggerid: String(23100 + i * 11),
       // every third trigger carries no code, so the search visibly filters
-      description: (i % 3 === 2 ? '' : '[T-Kodu T' + (1004 + i * 7) + '] ') + prob.n.replace('{p}', rint(tkoduRnd, 1, 24)),
+      description: (i % 3 === 2 ? '' : '[T-Code T' + (1004 + i * 7) + '] ') + prob.n.replace('{p}', rint(tkoduRnd, 1, 24)),
       status: tkoduRnd() < 0.83 ? 'Enabled' : 'Disabled',
       priority: prob.s,
       hosts: [{ name: host.name, status: host.enabled ? 'Enabled' : 'Disabled' }]
@@ -225,18 +225,18 @@
   });
 
   const SLA = [
-    { slaName: 'Kritik Servisler', serviceName: 'Portal',          slo: 99.9, sli: 99.9712 },
-    { slaName: 'Kritik Servisler', serviceName: 'API Gateway',     slo: 99.9, sli: 99.8140 },
-    { slaName: 'Kritik Servisler', serviceName: 'Veritabanı',      slo: 99.9, sli: 99.9455 },
-    { slaName: 'Altyapı',          serviceName: 'Çekirdek Ağ',     slo: 99.5, sli: 99.9903 },
-    { slaName: 'Altyapı',          serviceName: 'Sanallaştırma',   slo: 99.5, sli: 99.3020 },
-    { slaName: 'Altyapı',          serviceName: 'Depolama',        slo: 99.5, sli: 100 }
+    { slaName: 'Critical Services', serviceName: 'Portal',          slo: 99.9, sli: 99.9712 },
+    { slaName: 'Critical Services', serviceName: 'API Gateway',     slo: 99.9, sli: 99.8140 },
+    { slaName: 'Critical Services', serviceName: 'Database',        slo: 99.9, sli: 99.9455 },
+    { slaName: 'Infrastructure',   serviceName: 'Core Network',    slo: 99.5, sli: 99.9903 },
+    { slaName: 'Infrastructure',   serviceName: 'Virtualization',   slo: 99.5, sli: 99.3020 },
+    { slaName: 'Infrastructure',   serviceName: 'Storage',         slo: 99.5, sli: 100 }
   ].map(s => Object.assign(s, { status: s.sli >= s.slo ? 'ok' : 'violation' }));
 
   function loadScript(src) {
     return new Promise((resolve, reject) => {
       const s = document.createElement('script');
-      s.src = src; s.onload = resolve; s.onerror = () => reject(new Error('script yüklenemedi'));
+      s.src = src; s.onload = resolve; s.onerror = () => reject(new Error('could not load script'));
       document.head.appendChild(s);
     });
   }
@@ -264,8 +264,8 @@
   }
   function jobProgress(id) {
     const job = jobs[id];
-    if (!job) return { success: true, data: { percent: 0, step: 'Başlatılıyor...', events: 0 }, status: 'unknown' };
-    if (job.cancelled) return { success: true, data: { percent: 0, step: 'İptal edildi', events: 0 }, status: 'cancelled' };
+    if (!job) return { success: true, data: { percent: 0, step: 'Starting...', events: 0 }, status: 'unknown' };
+    if (job.cancelled) return { success: true, data: { percent: 0, step: 'Cancelled', events: 0 }, status: 'cancelled' };
     const i = Math.min(job.polls++, job.steps.length - 1);
     const done = i === job.steps.length - 1;
     return {
@@ -273,7 +273,7 @@
       data: { percent: job.steps[i][0], step: job.steps[i][1], events: Math.round(job.result.length * job.steps[i][0] / 100) }
     };
   }
-  const REPORT_STEPS = n => [[25, 'Eventler çekiliyor...'], [70, 'Trigger bilgileri çekiliyor...'], [100, 'Rapor hazır! (' + n + ' alarm)']];
+  const REPORT_STEPS = n => [[25, 'Fetching active problems...'], [70, 'Fetching trigger details...'], [100, 'Report ready! (' + n + ' alarms)']];
 
   // ── Routes ───────────────────────────────────────────────
   const ok = data => ({ success: true, data });
@@ -286,7 +286,7 @@
       servers: state.servers.map(s => Object.assign({ isActive: s.id === state.activeId }, s))
     })],
     ['POST', /^\/api\/servers$/, b => {
-      if (!b.name || !b.url || !b.username) return [400, { success: false, error: 'Ad, URL ve kullanici adi zorunlu.' }];
+      if (!b.name || !b.url || !b.username) return [400, { success: false, error: 'Name, URL and username are required.' }];
       const s = { id: state.nextId++, name: b.name, baseUrl: b.url.replace(/\/(api_jsonrpc\.php)?$/i, ''), username: b.username };
       state.servers.push(s); saveState();
       return { success: true, id: s.id };
@@ -294,12 +294,12 @@
     ['POST', /^\/api\/servers\/check$/, () => {
       const results = {};
       state.servers.forEach(s => {
-        results[s.id] = /example\.com/.test(s.baseUrl) ? { ok: true } : { ok: false, error: 'Connection timed out (demo: örnek erişilemeyen sunucu)' };
+        results[s.id] = /example\.com/.test(s.baseUrl) ? { ok: true } : { ok: false, error: 'Connection timed out' };
       });
       return { success: true, results };
     }],
     ['POST', /^\/api\/servers\/(\d+)\/activate$/, (b, m) => {
-      if (!serverById(m[1])) return [404, { success: false, error: 'Sunucu bulunamadi.' }];
+      if (!serverById(m[1])) return [404, { success: false, error: 'Server not found.' }];
       state.activeId = Number(m[1]); saveState();
       return { success: true };
     }],
@@ -311,8 +311,8 @@
     }],
     ['POST', /^\/api\/servers\/(\d+)$/, (b, m) => {
       const s = serverById(m[1]);
-      if (!s) return [404, { success: false, error: 'Sunucu bulunamadi.' }];
-      if (!b.name || !b.url || !b.username) return [400, { success: false, error: 'Ad, URL ve kullanici adi zorunlu.' }];
+      if (!s) return [404, { success: false, error: 'Server not found.' }];
+      if (!b.name || !b.url || !b.username) return [400, { success: false, error: 'Name, URL and username are required.' }];
       Object.assign(s, { name: b.name, baseUrl: b.url.replace(/\/(api_jsonrpc\.php)?$/i, ''), username: b.username });
       saveState();
       return { success: true };
@@ -344,13 +344,13 @@
     ['POST', /^\/api\/ack\/progress$/, b => jobProgress(b.jobId)],
     ['POST', /^\/api\/ack\/result$/, b => jobs[b.jobId]
       ? { success: true, data: jobs[b.jobId].result, total: jobs[b.jobId].result.length }
-      : [404, { success: false, error: 'Job bulunamadi' }]],
+      : [404, { success: false, error: 'Job not found' }]],
     ['POST', /^\/api\/ack\/cancel$/, b => { if (jobs[b.jobId]) jobs[b.jobId].cancelled = true; return { success: true }; }],
 
     ['POST', /^\/api\/generate$/, () => {
       const rows = inventoryRows();
       const enabled = rows.filter(r => r.status === 'Enabled').length;
-      const summary = { TOPLAM: rows.length };
+      const summary = { TOTAL: rows.length };
       summary[ALL_CAT] = { total: rows.length, serial_found: rows.length, enabled, disabled: rows.length - enabled };
       const d = new Date(), p = n => String(n).padStart(2, '0');
       return {
@@ -362,7 +362,7 @@
 
     ['POST', /^\/api\/tkodu$/, b => {
       const code = (b.code || '').trim().toLowerCase();
-      if (!code) return [400, { success: false, error: 'Aranacak kod bos olamaz.' }];
+      if (!code) return [400, { success: false, error: 'The search code cannot be empty.' }];
       const data = TKODU.filter(t => t.description.toLowerCase().includes(code));
       return { success: true, data, total: data.length };
     }],
@@ -372,10 +372,10 @@
     ['POST', /^\/alarm\/api\/hostgroups$/, () => ok(GROUPS.map(g => ({ groupid: g.id, name: g.name, hosts: g.hosts.length })))],
     ['POST', /^\/alarm\/api\/report-data$/, b => {
       const rows = eventsBetween(Number(b.timeFrom), Number(b.timeTill), b.groupIds).map(reportRow);
-      return { success: true, jobId: startJob(rows, REPORT_STEPS(rows.length)), message: 'Rapor olusturma basladi' };
+      return { success: true, jobId: startJob(rows, REPORT_STEPS(rows.length)), message: 'Report generation started' };
     }],
     ['POST', /^\/alarm\/api\/report-progress$/, b => jobProgress(b.jobId)],
-    ['POST', /^\/alarm\/api\/report-result$/, b => jobs[b.jobId] ? ok(jobs[b.jobId].result) : [404, { success: false, error: 'Job bulunamadi' }]],
+    ['POST', /^\/alarm\/api\/report-result$/, b => jobs[b.jobId] ? ok(jobs[b.jobId].result) : [404, { success: false, error: 'Job not found' }]],
     ['POST', /^\/alarm\/api\/report-cancel$/, b => { if (jobs[b.jobId]) jobs[b.jobId].cancelled = true; return { success: true }; }],
     ['POST', /^\/alarm\/api\/sla-data$/, () => ok(SLA)],
     ['POST', /^\/alarm\/api\/cache-stats$/, () => ok(cacheCleared
@@ -395,8 +395,7 @@
       return {
         success: true, total: rows.length, page, per_page: perPage,
         total_pages: Math.ceil(rows.length / perPage),
-        // the cache viewer compares against the ASCII spelling
-        data: rows.slice((page - 1) * perPage, page * perPage).map(e => Object.assign(reportRow(e), { mesai: e.mesai === 'Mesai İçi' ? 'Mesai Ici' : 'Mesai Disi' })),
+        data: rows.slice((page - 1) * perPage, page * perPage).map(reportRow),
         coverage
       };
     }]
@@ -438,7 +437,7 @@
   document.addEventListener('submit', e => {
     e.preventDefault(); e.stopPropagation();
     if (e.target.querySelector('input[type=password]') && !e.target.querySelector('select')) location.href = 'index.html';
-    else notice('Demo modunda kullanıcı değişiklikleri kaydedilmez.');
+    else notice(I18N.t('User changes are not saved in the demo.'));
   }, true);
 
   function whenReady(test, run) {
@@ -455,7 +454,7 @@
     const badge = document.createElement('div');
     badge.style.cssText = 'position:fixed;left:50%;bottom:14px;transform:translateX(-50%);z-index:2147483646;display:flex;align-items:center;gap:10px;background:#14110b;color:#c7c0b0;border:1px solid rgba(240,230,200,.18);border-radius:999px;padding:7px 16px 7px 8px;font:500 12px "IBM Plex Sans",system-ui,sans-serif;box-shadow:0 6px 24px rgba(0,0,0,.4);white-space:nowrap';
     badge.innerHTML = '<span style="background:#f59e0b;color:#2a1e05;font-weight:700;border-radius:999px;padding:2px 9px;letter-spacing:.06em">DEMO</span>'
-      + '<span>Örnek verilerle çalışır, gerçek bir Zabbix\'e bağlı değildir</span>';
+      + '<span>Sample data — not connected to a real Zabbix</span>';
     document.body.appendChild(badge);
 
     const login = document.querySelector('form input[name=username]');
@@ -470,7 +469,7 @@
         () => document.getElementById('generateReportBtn').click());
     }
     if (typeof window.fetchTkodu === 'function') {
-      document.getElementById('codeInput').value = 'T-Kodu';
+      document.getElementById('codeInput').value = 'T-Code';
       window.fetchTkodu();
     }
     if (document.getElementById('coverageGrid') && typeof window.loadData === 'function') window.loadData(1);

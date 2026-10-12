@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
 <script src="demo.js"></script>
 <meta charset="UTF-8">
+<script src="static/i18n.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ACK Raporu - Zabbix Report Studio</title>
+<title>ACK Report - Zabbix Report Studio</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css">
@@ -198,28 +199,28 @@ tr:hover td{background:rgba(255,255,255,0.02)}
     <div><div style="font-size:14px;font-weight:700;letter-spacing:-.01em;line-height:1.1;color:#f3efe6">Zabbix Report</div><div style="font-size:10.5px;color:#726c5e;letter-spacing:.05em;text-transform:uppercase;margin-top:2px">Studio</div></div>
   </div>
   <nav style="padding:6px 14px;flex:1;overflow-y:auto">
-    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">Genel</div>
-    <a href="index.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>Genel Bakış</a>
-    <a href="servers.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>Zabbix Sunucuları</a>
-    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">Raporlar</div>
-    <a href="alarm-report.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Alarm Raporu</a>
-    <a href="ack.html" data-on=1 style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;background:rgba(245,158,11,.14);color:#fbbf24;box-shadow:inset 2px 0 0 #f59e0b;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>ACK Raporu</a>
-    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">Nöbet</div>
-    <a href="nobet.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Nöbet Listesi</a>
-    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">Envanter</div>
-    <a href="tkodu.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>T-Kodu</a>
-    <a href="envanter.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V3a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v4"/></svg>Envanter</a>
+    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">General</div>
+    <a href="index.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>Overview</a>
+    <a href="servers.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>Zabbix Servers</a>
+    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">Reports</div>
+    <a href="alarm-report.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Alarm Report</a>
+    <a href="ack.html" data-on=1 style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;background:rgba(245,158,11,.14);color:#fbbf24;box-shadow:inset 2px 0 0 #f59e0b;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>ACK Report</a>
+    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">On-call</div>
+    <a href="nobet.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>On-call Roster</a>
+    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">Inventory</div>
+    <a href="tkodu.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>T-Code</a>
+    <a href="envanter.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V3a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v4"/></svg>Inventory</a>
     <a href="cache.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>Cache</a>
     
-    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">Yönetim</div>
-    <a href="users.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Kullanıcılar</a>
+    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">Management</div>
+    <a href="users.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Users</a>
     
   </nav>
   <div style="padding:14px;border-top:1px solid rgba(240,230,200,.1)">
     <div style="display:flex;align-items:center;gap:11px;padding:8px 10px;border-radius:10px;background:#1b1810;border:1px solid rgba(240,230,200,.1)">
       <div style="width:34px;height:34px;border-radius:9px;background:linear-gradient(150deg,#f59e0b,#d97d06);display:flex;align-items:center;justify-content:center;color:#2a1e05;font-weight:700;font-size:13px;flex-shrink:0">A</div>
       <div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#f3efe6">admin</div><div style="font-size:10.5px;color:#726c5e">Admin</div></div>
-      <a href="login.html" title="Çıkış" style="color:#726c5e;padding:6px;border-radius:7px;display:flex;text-decoration:none" onmouseover="this.style.color='#fb7a3c';this.style.background='rgba(251,122,60,.12)'" onmouseout="this.style.color='#726c5e';this.style.background='transparent'"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></a>
+      <a href="login.html" title="Sign out" style="color:#726c5e;padding:6px;border-radius:7px;display:flex;text-decoration:none" onmouseover="this.style.color='#fb7a3c';this.style.background='rgba(251,122,60,.12)'" onmouseout="this.style.color='#726c5e';this.style.background='transparent'"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></a>
     </div>
   </div>
 </aside>
@@ -228,7 +229,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 <header class="app-header">
   <div class="logo">
     <div class="logo-icon">✅</div>
-    <span class="logo-text">ACK Raporu</span>
+    <span class="logo-text">ACK Report</span>
   </div>
   <a class="nav-btn" href="index.html">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
@@ -243,18 +244,18 @@ tr:hover td{background:rgba(255,255,255,0.02)}
   <div class="filter-pill-wrap">
     <div class="filter-pill" id="pillMod" onclick="toggleDD('ddMod','pillMod')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-      <span id="pillModTxt">Aktif Alarmlar</span>
+      <span id="pillModTxt">Active Alarms</span>
       <svg class="pill-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><polyline points="6 9 12 15 18 9"/></svg>
     </div>
     <div class="dd-panel" id="ddMod">
-      <div class="dd-title">Alarm Modu</div>
+      <div class="dd-title">Alarm Mode</div>
       <div class="mode-toggle">
-        <button class="mode-btn active" id="modeActive" onclick="setMode('active')">Aktif</button>
-        <button class="mode-btn" id="modeHistory" onclick="setMode('history')">Gecmis</button>
+        <button class="mode-btn active" id="modeActive" onclick="setMode('active')">Active</button>
+        <button class="mode-btn" id="modeHistory" onclick="setMode('history')">History</button>
       </div>
       <div id="dateGroup" style="display:none;flex-direction:column;gap:0.5rem">
-        <div class="form-group"><label>Baslangic</label><input type="text" id="dateFrom" placeholder="Tarih..."></div>
-        <div class="form-group"><label>Bitis</label><input type="text" id="dateTill" placeholder="Tarih..."></div>
+        <div class="form-group"><label>Start</label><input type="text" id="dateFrom" placeholder="Date..."></div>
+        <div class="form-group"><label>End</label><input type="text" id="dateTill" placeholder="Date..."></div>
       </div>
     </div>
   </div>
@@ -263,18 +264,18 @@ tr:hover td{background:rgba(255,255,255,0.02)}
   <div class="filter-pill-wrap">
     <div class="filter-pill" id="pillGroups" onclick="toggleDD('ddGroups','pillGroups')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-      <span id="pillGroupsTxt">Host Gruplari</span>
+      <span id="pillGroupsTxt">Host Groups</span>
       <svg class="pill-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><polyline points="6 9 12 15 18 9"/></svg>
     </div>
     <div class="dd-panel dd-panel-wide" id="ddGroups">
-      <div class="dd-title">Host Gruplari</div>
+      <div class="dd-title">Host Groups</div>
       <div class="group-actions">
-        <button class="ga-btn" onclick="toggleAllGrp(true)">Tumu Sec</button>
-        <button class="ga-btn" onclick="toggleAllGrp(false)">Temizle</button>
+        <button class="ga-btn" onclick="toggleAllGrp(true)">Select All</button>
+        <button class="ga-btn" onclick="toggleAllGrp(false)">Clear</button>
         <span id="selInfo" class="sel-info"></span>
       </div>
-      <input type="text" class="gs-input" id="grpSearch" placeholder="Ara... (Shift ile toplu sec)" oninput="filterGroups()">
-      <div class="group-list" id="grpList"><div style="color:var(--text-muted);font-size:0.82rem;padding:0.5rem;text-align:center">Yukleniyor...</div></div>
+      <input type="text" class="gs-input" id="grpSearch" placeholder="Search... (Shift to select a range)" oninput="filterGroups()">
+      <div class="group-list" id="grpList"><div style="color:var(--text-muted);font-size:0.82rem;padding:0.5rem;text-align:center">Loading...</div></div>
     </div>
   </div>
 
@@ -282,17 +283,17 @@ tr:hover td{background:rgba(255,255,255,0.02)}
   <div class="filter-pill-wrap">
     <div class="filter-pill" id="pillThr" onclick="toggleDD('ddThr','pillThr')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="14" y2="18"/></svg>
-      <span id="pillThrTxt">Esikler: 30dk / 60dk</span><span id="pillThrDot" style="display:none" class="filter-active-dot"></span>
+      <span id="pillThrTxt">Thresholds: 30m / 60m</span><span id="pillThrDot" style="display:none" class="filter-active-dot"></span>
       <svg class="pill-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><polyline points="6 9 12 15 18 9"/></svg>
     </div>
     <div class="dd-panel" id="ddThr" style="min-width:300px">
-      <div class="dd-title">ACK Esikleri (dk)</div>
+      <div class="dd-title">ACK Thresholds (min)</div>
       <div class="two-col">
-        <div class="form-group"><label>Erken</label><input type="number" id="threshold1" value="30" min="1" oninput="onThrChange()"></div>
-        <div class="form-group"><label>Gec</label><input type="number" id="threshold2" value="60" min="1" oninput="onThrChange()"></div>
+        <div class="form-group"><label>Early</label><input type="number" id="threshold1" value="30" min="1" oninput="onThrChange()"></div>
+        <div class="form-group"><label>Late</label><input type="number" id="threshold2" value="60" min="1" oninput="onThrChange()"></div>
       </div>
 
-      <div class="dd-title" style="margin-top:0.25rem">Severity Filtresi</div>
+      <div class="dd-title" style="margin-top:0.25rem">Severity Filter</div>
       <div class="sev-grid" id="sevCheckboxes">
         <label class="sev-check checked" id="sc5"><input type="checkbox" value="5" checked onchange="onSevChange(this)"><span class="sev-dot" style="background:#ff6b6b"></span>Disaster</label>
         <label class="sev-check checked" id="sc4"><input type="checkbox" value="4" checked onchange="onSevChange(this)"><span class="sev-dot" style="background:#ff9b7a"></span>High</label>
@@ -301,14 +302,14 @@ tr:hover td{background:rgba(255,255,255,0.02)}
         <label class="sev-check checked" id="sc1"><input type="checkbox" value="1" checked onchange="onSevChange(this)"><span class="sev-dot" style="background:#7ec8f5"></span>Information</label>
         <label class="sev-check checked" id="sc0"><input type="checkbox" value="0" checked onchange="onSevChange(this)"><span class="sev-dot" style="background:#aab8be"></span>Not Classified</label>
       </div>
-      <button onclick="setAllSev(true)" style="font-size:0.72rem;padding:3px 10px;background:var(--bg-tertiary);border:1px solid var(--border-color);border-radius:6px;color:var(--text-muted);cursor:pointer;font-family:inherit;margin-top:-0.25rem">Tumu Sec</button>
+      <button onclick="setAllSev(true)" style="font-size:0.72rem;padding:3px 10px;background:var(--bg-tertiary);border:1px solid var(--border-color);border-radius:6px;color:var(--text-muted);cursor:pointer;font-family:inherit;margin-top:-0.25rem">Select All</button>
 
-      <div class="dd-title" style="margin-top:0.25rem">Hizli Filtreler</div>
+      <div class="dd-title" style="margin-top:0.25rem">Quick Filters</div>
       <div class="toggle-group">
         <div class="toggle-row">
           <div class="toggle-row-label">
-            10dk'dan kisa alarmları gizle
-            <small>Clear suresi &lt; 10 dk olanlari gizle</small>
+            Hide alarms shorter than 10 min
+            <small>Hide alarms cleared in under 10 min</small>
           </div>
           <label class="toggle-switch">
             <input type="checkbox" id="hideShort" onchange="applyFilters()">
@@ -317,8 +318,8 @@ tr:hover td{background:rgba(255,255,255,0.02)}
         </div>
         <div class="toggle-row">
           <div class="toggle-row-label">
-            ACK girilmemisleri gizle
-            <small>Sadece ACK girilmis alarmları goster</small>
+            Hide unacknowledged
+            <small>Show only acknowledged alarms</small>
           </div>
           <label class="toggle-switch">
             <input type="checkbox" id="hideNoAck" onchange="applyFilters()">
@@ -332,11 +333,11 @@ tr:hover td{background:rgba(255,255,255,0.02)}
   <!-- SEP + ACK FİLTRE -->
   <div class="toolbar-sep" id="sep1" style="display:none"></div>
   <div class="ack-filters" id="ackFilters" style="display:none">
-    <button class="ack-btn active" data-f="all" onclick="setAckFilter('all')">Tumu</button>
-    <button class="ack-btn" data-f="noack" onclick="setAckFilter('noack')">ACK Girilmemis</button>
-    <button class="ack-btn" data-f="ok" id="btnOk" onclick="setAckFilter('ok')">30dk Icinde</button>
-    <button class="ack-btn" data-f="late30" id="btnLate30" onclick="setAckFilter('late30')">30-60dk</button>
-    <button class="ack-btn" data-f="late60" id="btnLate60" onclick="setAckFilter('late60')">60dk+</button>
+    <button class="ack-btn active" data-f="all" onclick="setAckFilter('all')">All</button>
+    <button class="ack-btn" data-f="noack" onclick="setAckFilter('noack')">Not Acknowledged</button>
+    <button class="ack-btn" data-f="ok" id="btnOk" onclick="setAckFilter('ok')">Within 30m</button>
+    <button class="ack-btn" data-f="late30" id="btnLate30" onclick="setAckFilter('late30')">30-60m</button>
+    <button class="ack-btn" data-f="late60" id="btnLate60" onclick="setAckFilter('late60')">60m+</button>
   </div>
 
   <!-- ACTIONS -->
@@ -347,7 +348,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
     </button>
     <button class="btn btn-primary" id="fetchBtn" onclick="fetchData()">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
-      Verileri Cek
+      Fetch Data
     </button>
   </div>
 </div>
@@ -359,19 +360,19 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 <div class="content">
 
   <div class="stats" id="statsRow" style="display:none">
-    <div class="stat-card s-total" onclick="setAckFilter('all')"><div class="stat-label">Toplam</div><div class="stat-value" id="stTotal">0</div></div>
-    <div class="stat-card s-noack" onclick="setAckFilter('noack')"><div class="stat-label">ACK Girilmemis</div><div class="stat-value" id="stNoack">0</div></div>
-    <div class="stat-card s-ok" onclick="setAckFilter('ok')"><div class="stat-label" id="lblOk">30dk Icinde</div><div class="stat-value" id="stOk">0</div></div>
-    <div class="stat-card s-late30" onclick="setAckFilter('late30')"><div class="stat-label" id="lblLate30">30-60dk</div><div class="stat-value" id="stLate30">0</div></div>
-    <div class="stat-card s-late60" onclick="setAckFilter('late60')"><div class="stat-label" id="lblLate60">60dk+</div><div class="stat-value" id="stLate60">0</div></div>
+    <div class="stat-card s-total" onclick="setAckFilter('all')"><div class="stat-label">Total</div><div class="stat-value" id="stTotal">0</div></div>
+    <div class="stat-card s-noack" onclick="setAckFilter('noack')"><div class="stat-label">Not Acknowledged</div><div class="stat-value" id="stNoack">0</div></div>
+    <div class="stat-card s-ok" onclick="setAckFilter('ok')"><div class="stat-label" id="lblOk">Within 30m</div><div class="stat-value" id="stOk">0</div></div>
+    <div class="stat-card s-late30" onclick="setAckFilter('late30')"><div class="stat-label" id="lblLate30">30-60m</div><div class="stat-value" id="stLate30">0</div></div>
+    <div class="stat-card s-late60" onclick="setAckFilter('late60')"><div class="stat-label" id="lblLate60">60m+</div><div class="stat-value" id="stLate60">0</div></div>
   </div>
 
   <div class="table-toolbar" id="tblToolbar" style="display:none">
     <div class="search-wrap">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-      <input type="text" id="tableSearch" placeholder="Alarm, host veya ACK yapan ara..." oninput="applyFilters()">
+      <input type="text" id="tableSearch" placeholder="Search alarm, host or acknowledger..." oninput="applyFilters()">
     </div>
-    <span class="result-info">Gosterilen: <span id="shownCount">0</span> / <span id="totalCount">0</span></span>
+    <span class="result-info">Showing: <span id="shownCount">0</span> / <span id="totalCount">0</span></span>
   </div>
 
   <div class="table-card" id="tableCard" style="display:none">
@@ -379,15 +380,15 @@ tr:hover td{background:rgba(255,255,255,0.02)}
       <table>
         <thead>
           <tr>
-            <th>Alarm Zamani</th>
+            <th>Alarm Time</th>
             <th>Sev</th>
             <th>Host</th>
-            <th>Alarm Adi</th>
-            <th>Nöbetçi</th>
+            <th>Alarm Name</th>
+            <th>On-call Person</th>
             <th>ACK</th>
-            <th>Ilk ACK Suresi</th>
-            <th>Clear Suresi</th>
-            <th>ACK Detaylari</th>
+            <th>Time to First ACK</th>
+            <th>Time to Clear</th>
+            <th>ACK Details</th>
           </tr>
         </thead>
         <tbody id="tableBody"></tbody>
@@ -397,15 +398,15 @@ tr:hover td{background:rgba(255,255,255,0.02)}
 
   <div id="emptyState" class="empty-state">
     <div style="font-size:3rem;margin-bottom:1rem;opacity:0.3">✅</div>
-    <p style="color:var(--text-secondary);margin-bottom:0.5rem;font-size:1rem">Henuz veri yok</p>
-    <p style="font-size:0.85rem">Filtreleri ayarlayip "Verileri Cek" butonuna tiklayin.</p>
+    <p style="color:var(--text-secondary);margin-bottom:0.5rem;font-size:1rem">No data yet</p>
+    <p style="font-size:0.85rem">Set the filters, then click "Fetch Data".</p>
   </div>
 </div>
 
 <div id="loadingOverlay" class="loading-overlay hidden">
   <div class="loading-box">
     <div class="spinner"></div>
-    <p id="loadingText">Veriler cekiliyor...</p>
+    <p id="loadingText">Fetching data...</p>
     <div id="progressWrap" style="width:320px;margin:1rem auto 0;display:none">
       <div style="background:var(--bg-tertiary);border-radius:8px;height:8px;overflow:hidden;border:1px solid var(--border-color)">
         <div id="progressBar" style="height:100%;width:0%;background:var(--accent-gradient);border-radius:8px;transition:width 0.3s ease"></div>
@@ -415,7 +416,7 @@ tr:hover td{background:rgba(255,255,255,0.02)}
         <span id="progressPct" style="font-size:0.75rem;color:var(--accent-primary);font-weight:600"></span>
       </div>
     </div>
-    <button id="cancelBtn" class="btn" onclick="cancelAckJob()" style="margin-top:1rem;display:none;background:rgba(239,68,68,0.15);color:#fca5a5;border:1px solid rgba(239,68,68,0.3)">Iptal Et</button>
+    <button id="cancelBtn" class="btn" onclick="cancelAckJob()" style="margin-top:1rem;display:none;background:rgba(239,68,68,0.15);color:#fca5a5;border:1px solid rgba(239,68,68,0.3)">Cancel</button>
   </div>
 </div>
 <div class="toast-container" id="toastContainer"></div>
@@ -460,7 +461,7 @@ function setMode(mode){
   document.getElementById('modeHistory').classList.toggle('active',mode==='history');
   const dg=document.getElementById('dateGroup');
   dg.style.display=mode==='history'?'flex':'none';
-  document.getElementById('pillModTxt').textContent=mode==='active'?'Aktif Alarmlar':'Gecmis Alarmlar';
+  document.getElementById('pillModTxt').textContent=mode==='active'?'Active Alarms':'Past Alarms';
 }
 
 // ── GROUPS ──
@@ -475,7 +476,7 @@ async function loadGroups(){
     const r=await (await fetch('/api/ack/hostgroups',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'})).json();
     if(!r.success) throw new Error(r.error);
     allGroups=r.data; filtGroups=[...allGroups]; renderGrp();
-  }catch(e){document.getElementById('grpList').innerHTML='<div style="color:var(--text-muted);padding:0.5rem">Hata: '+esc(e.message)+'</div>';}
+  }catch(e){document.getElementById('grpList').innerHTML='<div style="color:var(--text-muted);padding:0.5rem">Error: '+esc(e.message)+'</div>';}
 }
 function filterGroups(){
   const q=document.getElementById('grpSearch').value.toLowerCase();
@@ -486,7 +487,7 @@ function renderGrp(){
   const sel=new Set(getSelGrps());
   document.getElementById('grpList').innerHTML=filtGroups.length
     ?filtGroups.map((g,i)=>`<div class="gi${sel.has(g.groupid)?' sel':''}" data-i="${i}" onclick="handleGrpClick(event,${i})"><input type="checkbox" id="g_${g.groupid}" value="${g.groupid}"${sel.has(g.groupid)?' checked':''} onclick="event.stopPropagation()"><label class="gn" for="g_${g.groupid}" onclick="event.preventDefault()">${esc(g.name)}</label><span class="gc">${g.host_count}</span></div>`).join('')
-    :'<div style="color:var(--text-muted);font-size:0.82rem;padding:0.5rem;text-align:center">Bulunamadi</div>';
+    :'<div style="color:var(--text-muted);font-size:0.82rem;padding:0.5rem;text-align:center">Not found</div>';
   updSelInfo();
 }
 function handleGrpClick(e,idx){
@@ -499,8 +500,8 @@ function handleGrpClick(e,idx){
 }
 function updSelInfo(){
   const cnt=document.querySelectorAll('#grpList input:checked').length;
-  document.getElementById('selInfo').textContent=cnt?cnt+' secili':'';
-  document.getElementById('pillGroupsTxt').textContent=cnt?cnt+' Grup':'Host Gruplari';
+  document.getElementById('selInfo').textContent=cnt?I18N.t('{0} selected',cnt):'';
+  document.getElementById('pillGroupsTxt').textContent=cnt?I18N.t('{0} Groups',cnt):'Host Groups';
 }
 function toggleAllGrp(s){document.querySelectorAll('#grpList input[type=checkbox]').forEach(c=>{c.checked=s;c.closest('.gi').classList.toggle('sel',s);}); updSelInfo();}
 function getSelGrps(){return Array.from(document.querySelectorAll('#grpList input[type=checkbox]:checked')).map(c=>c.value);}
@@ -525,13 +526,13 @@ function updatePillDot(){
 function onThrChange(){
   const t1=document.getElementById('threshold1').value||30;
   const t2=document.getElementById('threshold2').value||60;
-  document.getElementById('pillThrTxt').textContent='Esikler: '+t1+'dk / '+t2+'dk';
-  document.getElementById('btnOk').textContent=t1+'dk Icinde';
-  document.getElementById('btnLate30').textContent=t1+'-'+t2+'dk';
-  document.getElementById('btnLate60').textContent=t2+'dk+';
-  document.getElementById('lblOk').textContent=t1+'dk Icinde';
-  document.getElementById('lblLate30').textContent=t1+'-'+t2+'dk';
-  document.getElementById('lblLate60').textContent=t2+'dk+';
+  document.getElementById('pillThrTxt').textContent=I18N.t('Thresholds: {0}m / {1}m',t1,t2);
+  document.getElementById('btnOk').textContent=I18N.t('Within {0}m',t1);
+  document.getElementById('btnLate30').textContent=I18N.t('{0}-{1}m',t1,t2);
+  document.getElementById('btnLate60').textContent=I18N.t('{0}m+',t2);
+  document.getElementById('lblOk').textContent=I18N.t('Within {0}m',t1);
+  document.getElementById('lblLate30').textContent=I18N.t('{0}-{1}m',t1,t2);
+  document.getElementById('lblLate60').textContent=I18N.t('{0}m+',t2);
   updateStats(); applyFilters();
 }
 
@@ -550,7 +551,7 @@ async function fetchData(){
   closeAllDD();
   document.getElementById('fetchBtn').disabled=true;
   document.getElementById('loadingOverlay').classList.remove('hidden');
-  document.getElementById('loadingText').textContent='Job baslatiliyor...';
+  document.getElementById('loadingText').textContent='Starting job...';
   document.getElementById('progressWrap').style.display='block';
   document.getElementById('cancelBtn').style.display='inline-flex';
   document.getElementById('progressBar').style.width='0%';
@@ -561,13 +562,13 @@ async function fetchData(){
     const body={mode:curMode,groupIds:getSelGrps()};
     if(curMode==='history'){
       const tf=document.getElementById('dateFrom').value,tt=document.getElementById('dateTill').value;
-      if(!tf||!tt){alert('Lutfen tarih araligi secin!');hideLoading();return;}
+      if(!tf||!tt){alert('Please select a date range!');hideLoading();return;}
       body.timeFrom=localDateToUnix(tf);
       body.timeTill=localDateToUnix(tt);
     }
     // 1. Job'i baslat
     const startRes=await (await fetch('/api/ack',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)})).json();
-    if(!startRes.success) throw new Error(startRes.error||'Job baslatilamadi');
+    if(!startRes.success) throw new Error(startRes.error||'Could not start the job');
     curAckJobId=startRes.jobId;
 
     // 2. Progress polling
@@ -579,35 +580,35 @@ async function fetchData(){
         document.getElementById('progressBar').style.width=d.percent+'%';
         document.getElementById('progressStep').textContent=d.step||'';
         document.getElementById('progressPct').textContent=d.percent+'%';
-        document.getElementById('loadingText').textContent=d.step||'Veriler cekiliyor...';
+        document.getElementById('loadingText').textContent=d.step||'Fetching data...';
 
         if(pRes.status==='done'){
           clearInterval(ackPollTimer); ackPollTimer=null;
           // 3. Sonucu al
           const rRes=await (await fetch('/api/ack/result',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({jobId:curAckJobId})})).json();
-          if(!rRes.success) throw new Error(rRes.error||'Sonuc alinamadi');
+          if(!rRes.success) throw new Error(rRes.error||'Could not fetch the result');
           allData=rRes.data;
           ['sep1','ackFilters','statsRow','tblToolbar','tableCard','exportBtn'].forEach(id=>{const el=document.getElementById(id);if(el) el.style.display='';});
           document.getElementById('emptyState').style.display='none';
           onThrChange(); updateStats(); applyFilters();
-          showToast(rRes.total+' alarm yuklendi','success');
+          showToast(I18N.t('{0} alarms loaded',rRes.total),'success');
           hideLoading();
         } else if(pRes.status==='error'){
           clearInterval(ackPollTimer); ackPollTimer=null;
-          throw new Error(pRes.error||'Bilinmeyen hata');
+          throw new Error(pRes.error||'Unknown error');
         } else if(pRes.status==='cancelled'){
           clearInterval(ackPollTimer); ackPollTimer=null;
-          showToast('Iptal edildi','error');
+          showToast('Cancelled','error');
           hideLoading();
         }
       }catch(pe){
         clearInterval(ackPollTimer); ackPollTimer=null;
-        showToast('Hata: '+pe.message,'error');
+        showToast('Error: '+pe.message,'error');
         hideLoading();
       }
     },1000);
 
-  }catch(e){showToast('Hata: '+e.message,'error');hideLoading();}
+  }catch(e){showToast('Error: '+e.message,'error');hideLoading();}
 }
 
 function hideLoading(){
@@ -624,7 +625,7 @@ async function cancelAckJob(){
     await fetch('/api/ack/cancel',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({jobId:curAckJobId})});
   }catch(e){}
   if(ackPollTimer){clearInterval(ackPollTimer);ackPollTimer=null;}
-  showToast('Iptal ediliyor...','error');
+  showToast('Cancelling...','error');
   hideLoading();
 }
 
@@ -643,7 +644,7 @@ function applyFilters(){
   const s=document.getElementById('tableSearch').value.toLowerCase();
   const hideShort=document.getElementById('hideShort')?.checked;
   const hideNoAck=document.getElementById('hideNoAck')?.checked;
-  const SHORT_THRESHOLD=10*60; // 10 dakika saniye cinsinden
+  const SHORT_THRESHOLD=10*60; // 10 minutes, in seconds
   curFiltered=allData.filter(r=>{
     // Metin arama
     const ms=!s||(r.name||'').toLowerCase().includes(s)||(r.host||'').toLowerCase().includes(s)||(r.ack_username||'').toLowerCase().includes(s)||(r.nobetci||'').toLowerCase().includes(s);
@@ -664,18 +665,18 @@ function applyFilters(){
   renderTable(curFiltered);
 }
 
-function fd(ts){return ts?new Date(ts*1000).toLocaleString('tr-TR'):'-'}
+function fd(ts){return ts?new Date(ts*1000).toLocaleString(I18N.locale):'-'}
 function fDelay(sec){
   if(sec==null||sec<0)return'-';
-  if(sec<60)return sec+'sn';
-  if(sec<3600)return Math.round(sec/60)+'dk';
+  if(sec<60)return I18N.t('{0}s',sec);
+  if(sec<3600)return I18N.t('{0}m',Math.round(sec/60));
   const h=Math.floor(sec/3600),m=Math.round((sec%3600)/60);
-  return h+'sa'+(m?' '+m+'dk':'');
+  return m?I18N.t('{0}h {1}m',h,m):I18N.t('{0}h',h);
 }
 
 function renderTable(data){
   if(!data.length){
-    document.getElementById('tableBody').innerHTML='<tr><td colspan="9" style="text-align:center;padding:2rem;color:var(--text-muted)">Filtre kriterlerine uyan alarm yok</td></tr>';
+    document.getElementById('tableBody').innerHTML='<tr><td colspan="9" style="text-align:center;padding:2rem;color:var(--text-muted)">No alarms match the filters</td></tr>';
     return;
   }
   document.getElementById('tableBody').innerHTML=data.map(r=>{
@@ -683,7 +684,7 @@ function renderTable(data){
     const dc=cat==='ok'?'delay-ok':cat==='late30'?'delay-warn':cat==='late60'?'delay-late':'delay-none';
     const badge=r.ack_status==='ack'
       ?`<span class="ack-yes"><span class="dot dot-green"></span>ACK<span class="ack-count-badge">${r.ack_count}</span></span>`
-      :'<span class="ack-no"><span class="dot dot-red"></span>Girilmemis</span>';
+      :'<span class="ack-no"><span class="dot dot-red"></span>No ACK</span>';
     const delay=r.ack_status==='ack'
       ?`<span class="${dc}">${fDelay(r.ack_delay_sec)}</span><br><small style="color:var(--text-muted)">${fd(r.ack_clock)}</small>`
       :'<span class="delay-none">-</span>';
@@ -691,7 +692,7 @@ function renderTable(data){
       ?`<span class="clear-ok">${fDelay(r.clear_sec)}</span><br><small style="color:var(--text-muted)">${fd(r.r_clock)}</small>`
       :'<span class="clear-none">-</span>';
     const detail=r.all_acks&&r.all_acks.length
-      ?'<div class="ack-detail">'+r.all_acks.map((a,i)=>`<div class="ack-entry"><span class="ack-user">${esc(a.username)}${i===0?' <span style="font-size:0.65rem;color:#6ee7b7;font-weight:400">(ilk)</span>':''}</span><span class="ack-tline">${fd(a.clock)} · <span class="${i===0?dc:''}">${fDelay(a.clock-r.clock)} sonra</span></span>${a.message?'<div class="ack-msg">"'+esc(a.message)+'"</div>':''}</div>`).join('')+'</div>'
+      ?'<div class="ack-detail">'+r.all_acks.map((a,i)=>`<div class="ack-entry"><span class="ack-user">${esc(a.username)}${i===0?' <span style="font-size:0.65rem;color:#6ee7b7;font-weight:400">(first)</span>':''}</span><span class="ack-tline">${fd(a.clock)} · <span class="${i===0?dc:''}">${I18N.t('{0} later',fDelay(a.clock-r.clock))}</span></span>${a.message?'<div class="ack-msg">"'+esc(a.message)+'"</div>':''}</div>`).join('')+'</div>'
       :'<span style="color:var(--text-muted);font-size:0.78rem">-</span>';
     const nobetci=r.nobetci?esc(r.nobetci):'<span style="color:var(--text-muted)">-</span>';
     return`<tr><td style="white-space:nowrap;color:var(--text-primary)">${fd(r.clock)}</td><td><span class="sev sev-${r.severity}">${SEV_S[r.severity]||'?'}</span></td><td style="color:var(--text-primary);font-weight:500;white-space:nowrap">${esc(r.host)}</td><td style="max-width:260px;word-break:break-word">${esc(r.name)}</td><td style="white-space:nowrap;color:var(--text-primary)">${nobetci}</td><td>${badge}</td><td>${delay}</td><td>${clearStr}</td><td style="min-width:200px;max-width:260px">${detail}</td></tr>`;
@@ -700,53 +701,54 @@ function renderTable(data){
 
 // ── EXCEL ──
 function exportExcel(){
-  if(!curFiltered.length){showToast('Indirmeye hazir veri yok','error');return;}
+  if(!curFiltered.length){showToast('No data to download','error');return;}
   const t1=parseInt(document.getElementById('threshold1').value)||30;
   const t2=parseInt(document.getElementById('threshold2').value)||60;
-  const catLbl=c=>c==='noack'?'ACK Girilmemis':c==='ok'?t1+'dk Icinde':c==='late30'?t1+'-'+t2+'dk':t2+'dk+ Sonra';
+  const catLbl=c=>c==='noack'?I18N.t('Not Acknowledged'):c==='ok'?I18N.t('Within {0}m',t1):c==='late30'?I18N.t('{0}-{1}m',t1,t2):I18N.t('After {0}m',t2);
 
   const rows=curFiltered.map(r=>{
     const cat=getAckCat(r);
-    const ackDet=(r.all_acks||[]).map((a,i)=>`${i===0?'[ILK] ':''}${a.username} | ${fd(a.clock)} | ${fDelay(a.clock-r.clock)} sonra${a.message?' | "'+a.message+'"':''}`).join('\n');
+    const ackDet=(r.all_acks||[]).map((a,i)=>`${i===0?I18N.t('[FIRST] '):''}${a.username} | ${fd(a.clock)} | ${I18N.t('{0} later',fDelay(a.clock-r.clock))}${a.message?' | "'+a.message+'"':''}`).join('\n');
+    const T=I18N.t;
     return{
-      'Alarm Zamani':fd(r.clock),
-      'Severity':SEV_L[r.severity]||r.severity,
-      'Host':r.host||'',
-      'Alarm Adi':r.name||'',
-      'Nobetci':r.nobetci||'-',
-      'ACK Durumu':r.ack_status==='ack'?'ACK Girildi':'ACK Girilmemis',
-      'ACK Kategorisi':catLbl(cat),
-      'ACK Sayisi':r.ack_count||0,
-      'Ilk ACK Suresi':r.ack_status==='ack'?fDelay(r.ack_delay_sec):'-',
-      'Ilk ACK Zamani':r.ack_status==='ack'?fd(r.ack_clock):'-',
-      'Ilk ACK Yapan':r.ack_username||'-',
-      'Clear Suresi':r.clear_sec!=null&&r.clear_sec>=0?fDelay(r.clear_sec):'-',
-      'Clear Zamani':r.r_clock?fd(r.r_clock):'-',
-      'ACK Detaylari':ackDet||'-'
+      [T('Alarm Time')]:fd(r.clock),
+      [T('Severity')]:SEV_L[r.severity]||r.severity,
+      [T('Host')]:r.host||'',
+      [T('Alarm Name')]:r.name||'',
+      [T('On-call Person')]:r.nobetci||'-',
+      [T('ACK Status')]:r.ack_status==='ack'?T('Acknowledged'):T('Not Acknowledged'),
+      [T('ACK Category')]:catLbl(cat),
+      [T('ACK Count')]:r.ack_count||0,
+      [T('Time to First ACK')]:r.ack_status==='ack'?fDelay(r.ack_delay_sec):'-',
+      [T('First ACK Time')]:r.ack_status==='ack'?fd(r.ack_clock):'-',
+      [T('First ACK By')]:r.ack_username||'-',
+      [T('Time to Clear')]:r.clear_sec!=null&&r.clear_sec>=0?fDelay(r.clear_sec):'-',
+      [T('Clear Time')]:r.r_clock?fd(r.r_clock):'-',
+      [T('ACK Details')]:ackDet||'-'
     };
   });
 
   const ws=XLSX.utils.json_to_sheet(rows);
   ws['!cols']=[{wch:20},{wch:14},{wch:22},{wch:45},{wch:16},{wch:16},{wch:8},{wch:16},{wch:20},{wch:20},{wch:14},{wch:20},{wch:50}];
   const wb=XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb,ws,'ACK Raporu');
+  XLSX.utils.book_append_sheet(wb,ws,I18N.t('ACK Report'));
 
   // Ozet
   const sum=[
-    {Metrik:'Toplam Alarm',Deger:allData.length},
-    {Metrik:'ACK Girilmemis',Deger:allData.filter(r=>getAckCat(r)==='noack').length},
-    {Metrik:t1+'dk Icinde',Deger:allData.filter(r=>getAckCat(r)==='ok').length},
-    {Metrik:t1+'-'+t2+'dk Arasi',Deger:allData.filter(r=>getAckCat(r)==='late30').length},
-    {Metrik:t2+'dk Sonrasi',Deger:allData.filter(r=>getAckCat(r)==='late60').length},
-    {Metrik:'Mod',Deger:curMode==='active'?'Aktif':'Gecmis'},
-    {Metrik:'Rapor Tarihi',Deger:new Date().toLocaleString('tr-TR')},
-  ];
+    [I18N.t('Total Alarms'),allData.length],
+    [I18N.t('Not Acknowledged'),allData.filter(r=>getAckCat(r)==='noack').length],
+    [I18N.t('Within {0}m',t1),allData.filter(r=>getAckCat(r)==='ok').length],
+    [I18N.t('{0}-{1}m',t1,t2),allData.filter(r=>getAckCat(r)==='late30').length],
+    [I18N.t('After {0}m',t2),allData.filter(r=>getAckCat(r)==='late60').length],
+    [I18N.t('Mode'),curMode==='active'?I18N.t('Active'):I18N.t('History')],
+    [I18N.t('Report Date'),new Date().toLocaleString(I18N.locale)],
+  ].map(([k,v])=>({[I18N.t('Metric')]:k,[I18N.t('Value')]:v}));
   const ws2=XLSX.utils.json_to_sheet(sum);
   ws2['!cols']=[{wch:22},{wch:20}];
-  XLSX.utils.book_append_sheet(wb,ws2,'Ozet');
+  XLSX.utils.book_append_sheet(wb,ws2,I18N.t('Summary'));
 
-  XLSX.writeFile(wb,`ACK_Raporu_${curMode==='active'?'Aktif':'Gecmis'}_${new Date().toISOString().slice(0,10)}.xlsx`);
-  showToast('Excel indirildi','success');
+  XLSX.writeFile(wb,`ACK_Report_${curMode==='active'?'Active':'History'}_${new Date().toISOString().slice(0,10)}.xlsx`);
+  showToast('Excel downloaded','success');
 }
 
 function esc(s){const d=document.createElement('div');d.textContent=s||'';return d.innerHTML}

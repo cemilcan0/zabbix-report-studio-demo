@@ -8,16 +8,22 @@ const PROBLEM_CATEGORIES = {
     'Space': { keywords: ['space'], color: '#eab308' },
     'URL/Web': { keywords: ['url'], color: '#14b8a6' },
     'Restart': { keywords: ['restart'], color: '#8b5cf6' },
-    'Diğer': { keywords: [], color: '#64748b' }
+    'Other': { keywords: [], color: '#64748b' }
 };
+
+// Shift values are stored as 'Mesai İçi' / 'Mesai Dışı' (also in the cache DB);
+// only the label shown to the user is translated.
+const mesaiLabel = v => t(v === 'Mesai İçi' ? 'Business hours' : 'After hours');
+const pctText = v => (I18N.lang === 'tr' ? `%${v}` : `${v}%`);
+const durUnits = () => (I18N.lang === 'tr' ? { d: 'g', h: 's', m: 'dk', s: 'sn' } : { d: 'd', h: 'h', m: 'm', s: 's' });
 
 function categorizeProblem(problemName) {
     const lower = problemName.toLowerCase();
     for (const [cat, info] of Object.entries(PROBLEM_CATEGORIES)) {
-        if (cat === 'Diğer') continue;
+        if (cat === 'Other') continue;
         if (info.keywords.some(kw => lower.includes(kw))) return cat;
     }
-    return 'Diğer';
+    return 'Other';
 }
 
 const reportState = {
@@ -83,7 +89,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const isExpanded = container.classList.toggle('chart-expanded');
         btn.querySelector('.icon-expand').style.display = isExpanded ? 'none' : '';
         btn.querySelector('.icon-collapse').style.display = isExpanded ? '' : 'none';
-        btn.title = isExpanded ? 'Küçült' : 'Büyüt';
+        btn.title = isExpanded ? 'Collapse' : 'Expand';
         setCompactTable(container, isExpanded);
         setTimeout(() => { if (reportState.hostProblemChart) reportState.hostProblemChart.resize(); }, 450);
     });
@@ -99,7 +105,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const isExpanded = container.classList.toggle('chart-expanded');
         btn.querySelector('.icon-expand').style.display = isExpanded ? 'none' : '';
         btn.querySelector('.icon-collapse').style.display = isExpanded ? '' : 'none';
-        btn.title = isExpanded ? 'Küçült' : 'Büyüt';
+        btn.title = isExpanded ? 'Collapse' : 'Expand';
         setCompactTable(container, isExpanded);
         setTimeout(() => { if (reportState.topDevicesChart) reportState.topDevicesChart.resize(); }, 450);
     });
@@ -124,10 +130,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             loadHostGroups();
             loadCacheStats();
         } else {
-            showToast('Zabbix bağlantısı kurulamadı: ' + data.error, 'error');
+            showToast('Could not connect to Zabbix: ' + data.error, 'error');
         }
     } catch (e) {
-        showToast('Zabbix bağlantı hatası: ' + e.message, 'error');
+        showToast('Zabbix connection error: ' + e.message, 'error');
     }
 });
 
@@ -202,7 +208,7 @@ function initExcludedPopup() {
         updateExcludedUI();
         renderHostProblemCombinations();
         document.getElementById('excludedPopup').classList.add('hidden');
-        showToast('Tüm kombinasyonlar geri eklendi', 'success');
+        showToast('All combinations added back', 'success');
     });
 
     // Close on overlay click
@@ -218,7 +224,7 @@ function renderExcludedList() {
     const excluded = Array.from(reportState.excludedCombinations);
 
     if (excluded.length === 0) {
-        container.innerHTML = '<div class="popup-empty">Çıkarılan kombinasyon bulunmuyor.</div>';
+        container.innerHTML = '<div class="popup-empty">No excluded combinations.</div>';
         return;
     }
 
@@ -243,7 +249,7 @@ function renderExcludedList() {
             updateExcludedUI();
             renderHostProblemCombinations();
             renderExcludedList();
-            showToast('Kombinasyon geri eklendi', 'success');
+            showToast('Combination added back', 'success');
         });
     });
 }
@@ -403,7 +409,7 @@ function populateDetailFilterDropdowns() {
         return `
             <div class="dropdown-item ${selectedClass}" data-value="${mesai}">
                 <input type="checkbox" ${checked}>
-                <span>${mesai}</span>
+                <span>${mesaiLabel(mesai)}</span>
                 <span class="item-count">${count}</span>
             </div>
         `;
@@ -543,7 +549,7 @@ function renderActiveFilters() {
 
     f.severity.forEach(val => {
         const info = SEVERITY_MAP[val];
-        tags.push(`<span class="filter-tag">Seviye: ${info.name}<button class="tag-remove" data-type="severity" data-value="${val}">&times;</button></span>`);
+        tags.push(`<span class="filter-tag">${t('Severity')}: ${info.name}<button class="tag-remove" data-type="severity" data-value="${val}">&times;</button></span>`);
     });
 
     f.host.forEach(val => {
@@ -551,16 +557,16 @@ function renderActiveFilters() {
     });
 
     f.mesai.forEach(val => {
-        tags.push(`<span class="filter-tag">${val}<button class="tag-remove" data-type="mesai" data-value="${val}">&times;</button></span>`);
+        tags.push(`<span class="filter-tag">${mesaiLabel(val)}<button class="tag-remove" data-type="mesai" data-value="${val}">&times;</button></span>`);
     });
 
     f.category.forEach(val => {
         const catInfo = PROBLEM_CATEGORIES[val];
-        tags.push(`<span class="filter-tag" style="border-left: 3px solid ${catInfo ? catInfo.color : '#888'};">Kategori: ${val}<button class="tag-remove" data-type="category" data-value="${val}">&times;</button></span>`);
+        tags.push(`<span class="filter-tag" style="border-left: 3px solid ${catInfo ? catInfo.color : '#888'};">${t('Category')}: ${t(val)}<button class="tag-remove" data-type="category" data-value="${val}">&times;</button></span>`);
     });
 
     if (reportState.problemSearchText) {
-        tags.push(`<span class="filter-tag">Arama: "${escapeHtml(reportState.problemSearchText)}"<button class="tag-remove" data-type="problemSearch" data-value="clear">&times;</button></span>`);
+        tags.push(`<span class="filter-tag">${t('Search')}: "${escapeHtml(reportState.problemSearchText)}"<button class="tag-remove" data-type="problemSearch" data-value="clear">&times;</button></span>`);
     }
 
     container.innerHTML = tags.join('');
@@ -605,7 +611,7 @@ async function loadHostGroups() {
         reportState.hostGroups = result;
         renderHostGroupChips();
     } catch (error) {
-        showToast('Host grupları yüklenemedi: ' + error.message, 'error');
+        showToast('Could not load host groups: ' + error.message, 'error');
     }
 }
 
@@ -620,7 +626,7 @@ function renderHostGroupChips() {
     const filtered = getFilteredReportGroups();
 
     if (filtered.length === 0) {
-        container.innerHTML = '<div class="empty-state">Sonuç bulunamadı</div>';
+        container.innerHTML = '<div class="empty-state">No results</div>';
     } else {
         container.innerHTML = filtered.map((g, i) => `
             <div class="report-host-chip ${reportState.selectedGroups.has(g.groupid) ? 'selected' : ''}"
@@ -632,19 +638,19 @@ function renderHostGroupChips() {
     }
 
     const countEl = document.getElementById('selectedGroupCount');
-    if (countEl) countEl.textContent = `${reportState.selectedGroups.size} seçili`;
+    if (countEl) countEl.textContent = t('{0} selected', reportState.selectedGroups.size);
 
     // Update the button texts
     const filtered2 = getFilteredReportGroups();
     const visBtn = document.getElementById('rptSelectVisibleBtn');
     if (visBtn) {
         const allVisSel = filtered2.length > 0 && filtered2.every(g => reportState.selectedGroups.has(g.groupid));
-        visBtn.textContent = allVisSel ? 'Görünenleri Kaldır' : 'Görünenleri Seç';
+        visBtn.textContent = allVisSel ? 'Deselect Visible' : 'Select Visible';
     }
     const allBtn = document.getElementById('rptSelectAllBtn');
     if (allBtn) {
         const allSel = reportState.hostGroups.length > 0 && reportState.selectedGroups.size === reportState.hostGroups.length;
-        allBtn.textContent = allSel ? 'Tümünü Kaldır' : 'Tümünü Seç';
+        allBtn.textContent = allSel ? 'Deselect All' : 'Select All';
     }
 }
 
@@ -700,16 +706,16 @@ async function generateReport() {
     const endDate = document.getElementById('reportEndDate').value;
 
     if (!startDate || !endDate) {
-        showToast('Lütfen tarih aralığı seçin', 'warning');
+        showToast('Please select a date range', 'warning');
         return;
     }
 
     if (reportState.selectedSeverities.size === 0) {
-        showToast('En az bir seviye seçmelisiniz', 'warning');
+        showToast('Select at least one severity', 'warning');
         return;
     }
 
-    showLoading('Rapor oluşturuluyor...');
+    showLoading('Generating report...');
 
     // Show the progress bar
     const progressContainer = document.getElementById('progressContainer');
@@ -718,8 +724,8 @@ async function generateReport() {
     const progressDetail = document.getElementById('progressDetail');
     progressContainer.style.display = '';
     progressBarFill.style.width = '0%';
-    progressText.textContent = '%0';
-    progressDetail.textContent = 'Başlatılıyor...';
+    progressText.textContent = pctText(0);
+    progressDetail.textContent = 'Starting...';
 
     // Add a cancel button
     let cancelBtn = document.getElementById('reportCancelBtn');
@@ -727,7 +733,7 @@ async function generateReport() {
         cancelBtn = document.createElement('button');
         cancelBtn.id = 'reportCancelBtn';
         cancelBtn.className = 'btn btn-cancel-report';
-        cancelBtn.innerHTML = '✕ Raporu İptal Et';
+        cancelBtn.innerHTML = '✕ Cancel Report';
         cancelBtn.style.cssText = 'margin-top:12px;padding:8px 24px;border-radius:8px;border:1px solid #ef4444;background:rgba(239,68,68,0.1);color:#ef4444;cursor:pointer;font-size:14px;font-weight:500;transition:all 0.2s;';
         cancelBtn.onmouseenter = () => { cancelBtn.style.background = 'rgba(239,68,68,0.25)'; };
         cancelBtn.onmouseleave = () => { cancelBtn.style.background = 'rgba(239,68,68,0.1)'; };
@@ -735,7 +741,7 @@ async function generateReport() {
     }
     cancelBtn.style.display = '';
     cancelBtn.disabled = false;
-    cancelBtn.innerHTML = '✕ Raporu İptal Et';
+    cancelBtn.innerHTML = '✕ Cancel Report';
 
     let currentJobId = null;
     let progressInterval = null;
@@ -745,7 +751,7 @@ async function generateReport() {
         if (currentJobId && !isCancelled) {
             isCancelled = true;
             cancelBtn.disabled = true;
-            cancelBtn.innerHTML = 'İptal ediliyor...';
+            cancelBtn.innerHTML = 'Cancelling...';
             try {
                 await fetch(`${API_BASE}/report-cancel`, {
                     method: 'POST',
@@ -773,7 +779,7 @@ async function generateReport() {
         });
 
         const startResult = await startResponse.json();
-        if (!startResult.success) throw new Error(startResult.error || 'Job başlatılamadı');
+        if (!startResult.success) throw new Error(startResult.error || 'Could not start the job');
 
         currentJobId = startResult.jobId;
 
@@ -782,7 +788,7 @@ async function generateReport() {
             progressInterval = setInterval(async () => {
                 if (isCancelled) {
                     clearInterval(progressInterval);
-                    reject(new Error('Rapor iptal edildi'));
+                    reject(new Error('Report cancelled'));
                     return;
                 }
 
@@ -798,12 +804,12 @@ async function generateReport() {
                         const p = pData.data;
                         const pct = Math.min(p.percent, 99);
                         progressBarFill.style.width = `${pct}%`;
-                        progressText.textContent = `%${pct}`;
-                        progressDetail.textContent = `${p.step} — ${p.events} alarm bulundu`;
+                        progressText.textContent = pctText(pct);
+                        progressDetail.textContent = t('{0} — {1} alarms found', I18N.msg(p.step), p.events);
                         
                         const loadingText = document.getElementById('loadingText');
                         if (loadingText) {
-                            loadingText.textContent = `${p.step} — %${pct}`;
+                            loadingText.textContent = `${I18N.msg(p.step)} — ${pctText(pct)}`;
                         }
                     }
 
@@ -813,8 +819,8 @@ async function generateReport() {
 
                         // STEP 3: fetch the result
                         progressBarFill.style.width = '100%';
-                        progressText.textContent = '%100';
-                        progressDetail.textContent = 'Rapor verisi alınıyor...';
+                        progressText.textContent = pctText(100);
+                        progressDetail.textContent = 'Fetching report data...';
 
                         const resultRes = await fetch(`${API_BASE}/report-result`, {
                             method: 'POST',
@@ -824,26 +830,26 @@ async function generateReport() {
                         const resultJson = await resultRes.json();
 
                         if (!resultJson.success) {
-                            reject(new Error(resultJson.error || 'Sonuç alınamadı'));
+                            reject(new Error(resultJson.error || 'Could not fetch the result'));
                         } else {
                             resolve(resultJson.data);
                         }
                     } else if (pData.status === 'error') {
                         clearInterval(progressInterval);
-                        reject(new Error(pData.error || 'Rapor oluşturulurken hata oluştu'));
+                        reject(new Error(pData.error || 'An error occurred while generating the report'));
                     } else if (pData.status === 'cancelled') {
                         clearInterval(progressInterval);
-                        reject(new Error('Rapor iptal edildi'));
+                        reject(new Error('Report cancelled'));
                     }
                 } catch (e) {
                     // Swallow the polling error but check for a dropped connection
-                    if (e.message === 'Rapor iptal edildi' || e.message?.includes('Sonuç alınamadı')) {
+                    if (e.message === 'Report cancelled' || e.message?.includes('Could not fetch the result')) {
                         clearInterval(progressInterval);
                         reject(e);
                     }
                     // Ignore other polling errors, retry
                 }
-            }, 1000); // 500ms → 1000ms (backend thread'li olduğundan daha az sık yeterli)
+            }, 1000); // 500ms → 1000ms (the backend job is threaded, so polling less often is enough)
         });
 
         // === REPORT DATA RECEIVED ===
@@ -894,13 +900,13 @@ async function generateReport() {
             document.getElementById('reportContent').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }, 350);
 
-        showToast(`Rapor oluşturuldu - ${reportState.filteredData.length} alarm`, 'info');
+        showToast(t('Report generated - {0} alarms', reportState.filteredData.length), 'info');
         loadCacheStats();
     } catch (error) {
-        if (error.message !== 'Rapor iptal edildi') {
-            showToast('Rapor oluşturulamadı: ' + error.message, 'error');
+        if (error.message !== 'Report cancelled') {
+            showToast('Could not generate the report: ' + error.message, 'error');
         } else {
-            showToast('Rapor iptal edildi', 'warning');
+            showToast('Report cancelled', 'warning');
         }
     } finally {
         if (progressInterval) clearInterval(progressInterval);
@@ -937,11 +943,11 @@ function renderGeneralStats(startDate, endDate) {
         </div>`;
 
     document.getElementById('generalStats').innerHTML =
-        kpi('total', 'Toplam Alarm', total.toLocaleString('tr-TR'), '#f59e0b', ICO.bell, '') +
-        kpi('date', 'Başlangıç Tarihi', `<span class="stat-value-sm">${startDate}</span>`, '#a59f91', ICO.calStart, '') +
-        kpi('date', 'Bitiş Tarihi', `<span class="stat-value-sm">${endDate}</span>`, '#a59f91', ICO.calEnd, '') +
-        kpi('mesai-ici', 'Mesai İçi', mesaiIci.toLocaleString('tr-TR'), '#4CAF50', ICO.sun, `%${mesaiIciPct} · 08:00 – 18:00`) +
-        kpi('mesai-disi', 'Mesai Dışı', mesaiDisi.toLocaleString('tr-TR'), '#f59e0b', ICO.moon, `%${mesaiDisiPct} · 18:00 – 08:00`);
+        kpi('total', 'Total Alarms', total.toLocaleString(I18N.locale), '#f59e0b', ICO.bell, '') +
+        kpi('date', 'Start Date', `<span class="stat-value-sm">${startDate}</span>`, '#a59f91', ICO.calStart, '') +
+        kpi('date', 'End Date', `<span class="stat-value-sm">${endDate}</span>`, '#a59f91', ICO.calEnd, '') +
+        kpi('mesai-ici', 'Business hours', mesaiIci.toLocaleString(I18N.locale), '#4CAF50', ICO.sun, `${pctText(mesaiIciPct)} · 08:00 – 18:00`) +
+        kpi('mesai-disi', 'After hours', mesaiDisi.toLocaleString(I18N.locale), '#f59e0b', ICO.moon, `${pctText(mesaiDisiPct)} · 18:00 – 08:00`);
 }
 
 // ===== SEVERITY DISTRIBUTION =====
@@ -975,7 +981,7 @@ function renderSeverityDistribution() {
         tr.className = info.rowClass;
         tr.innerHTML = `
             <td><span class="severity-badge-table ${info.class}">${info.name}</span></td>
-            <td><strong>${count.toLocaleString('tr-TR')}</strong></td>
+            <td><strong>${count.toLocaleString(I18N.locale)}</strong></td>
             <td>${pct}%</td>
             <td>${hostCount}</td>
         `;
@@ -1015,7 +1021,7 @@ function renderSeverityChart(counts) {
                     callbacks: {
                         label: (ctx) => {
                             const pct = ((ctx.raw / total) * 100).toFixed(1);
-                            return ` ${ctx.label}: ${ctx.raw} (%${pct})`;
+                            return ` ${ctx.label}: ${ctx.raw} (${pctText(pct)})`;
                         }
                     }
                 },
@@ -1026,7 +1032,7 @@ function renderSeverityChart(counts) {
                     textShadowBlur: 4,
                     formatter: (value) => {
                         const pct = ((value / total) * 100).toFixed(1);
-                        return `%${pct}`;
+                        return pctText(pct);
                     },
                     display: (ctx) => {
                         const pct = (ctx.dataset.data[ctx.dataIndex] / total) * 100;
@@ -1047,22 +1053,22 @@ function renderMesaiDistribution() {
 
     document.querySelector('#mesaiTable tbody').innerHTML = `
         <tr>
-            <td><strong>Mesai İçi</strong></td>
-            <td><strong>${mesaiIci.toLocaleString('tr-TR')}</strong></td>
+            <td><strong>Business hours</strong></td>
+            <td><strong>${mesaiIci.toLocaleString(I18N.locale)}</strong></td>
             <td>${total > 0 ? ((mesaiIci / total) * 100).toFixed(1) : '0.0'}%</td>
-            <td>08:00 - 18:00 arası (tüm günler)</td>
+            <td>08:00 - 18:00 (all days)</td>
         </tr>
         <tr>
-            <td><strong>Mesai Dışı</strong></td>
-            <td><strong>${mesaiDisi.toLocaleString('tr-TR')}</strong></td>
+            <td><strong>After hours</strong></td>
+            <td><strong>${mesaiDisi.toLocaleString(I18N.locale)}</strong></td>
             <td>${total > 0 ? ((mesaiDisi / total) * 100).toFixed(1) : '0.0'}%</td>
-            <td>18:00 - 08:00 arası</td>
+            <td>18:00 - 08:00</td>
         </tr>
         <tr style="border-top: 2px solid var(--border-color);">
-            <td><strong>TOPLAM</strong></td>
-            <td><strong>${total.toLocaleString('tr-TR')}</strong></td>
+            <td><strong>TOTAL</strong></td>
+            <td><strong>${total.toLocaleString(I18N.locale)}</strong></td>
             <td>100.0%</td>
-            <td>Tüm alarmlar</td>
+            <td>All alarms</td>
         </tr>
     `;
 
@@ -1076,7 +1082,7 @@ function renderMesaiChart(mesaiIci, mesaiDisi) {
     const total = mesaiIci + mesaiDisi;
     if (total === 0) return;
 
-    const labels = ['Mesai İçi', 'Mesai Dışı'];
+    const labels = [t('Business hours'), t('After hours')];
     const values = [mesaiIci, mesaiDisi];
     const colors = ['#36d399', '#a78bfa'];
 
@@ -1095,7 +1101,7 @@ function renderMesaiChart(mesaiIci, mesaiDisi) {
                     callbacks: {
                         label: (ctx) => {
                             const pct = ((ctx.raw / total) * 100).toFixed(1);
-                            return ` ${ctx.label}: ${ctx.raw.toLocaleString('tr-TR')} (%${pct})`;
+                            return ` ${ctx.label}: ${ctx.raw.toLocaleString(I18N.locale)} (${pctText(pct)})`;
                         }
                     }
                 },
@@ -1106,7 +1112,7 @@ function renderMesaiChart(mesaiIci, mesaiDisi) {
                     textShadowBlur: 4,
                     formatter: (value) => {
                         const pct = ((value / total) * 100).toFixed(1);
-                        return `%${pct}`;
+                        return pctText(pct);
                     },
                     display: (ctx) => {
                         const pct = (ctx.dataset.data[ctx.dataIndex] / total) * 100;
@@ -1142,7 +1148,7 @@ function renderHostProblemCombinations() {
                 <td>${i + 1}</td>
                 <td><strong>${escapeHtml(host)}</strong></td>
                 <td>${escapeHtml(problem)}</td>
-                <td><strong>${count.toLocaleString('tr-TR')}</strong></td>
+                <td><strong>${count.toLocaleString(I18N.locale)}</strong></td>
                 <td><button class="btn-exclude" data-index="${i}">✕</button></td>
             </tr>
         `;
@@ -1155,7 +1161,7 @@ function renderHostProblemCombinations() {
             reportState.excludedCombinations.add(key);
             updateExcludedUI();
             renderHostProblemCombinations();
-            showToast('Kombinasyon listeden çıkarıldı', 'info');
+            showToast('Combination removed from the list', 'info');
         });
     });
 
@@ -1201,7 +1207,7 @@ function renderHostProblemChart(top10) {
         data: {
             labels,
             datasets: [{
-                label: 'Tekrar Sayısı',
+                label: t('Occurrences'),
                 data: values,
                 backgroundColor: colors.slice(0, values.length),
                 borderColor: colors.slice(0, values.length),
@@ -1225,7 +1231,7 @@ function renderHostProblemChart(top10) {
                         label: (ctx) => {
                             const idx = ctx.dataIndex;
                             const problem = top10[idx][0].split('|||')[1];
-                            return [`Problem: ${problem}`, `Tekrar: ${ctx.raw}`];
+                            return [`Problem: ${problem}`, t('Occurrences: {0}', ctx.raw)];
                         }
                     }
                 }
@@ -1264,7 +1270,7 @@ function renderTopDevices() {
             .sort((a, b) => b[1] - a[1])
             .slice(0, 3);
         const tooltipRows = topProblems.map(([p, c]) =>
-            `<div class="host-tooltip-row"><span class="host-tooltip-problem">${escapeHtml(p)}</span><span class="host-tooltip-count">${c.toLocaleString('tr-TR')}</span></div>`
+            `<div class="host-tooltip-row"><span class="host-tooltip-problem">${escapeHtml(p)}</span><span class="host-tooltip-count">${c.toLocaleString(I18N.locale)}</span></div>`
         ).join('');
 
         return `
@@ -1274,12 +1280,12 @@ function renderTopDevices() {
                     <div class="host-cell-hover">
                         <strong>${escapeHtml(host)}</strong>
                         <div class="host-tooltip">
-                            <div class="host-tooltip-title">En Çok Tekrar Eden Problemler</div>
+                            <div class="host-tooltip-title">Most Frequent Problems</div>
                             ${tooltipRows}
                         </div>
                     </div>
                 </td>
-                <td><strong>${count.toLocaleString('tr-TR')}</strong></td>
+                <td><strong>${count.toLocaleString(I18N.locale)}</strong></td>
                 <td><button class="btn-exclude" data-index="${i}">✕</button></td>
             </tr>
         `;
@@ -1292,7 +1298,7 @@ function renderTopDevices() {
             reportState.excludedDevices.add(host);
             updateExcludedDevicesUI();
             renderTopDevices();
-            showToast('Cihaz listeden çıkarıldı', 'info');
+            showToast('Device removed from the list', 'info');
         });
     });
 
@@ -1318,7 +1324,7 @@ function renderTopDevicesChart(top10) {
         data: {
             labels,
             datasets: [{
-                label: 'Alarm Sayısı',
+                label: t('Alarm Count'),
                 data: values,
                 backgroundColor: colors.slice(0, values.length),
                 borderColor: colors.slice(0, values.length),
@@ -1346,7 +1352,7 @@ function renderTopDevicesChart(top10) {
                             return top10[idx][0];
                         },
                         label: (ctx) => {
-                            return `Alarm Sayısı: ${ctx.raw}`;
+                            return t('Alarm Count: {0}', ctx.raw);
                         }
                     }
                 }
@@ -1401,7 +1407,7 @@ async function renderAvailabilityReport(timeFrom, timeTill) {
         });
 
     } catch (err) {
-        console.warn('SLA verisi alınamadı:', err);
+        console.warn('Could not fetch SLA data:', err);
         section.style.display = 'none';
     }
 }
@@ -1421,7 +1427,7 @@ function renderSlaTable() {
     countBadge.textContent = data.length;
 
     if (data.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:var(--text-muted);padding:2rem;">Gösterilecek SLA verisi yok</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:var(--text-muted);padding:2rem;">No SLA data to show</td></tr>`;
         return;
     }
 
@@ -1432,7 +1438,7 @@ function renderSlaTable() {
         const isError = item.status === 'error';
 
         const statusClass = isError ? 'sla-error' : (isOk ? 'sla-ok' : 'sla-violation');
-        const statusText = isError ? '⚠ Hata' : (isOk ? '✓ OK' : '✗ Uyarı');
+        const statusText = isError ? '⚠ Error' : (isOk ? '✓ OK' : '✗ Violation');
 
         const barColor = isOk ? '#22c55e' : '#ef4444';
         const barWidth = Math.min(sli, 100);
@@ -1459,17 +1465,18 @@ function renderSlaTable() {
 }
 
 function formatDurationLong(seconds) {
-    if (!seconds || seconds <= 0) return '0s';
+    if (!seconds || seconds <= 0) return `0${durUnits().s}`;
     const d = Math.floor(seconds / 86400);
     const h = Math.floor((seconds % 86400) / 3600);
     const m = Math.floor((seconds % 3600) / 60);
     const s = seconds % 60;
+    const u = durUnits();
     let parts = [];
-    if (d > 0) parts.push(`${d}g`);
-    if (h > 0) parts.push(`${h}s`);
-    if (m > 0) parts.push(`${m}d`);
-    if (s > 0 && d === 0) parts.push(`${s}sn`);
-    return parts.join(' ') || '0s';
+    if (d > 0) parts.push(`${d}${u.d}`);
+    if (h > 0) parts.push(`${h}${u.h}`);
+    if (m > 0) parts.push(`${m}${u.m}`);
+    if (s > 0 && d === 0) parts.push(`${s}${u.s}`);
+    return parts.join(' ') || `0${u.s}`;
 }
 
 function initExcludedDevicesPopup() {
@@ -1491,7 +1498,7 @@ function initExcludedDevicesPopup() {
         updateExcludedDevicesUI();
         renderTopDevices();
         document.getElementById('excludedDevicesPopup').classList.add('hidden');
-        showToast('Tüm cihazlar geri eklendi', 'success');
+        showToast('All devices added back', 'success');
     });
 
     document.getElementById('excludedDevicesPopup').addEventListener('click', (e) => {
@@ -1506,7 +1513,7 @@ function renderExcludedDevicesList() {
     const excluded = Array.from(reportState.excludedDevices);
 
     if (excluded.length === 0) {
-        container.innerHTML = '<div class="popup-empty">Çıkarılan cihaz bulunmuyor.</div>';
+        container.innerHTML = '<div class="popup-empty">No excluded devices.</div>';
         return;
     }
 
@@ -1529,7 +1536,7 @@ function renderExcludedDevicesList() {
             updateExcludedDevicesUI();
             renderTopDevices();
             renderExcludedDevicesList();
-            showToast('Cihaz geri eklendi', 'success');
+            showToast('Device added back', 'success');
         });
     });
 }
@@ -1567,7 +1574,7 @@ function renderDetailTableRows(data) {
     document.querySelector('#detailTable tbody').innerHTML = data.map(d => {
         const sev = SEVERITY_MAP[d.severity] || SEVERITY_MAP['0'];
         const date = formatDate(d.clock);
-        const status = d.resolved ? 'Çözüldü' : 'Problem';
+        const status = d.resolved ? 'Resolved' : 'Problem';
         const statusClass = d.resolved ? 'status-resolved' : 'status-problem';
         const duration = d.resolved ? formatDuration(d.duration) : '-';
         const mesaiClass = d.mesai === 'Mesai İçi' ? 'ici' : 'disi';
@@ -1580,7 +1587,7 @@ function renderDetailTableRows(data) {
                 <td>${escapeHtml(d.name)}</td>
                 <td><span class="${statusClass}">${status}</span></td>
                 <td>${duration}</td>
-                <td><span class="mesai-badge ${mesaiClass}">${d.mesai}</span></td>
+                <td><span class="mesai-badge ${mesaiClass}">${mesaiLabel(d.mesai)}</span></td>
             </tr>
         `;
     }).join('');
@@ -1588,11 +1595,11 @@ function renderDetailTableRows(data) {
 
 // ===== EXPORT =====
 async function exportReport() {
-    showToast('Excel raporu hazırlanıyor...', 'info');
+    showToast('Preparing the Excel report...', 'info');
 
     try {
         const workbook = new ExcelJS.Workbook();
-        workbook.creator = 'Zabbix Rapor';
+        workbook.creator = 'Zabbix Report';
         workbook.created = new Date();
 
         const data = reportState.filteredData;
@@ -1619,7 +1626,7 @@ async function exportReport() {
         const rowFillEven = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFF3F4F6' } };
         const rowFillOdd = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFE5E7EB' } };
 
-        const ws = workbook.addWorksheet('Rapor');
+        const ws = workbook.addWorksheet(t('Report'));
         ws.getColumn(1).width = 8;
         ws.getColumn(2).width = 40;
         ws.getColumn(3).width = 50;
@@ -1676,7 +1683,7 @@ async function exportReport() {
         // Title
         ws.mergeCells(row, 1, row, 6);
         const titleCell = ws.getCell(row, 1);
-        titleCell.value = `Zabbix Alarm Raporu (${startDate} - ${endDate})`;
+        titleCell.value = t('Zabbix Alarm Report ({0} - {1})', startDate, endDate);
         titleCell.font = { bold: true, size: 16, color: { argb: 'FF4F46E5' }, name: 'Calibri' };
         titleCell.alignment = { vertical: 'middle', horizontal: 'center' };
         titleCell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFE0E7FF' } };
@@ -1691,11 +1698,11 @@ async function exportReport() {
         const mesaiDisi = totalAlarms - mesaiIci;
 
         // General statistics
-        addSectionTitle('Genel İstatistik', 6);
-        addHeaderRow(['İstatistik', 'Değer']);
-        [['Toplam Alarm', totalAlarms], ['Çözülen Alarm', resolvedAlarms],
-        ['Aktif Problem', unresolvedAlarms], ['Etkilenen Cihaz', uniqueHosts],
-        ['Mesai İçi', mesaiIci], ['Mesai Dışı', mesaiDisi]].forEach(s => addDataRow(s));
+        addSectionTitle(t('General Statistics'), 6);
+        addHeaderRow([t('Statistic'), t('Value')]);
+        [[t('Total Alarms'), totalAlarms], [t('Resolved Alarms'), resolvedAlarms],
+        [t('Active Problems'), unresolvedAlarms], [t('Affected Devices'), uniqueHosts],
+        [t('Business hours'), mesaiIci], [t('After hours'), mesaiDisi]].forEach(s => addDataRow(s));
         addEmptyRow();
 
         // Severity distribution
@@ -1703,8 +1710,8 @@ async function exportReport() {
             '5': 'FFFF4444', '4': 'FFFF8800', '3': 'FFFFAA00',
             '2': 'FFFFC800', '1': 'FF7499FF', '0': 'FF97AAB3'
         };
-        addSectionTitle('Seviye Dağılımı', 6);
-        addHeaderRow(['Seviye', 'Alarm Sayısı', 'Oran (%)']);
+        addSectionTitle(t('Severity Distribution'), 6);
+        addHeaderRow([t('Severity'), t('Alarm Count'), t('Share (%)')]);
         for (const sev of ['5', '4', '3', '2', '1', '0']) {
             const info = SEVERITY_MAP[sev];
             const count = data.filter(d => d.severity === sev).length;
@@ -1717,8 +1724,8 @@ async function exportReport() {
         addEmptyRow();
 
         // Top alarming devices
-        addSectionTitle('En Çok Alarm Veren Cihazlar (TOP 20)', 6);
-        addHeaderRow(['#', 'Host', 'Alarm Sayısı', 'Oran (%)']);
+        addSectionTitle(t('Top Alarming Devices (TOP 20)'), 6);
+        addHeaderRow(['#', 'Host', t('Alarm Count'), t('Share (%)')]);
         const hostCounts = {};
         data.forEach(d => hostCounts[d.host] = (hostCounts[d.host] || 0) + 1);
         Object.entries(hostCounts).sort((a, b) => b[1] - a[1]).slice(0, 20)
@@ -1728,8 +1735,8 @@ async function exportReport() {
         addEmptyRow();
 
         // Host-problem combinations
-        addSectionTitle('Host-Problem Kombinasyonları (TOP 30)', 6);
-        addHeaderRow(['#', 'Host', 'Problem', 'Alarm Sayısı', 'Oran (%)']);
+        addSectionTitle(t('Host-Problem Combinations (TOP 30)'), 6);
+        addHeaderRow(['#', 'Host', 'Problem', t('Alarm Count'), t('Share (%)')]);
         const comboCounts = {};
         data.forEach(d => {
             const key = `${d.host}|||${d.name}`;
@@ -1744,10 +1751,10 @@ async function exportReport() {
 
         // SLA Availability
         if (_slaDataCache && _slaDataCache.length > 0) {
-            addSectionTitle('SLA Availability Raporu', 6);
-            addHeaderRow(['SLA Adı', 'SLO (%)', 'SLI (%)', 'Uptime', 'Downtime', 'Durum']);
+            addSectionTitle(t('SLA Availability Report'), 6);
+            addHeaderRow([t('SLA Name'), 'SLO (%)', 'SLI (%)', 'Uptime', 'Downtime', t('Status')]);
             [..._slaDataCache].sort((a, b) => b.sli - a.sli).forEach(item => {
-                const status = item.status === 'ok' ? '✓ OK' : '✗ Uyarı';
+                const status = item.status === 'ok' ? '✓ OK' : t('✗ Violation');
                 const r = addDataRow([
                     item.slaName, `${item.slo.toFixed(2)}%`, `${item.sli.toFixed(4)}%`,
                     formatDurationLong(item.uptime), formatDurationLong(item.downtime), status
@@ -1762,20 +1769,20 @@ async function exportReport() {
         const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
         const a = document.createElement('a');
         a.href = URL.createObjectURL(blob);
-        a.download = `Zabbix_Rapor_${new Date().toISOString().slice(0, 10)}.xlsx`;
+        a.download = `Zabbix_Report_${new Date().toISOString().slice(0, 10)}.xlsx`;
         a.click();
         URL.revokeObjectURL(a.href);
-        showToast('Excel raporu indirildi', 'success');
+        showToast('Excel report downloaded', 'success');
 
     } catch (err) {
-        console.error('Excel export hatası:', err);
-        showToast('Excel export hatası: ' + err.message, 'error');
+        console.error('Excel export error:', err);
+        showToast('Excel export error: ' + err.message, 'error');
     }
 }
 
 
 async function exportPDF() {
-    showToast('PDF hazırlanıyor...', 'info');
+    showToast('Preparing the PDF...', 'info');
 
     try {
         const { jsPDF } = window.jspdf;
@@ -1804,7 +1811,7 @@ async function exportPDF() {
         // Title page
         pdf.setFontSize(22);
         pdf.setTextColor(79, 70, 229);
-        pdf.text('Zabbix Alarm Raporu', pageWidth / 2, 30, { align: 'center' });
+        pdf.text(t('Zabbix Alarm Report'), pageWidth / 2, 30, { align: 'center' });
 
         const startDate = document.getElementById('reportStartDate').value;
         const endDate = document.getElementById('reportEndDate').value;
@@ -1813,7 +1820,7 @@ async function exportPDF() {
         pdf.text(`${startDate}  -  ${endDate}`, pageWidth / 2, 40, { align: 'center' });
 
         pdf.setFontSize(10);
-        pdf.text(`Olu\u015fturulma: ${new Date().toLocaleString('tr-TR')}`, pageWidth / 2, 48, { align: 'center' });
+        pdf.text(t('Generated: {0}', new Date().toLocaleString(I18N.locale)), pageWidth / 2, 48, { align: 'center' });
 
         yOffset = 60;
 
@@ -1845,19 +1852,19 @@ async function exportPDF() {
             yOffset += imgHeight + 8;
         }
 
-        pdf.save(`Zabbix_Rapor_${new Date().toISOString().slice(0, 10)}.pdf`);
-        showToast('PDF indirildi', 'success');
+        pdf.save(`Zabbix_Report_${new Date().toISOString().slice(0, 10)}.pdf`);
+        showToast('PDF downloaded', 'success');
 
     } catch (err) {
-        console.error('PDF export hatası:', err);
-        showToast('PDF export hatası: ' + err.message, 'error');
+        console.error('PDF export error:', err);
+        showToast('PDF export error: ' + err.message, 'error');
     }
 }
 
 // ===== UTILITIES =====
 function formatDate(timestamp) {
     const d = new Date(timestamp * 1000);
-    return d.toLocaleString('tr-TR', {
+    return d.toLocaleString(I18N.locale, {
         year: 'numeric', month: '2-digit', day: '2-digit',
         hour: '2-digit', minute: '2-digit', second: '2-digit'
     });
@@ -1870,12 +1877,13 @@ function formatDuration(seconds) {
     const m = Math.floor((seconds % 3600) / 60);
     const s = seconds % 60;
 
+    const u = durUnits();
     const parts = [];
-    if (d > 0) parts.push(`${d}g`);
-    if (h > 0) parts.push(`${h}s`);
-    if (m > 0) parts.push(`${m}dk`);
-    if (s > 0 && d === 0) parts.push(`${s}sn`);
-    return parts.join(' ') || '0sn';
+    if (d > 0) parts.push(`${d}${u.d}`);
+    if (h > 0) parts.push(`${h}${u.h}`);
+    if (m > 0) parts.push(`${m}${u.m}`);
+    if (s > 0 && d === 0) parts.push(`${s}${u.s}`);
+    return parts.join(' ') || `0${u.s}`;
 }
 
 function escapeHtml(str) {
@@ -1892,12 +1900,12 @@ async function apiRequest(endpoint, data) {
     });
     if (response.status === 401) {
         localStorage.removeItem('zabbixSession');
-        showToast('Oturum süresi doldu. Giriş sayfasına yönlendiriliyorsunuz...', 'error');
+        showToast('Session expired. Redirecting to the sign-in page...', 'error');
         setTimeout(() => window.location.href = 'index.html', 2000);
-        throw new Error('Oturum süresi doldu');
+        throw new Error('Session expired');
     }
     const result = await response.json();
-    if (!result.success) throw new Error(result.error || 'Bilinmeyen hata');
+    if (!result.success) throw new Error(result.error || 'Unknown error');
     return result.data;
 }
 
@@ -1931,16 +1939,16 @@ async function loadCacheStats() {
             const s = data.data;
             const infoEl = document.getElementById('cacheInfoText');
             if (s.events > 0) {
-                infoEl.textContent = `📦 Önbellek: ${s.events.toLocaleString('tr-TR')} event, ${s.coverage_days} gün, ${s.db_size_mb} MB`;
+                infoEl.textContent = t('📦 Cache: {0} events, {1} days, {2}', s.events.toLocaleString(I18N.locale), s.coverage_days, s.db_size_mb);
             } else {
-                infoEl.textContent = '📦 Önbellek boş';
+                infoEl.textContent = '📦 Cache is empty';
             }
         }
     } catch (e) { /* ignore */ }
 }
 
 async function handleClearCache() {
-    if (!confirm('Önbellek temizlensin mi?\n\nTüm cache\'lenmiş rapor verileri silinecek.\nBir sonraki rapor oluşturmada tüm veriler Zabbix\'ten yeniden çekilecek.')) {
+    if (!confirm('Clear the cache?\n\nAll cached report data will be deleted.\nThe next report will fetch everything from Zabbix again.')) {
         return;
     }
     try {
@@ -1951,12 +1959,12 @@ async function handleClearCache() {
         });
         const data = await res.json();
         if (data.success) {
-            showToast('Önbellek temizlendi', 'success');
+            showToast('Cache cleared', 'success');
             loadCacheStats();
         } else {
-            showToast('Önbellek temizlenemedi: ' + (data.error || ''), 'error');
+            showToast('Could not clear the cache: ' + (data.error || ''), 'error');
         }
     } catch (e) {
-        showToast('Önbellek temizlenemedi: ' + e.message, 'error');
+        showToast('Could not clear the cache: ' + e.message, 'error');
     }
 }

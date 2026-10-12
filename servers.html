@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
 <script src="demo.js"></script>
   <meta charset="UTF-8">
+  <script src="static/i18n.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zabbix Sunucuları · Zabbix Report Studio</title>
+  <title>Zabbix Servers · Zabbix Report Studio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -127,21 +128,21 @@
       <div><div class="nm">Zabbix Report</div><div class="sub">Studio</div></div>
     </div>
     <nav class="nav">
-      <div class="grp">Genel</div>
-      <a href="index.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>Genel Bakış</a>
-      <a href="servers.html" class="active"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>Zabbix Sunucuları</a>
-      <div class="grp">Raporlar</div>
-      <a href="alarm-report.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Alarm Raporu</a>
-      <a href="ack.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>ACK Raporu</a>
-      <div class="grp">Nöbet</div>
-      <a href="nobet.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Nöbet Listesi</a>
-      <div class="grp">Envanter</div>
-      <a href="tkodu.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>T-Kodu</a>
-      <a href="envanter.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>Envanter</a>
+      <div class="grp">General</div>
+      <a href="index.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>Overview</a>
+      <a href="servers.html" class="active"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>Zabbix Servers</a>
+      <div class="grp">Reports</div>
+      <a href="alarm-report.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Alarm Report</a>
+      <a href="ack.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>ACK Report</a>
+      <div class="grp">On-call</div>
+      <a href="nobet.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>On-call Roster</a>
+      <div class="grp">Inventory</div>
+      <a href="tkodu.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>T-Code</a>
+      <a href="envanter.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>Inventory</a>
       <a href="cache.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>Cache</a>
       
-      <div class="grp">Yönetim</div>
-      <a href="users.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Kullanıcılar</a>
+      <div class="grp">Management</div>
+      <a href="users.html"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Users</a>
       
     </nav>
     <div class="userbar">
@@ -151,7 +152,7 @@
           <div class="uname">admin</div>
           <div class="urole">Admin</div>
         </div>
-        <a href="login.html" class="logout" title="Çıkış">
+        <a href="login.html" class="logout" title="Sign out">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
         </a>
       </div>
@@ -162,12 +163,12 @@
     <div class="content">
       <div class="tophead">
         <div>
-          <h1>Zabbix Sunucuları</h1>
-          <p class="lead">Birden fazla Zabbix ortamı ekleyin, erişilebilir olanları görün ve aralarında geçiş yapın.</p>
+          <h1>Zabbix Servers</h1>
+          <p class="lead">Add multiple Zabbix environments, see which are reachable and switch between them.</p>
         </div>
         <button class="cta" onclick="openAdd()">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          Yeni Sunucu Ekle
+          Add Server
         </button>
       </div>
 
@@ -179,29 +180,29 @@
 <!-- Modal -->
 <div class="modal" id="modal">
   <div class="dialog">
-    <h3 id="modalTitle">Yeni Zabbix Sunucusu</h3>
+    <h3 id="modalTitle">New Zabbix Server</h3>
     <input type="hidden" id="fId">
     <div class="field">
-      <label>Görünen Ad</label>
-      <input id="fName" placeholder="Örn: Ankara DC Zabbix" autocomplete="off">
+      <label>Display Name</label>
+      <input id="fName" placeholder="e.g. Main DC Zabbix" autocomplete="off">
     </div>
     <div class="field">
       <label>Zabbix URL</label>
-      <input id="fUrl" placeholder="http://10.0.0.5 veya http://10.0.0.5/api_jsonrpc.php" autocomplete="off">
-      <div class="hint">/api_jsonrpc.php otomatik eklenir — sadece adresi girmeniz yeterli.</div>
+      <input id="fUrl" placeholder="http://10.0.0.5 or http://10.0.0.5/api_jsonrpc.php" autocomplete="off">
+      <div class="hint">/api_jsonrpc.php is appended automatically — just enter the address.</div>
     </div>
     <div class="field">
-      <label>Kullanıcı Adı</label>
-      <input id="fUser" placeholder="Zabbix kullanıcı adı" autocomplete="off">
+      <label>Username</label>
+      <input id="fUser" placeholder="Zabbix username" autocomplete="off">
     </div>
     <div class="field">
-      <label>Şifre</label>
-      <input id="fPass" type="password" placeholder="Zabbix şifresi" autocomplete="new-password">
-      <div class="hint" id="passHint" style="display:none">Boş bırakılırsa mevcut şifre korunur.</div>
+      <label>Password</label>
+      <input id="fPass" type="password" placeholder="Zabbix password" autocomplete="new-password">
+      <div class="hint" id="passHint" style="display:none">Leave blank to keep the current password.</div>
     </div>
     <div class="row">
-      <button class="btn" onclick="closeModal()">İptal</button>
-      <button class="btn primary" id="saveBtn" onclick="saveServer()">Kaydet</button>
+      <button class="btn" onclick="closeModal()">Cancel</button>
+      <button class="btn primary" id="saveBtn" onclick="saveServer()">Save</button>
     </div>
   </div>
 </div>
@@ -231,11 +232,11 @@ function render(){
   const g = document.getElementById('grid');
   if (!SERVERS.length){
     g.innerHTML = `<div class="empty" style="grid-column:1/-1">
-      <h2>Henüz kayıtlı Zabbix yok</h2>
-      <p style="margin-bottom:22px">İlk Zabbix sunucunuzu ekleyerek başlayın.</p>
+      <h2>No Zabbix servers yet</h2>
+      <p style="margin-bottom:22px">Start by adding your first Zabbix server.</p>
       <button class="cta" style="margin:0 auto" onclick="openAdd()">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        Yeni Sunucu Ekle</button></div>`;
+        Add Server</button></div>`;
     return;
   }
   let html = '';
@@ -245,23 +246,23 @@ function render(){
       <div class="shead">
         <span class="stat checking" id="stat-${s.id}"></span>
         <span class="sname">${esc(s.name)}</span>
-        ${isActive ? '<span class="badge">Aktif</span>' : ''}
+        ${isActive ? '<span class="badge">Active</span>' : ''}
       </div>
       <div class="smeta"><b>URL:</b> ${esc(s.baseUrl)}</div>
-      <div class="smeta"><b>Kullanıcı:</b> ${esc(s.username)}</div>
-      <div class="sstatus checking" id="msg-${s.id}">Bağlantı kontrol ediliyor…</div>
+      <div class="smeta"><b>User:</b> ${esc(s.username)}</div>
+      <div class="sstatus checking" id="msg-${s.id}">Checking connection…</div>
       <div class="sactions">
         ${isActive
-          ? '<button class="btn activebadge">✓ Kullanımda</button>'
-          : `<button class="btn primary" onclick="activate(${s.id})">Aktif Yap</button>`}
-        <button class="btn" onclick="openEdit(${s.id})">Düzenle</button>
-        <button class="btn ghost" onclick="delServer(${s.id})">Sil</button>
+          ? '<button class="btn activebadge">✓ In use</button>'
+          : `<button class="btn primary" onclick="activate(${s.id})">Activate</button>`}
+        <button class="btn" onclick="openEdit(${s.id})">Edit</button>
+        <button class="btn ghost" onclick="delServer(${s.id})">Delete</button>
       </div>
     </div>`;
   }
   html += `<div class="addcard" onclick="openAdd()">
       <div class="plus"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
-      <span>Yeni Sunucu Ekle</span></div>`;
+      <span>Add Server</span></div>`;
   g.innerHTML = html;
 }
 
@@ -270,7 +271,7 @@ async function checkStatus(){
   for (const s of SERVERS){
     const st = document.getElementById('stat-'+s.id), msg = document.getElementById('msg-'+s.id);
     if (st){ st.className = 'stat checking'; }
-    if (msg){ msg.className = 'sstatus checking'; msg.textContent = 'Bağlantı kontrol ediliyor…'; }
+    if (msg){ msg.className = 'sstatus checking'; msg.textContent = 'Checking connection…'; }
   }
   try{
     const r = await fetch('/api/servers/check', {method:'POST'});
@@ -281,43 +282,43 @@ async function checkStatus(){
       const info = res[String(s.id)];
       if (!st || !msg) continue;
       if (info && info.ok){
-        st.className = 'stat ok'; msg.className = 'sstatus ok'; msg.textContent = '● Erişilebilir — bağlantı ve kimlik doğrulama başarılı';
+        st.className = 'stat ok'; msg.className = 'sstatus ok'; msg.textContent = '● Reachable — connection and authentication succeeded';
       } else {
         st.className = 'stat bad'; msg.className = 'sstatus bad';
-        msg.textContent = '● Erişilemiyor' + (info && info.error ? ' — ' + info.error : '');
+        msg.textContent = I18N.t('● Unreachable') + (info && info.error ? ' — ' + I18N.msg(info.error) : '');
       }
     }
   } catch(e){
     for (const s of SERVERS){
       const st = document.getElementById('stat-'+s.id), msg = document.getElementById('msg-'+s.id);
       if (st) st.className = 'stat bad';
-      if (msg){ msg.className = 'sstatus bad'; msg.textContent = '● Kontrol başarısız'; }
+      if (msg){ msg.className = 'sstatus bad'; msg.textContent = '● Check failed'; }
     }
   }
 }
 
 // ── Modal ──
 function openAdd(){
-  document.getElementById('modalTitle').textContent = 'Yeni Zabbix Sunucusu';
+  document.getElementById('modalTitle').textContent = 'New Zabbix Server';
   document.getElementById('fId').value = '';
   document.getElementById('fName').value = '';
   document.getElementById('fUrl').value = '';
   document.getElementById('fUser').value = '';
   document.getElementById('fPass').value = '';
-  document.getElementById('fPass').placeholder = 'Zabbix şifresi';
+  document.getElementById('fPass').placeholder = 'Zabbix password';
   document.getElementById('passHint').style.display = 'none';
   document.getElementById('modal').classList.add('show');
   document.getElementById('fName').focus();
 }
 function openEdit(id){
   const s = SERVERS.find(x => x.id === id); if (!s) return;
-  document.getElementById('modalTitle').textContent = 'Sunucuyu Düzenle';
+  document.getElementById('modalTitle').textContent = 'Edit Server';
   document.getElementById('fId').value = s.id;
   document.getElementById('fName').value = s.name;
   document.getElementById('fUrl').value = s.baseUrl;
   document.getElementById('fUser').value = s.username;
   document.getElementById('fPass').value = '';
-  document.getElementById('fPass').placeholder = '(değiştirmek için yeni şifre girin)';
+  document.getElementById('fPass').placeholder = '(enter a new password to change it)';
   document.getElementById('passHint').style.display = 'block';
   document.getElementById('modal').classList.add('show');
   document.getElementById('fName').focus();
@@ -333,16 +334,16 @@ async function saveServer(){
     password: document.getElementById('fPass').value
   };
   if (!payload.name || !payload.url || !payload.username){
-    toast('Ad, URL ve kullanıcı adı zorunlu.', true); return;
+    toast('Name, URL and username are required.', true); return;
   }
   const btn = document.getElementById('saveBtn'); btn.disabled = true;
   const url = id ? `/api/servers/${id}` : '/api/servers';
   try{
     const r = await fetch(url, {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload)});
     const j = await r.json();
-    if (j.success){ closeModal(); toast(id ? 'Sunucu güncellendi' : 'Sunucu eklendi'); await loadServers(); }
-    else toast(j.error || 'Kaydedilemedi', true);
-  } catch(e){ toast('Sunucu kaydedilemedi', true); }
+    if (j.success){ closeModal(); toast(id ? 'Server updated' : 'Server added'); await loadServers(); }
+    else toast(j.error || 'Could not save', true);
+  } catch(e){ toast('Could not save the server', true); }
   finally{ btn.disabled = false; }
 }
 
@@ -350,20 +351,20 @@ async function activate(id){
   try{
     const r = await fetch(`/api/servers/${id}/activate`, {method:'POST'});
     const j = await r.json();
-    if (j.success){ ACTIVE = id; render(); checkStatus(); toast('Aktif Zabbix değiştirildi'); }
-    else toast(j.error || 'Değiştirilemedi', true);
-  } catch(e){ toast('İşlem başarısız', true); }
+    if (j.success){ ACTIVE = id; render(); checkStatus(); toast('Active Zabbix changed'); }
+    else toast(j.error || 'Could not change', true);
+  } catch(e){ toast('Operation failed', true); }
 }
 
 async function delServer(id){
   const s = SERVERS.find(x => x.id === id);
-  if (!confirm(`"${s ? s.name : ''}" sunucusunu silmek istediğinize emin misiniz?`)) return;
+  if (!confirm(I18N.t('Are you sure you want to delete the server "{0}"?', s ? s.name : ''))) return;
   try{
     const r = await fetch(`/api/servers/${id}/delete`, {method:'POST'});
     const j = await r.json();
-    if (j.success){ toast('Sunucu silindi'); await loadServers(); }
-    else toast(j.error || 'Silinemedi', true);
-  } catch(e){ toast('Silme başarısız', true); }
+    if (j.success){ toast('Server deleted'); await loadServers(); }
+    else toast(j.error || 'Could not delete', true);
+  } catch(e){ toast('Delete failed', true); }
 }
 
 document.getElementById('modal').addEventListener('click', e => { if (e.target.id === 'modal') closeModal(); });

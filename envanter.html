@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
 <script src="demo.js"></script>
   <meta charset="UTF-8">
+  <script src="static/i18n.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Envanter — Zabbix Report Studio</title>
+  <title>Inventory — Zabbix Report Studio</title>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -246,28 +247,28 @@
     <div><div style="font-size:14px;font-weight:700;letter-spacing:-.01em;line-height:1.1;color:#f3efe6">Zabbix Report</div><div style="font-size:10.5px;color:#726c5e;letter-spacing:.05em;text-transform:uppercase;margin-top:2px">Studio</div></div>
   </div>
   <nav style="padding:6px 14px;flex:1;overflow-y:auto">
-    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">Genel</div>
-    <a href="index.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>Genel Bakış</a>
-    <a href="servers.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>Zabbix Sunucuları</a>
-    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">Raporlar</div>
-    <a href="alarm-report.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Alarm Raporu</a>
-    <a href="ack.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>ACK Raporu</a>
-    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">Nöbet</div>
-    <a href="nobet.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Nöbet Listesi</a>
-    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">Envanter</div>
-    <a href="tkodu.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>T-Kodu</a>
-    <a href="envanter.html" data-on=1 style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;background:rgba(245,158,11,.14);color:#fbbf24;box-shadow:inset 2px 0 0 #f59e0b;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V3a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v4"/></svg>Envanter</a>
+    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">General</div>
+    <a href="index.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>Overview</a>
+    <a href="servers.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>Zabbix Servers</a>
+    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">Reports</div>
+    <a href="alarm-report.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Alarm Report</a>
+    <a href="ack.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>ACK Report</a>
+    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">On-call</div>
+    <a href="nobet.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>On-call Roster</a>
+    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">Inventory</div>
+    <a href="tkodu.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>T-Code</a>
+    <a href="envanter.html" data-on=1 style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;background:rgba(245,158,11,.14);color:#fbbf24;box-shadow:inset 2px 0 0 #f59e0b;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V3a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v4"/></svg>Inventory</a>
     <a href="cache.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>Cache</a>
     
-    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">Yönetim</div>
-    <a href="users.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Kullanıcılar</a>
+    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">Management</div>
+    <a href="users.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Users</a>
     
   </nav>
   <div style="padding:14px;border-top:1px solid rgba(240,230,200,.1)">
     <div style="display:flex;align-items:center;gap:11px;padding:8px 10px;border-radius:10px;background:#1b1810;border:1px solid rgba(240,230,200,.1)">
       <div style="width:34px;height:34px;border-radius:9px;background:linear-gradient(150deg,#f59e0b,#d97d06);display:flex;align-items:center;justify-content:center;color:#2a1e05;font-weight:700;font-size:13px;flex-shrink:0">A</div>
       <div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#f3efe6">admin</div><div style="font-size:10.5px;color:#726c5e">Admin</div></div>
-      <a href="login.html" title="Çıkış" style="color:#726c5e;padding:6px;border-radius:7px;display:flex;text-decoration:none" onmouseover="this.style.color='#fb7a3c';this.style.background='rgba(251,122,60,.12)'" onmouseout="this.style.color='#726c5e';this.style.background='transparent'"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></a>
+      <a href="login.html" title="Sign out" style="color:#726c5e;padding:6px;border-radius:7px;display:flex;text-decoration:none" onmouseover="this.style.color='#fb7a3c';this.style.background='rgba(251,122,60,.12)'" onmouseout="this.style.color='#726c5e';this.style.background='transparent'"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></a>
     </div>
   </div>
 </aside>
@@ -277,7 +278,7 @@
 <header class="app-header">
   <div class="logo">
     <div class="logo-icon">📦</div>
-    <span class="logo-text">Envanter</span>
+    <span class="logo-text">Inventory</span>
   </div>
   <div class="header-right">
     <a href="index.html" class="btn btn-outline">
@@ -290,14 +291,14 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15">
         <polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
       </svg>
-      Yenile
+      Refresh
     </button>
     <button id="downloadBtn" class="btn btn-success" disabled>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15">
         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
         <polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
       </svg>
-      Excel İndir
+      Download Excel
     </button>
   </div>
 </header>
@@ -305,21 +306,21 @@
 <div class="main">
 
   <div class="hero">
-    <h1>Altyapı Envanteri</h1>
-    <p>SAN SW, Servers, Storage ve Tape kategorilerindeki cihazların Zabbix üzerinden çekilen serial number bilgileri.</p>
+    <h1>Infrastructure Inventory</h1>
+    <p>Serial numbers of the devices in the SAN SW, Servers, Storage and Tape categories, pulled from Zabbix.</p>
   </div>
 
   <div class="action-bar">
     <div class="action-bar-left">
-      <span id="lastUpdate" class="last-update hidden">Son güncelleme: <span id="lastUpdateTime"></span></span>
-      <span id="totalBadge" class="last-update hidden">Toplam: <span id="totalCount" style="color:var(--accent-primary);font-weight:600;"></span> cihaz</span>
+      <span id="lastUpdate" class="last-update hidden">Last update: <span id="lastUpdateTime"></span></span>
+      <span id="totalBadge" class="last-update hidden">Total: <span id="totalCount" style="color:var(--accent-primary);font-weight:600;"></span> devices</span>
     </div>
     <div class="action-bar-right">
       <div class="search-input-wrap">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
         </svg>
-        <input type="text" id="globalSearch" placeholder="Lokasyon, hostname, IP ara...">
+        <input type="text" id="globalSearch" placeholder="Search location, hostname, IP...">
       </div>
     </div>
   </div>
@@ -327,7 +328,7 @@
   <!-- STATS -->
   <div class="stats" id="statsRow" style="display:none;">
     <div class="stat-card total">
-      <div class="stat-label">Toplam Cihaz</div>
+      <div class="stat-label">Total Devices</div>
       <div class="stat-value" id="statTotal">0</div>
       <div class="stat-sub" id="statTotalSub"></div>
     </div>
@@ -385,12 +386,12 @@
         <table>
           <thead>
             <tr>
-              <th>Lokasyon</th>
+              <th>Location</th>
               <th>Serial / Model</th>
-              <th>Ad</th>
+              <th>Name</th>
               <th>Hostname</th>
-              <th>IP Adresi</th>
-              <th>Durum</th>
+              <th>IP Address</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody id="tableBody"></tbody>
@@ -405,7 +406,7 @@
           <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
           <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
         </svg>
-        Eksik Kategoriler
+        Missing Categories
         <svg id="eksikChevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" style="margin-left:auto;transition:0.3s;"><polyline points="6 9 12 15 18 9"/></svg>
       </div>
       <div class="eksik-body" id="eksikBody">
@@ -420,8 +421,8 @@
   <!-- EMPTY STATE -->
   <div id="emptyState" style="text-align:center;padding:5rem 2rem;color:var(--text-muted);">
     <div style="font-size:4rem;margin-bottom:1rem;opacity:0.4;">📦</div>
-    <p style="font-size:1rem;margin-bottom:0.5rem;color:var(--text-secondary);">Veri yükleniyor…</p>
-    <p style="font-size:0.85rem;">Zabbix'ten envanter verisi çekiliyor. Sorun olursa "Yenile" ile tekrar deneyin.</p>
+    <p style="font-size:1rem;margin-bottom:0.5rem;color:var(--text-secondary);">Loading data…</p>
+    <p style="font-size:0.85rem;">Fetching inventory data from Zabbix. If something goes wrong, try "Refresh".</p>
   </div>
 
 </div>
@@ -430,7 +431,7 @@
 <div id="loadingOverlay" class="loading-overlay hidden">
   <div class="loading-box">
     <div class="spinner"></div>
-    <p id="loadingText">Zabbix'ten veri çekiliyor...</p>
+    <p id="loadingText">Fetching data from Zabbix...</p>
   </div>
 </div>
 
@@ -479,7 +480,7 @@ function buildTabs() {
 }
 
 async function generateReport() {
-  showLoading('Zabbix\'ten veri çekiliyor...');
+  showLoading('Fetching data from Zabbix...');
   document.getElementById('generateBtn').disabled = true;
   try {
     const res = await fetch('/api/generate', { method:'POST', headers:{'Content-Type':'application/json'} });
@@ -495,10 +496,10 @@ async function generateReport() {
 
     // Set the title and description based on the mode
     document.querySelector('.hero h1').textContent =
-      mode === 'all' ? 'Cihaz Envanteri' : 'Altyapı Envanteri';
+      mode === 'all' ? 'Device Inventory' : 'Infrastructure Inventory';
     document.querySelector('.hero p').textContent = mode === 'all'
-      ? 'Bu Zabbix sunucusundaki tüm host’ların çekilebilen serial number bilgileri.'
-      : 'SAN SW, Servers, Storage ve Tape kategorilerindeki cihazların Zabbix üzerinden çekilen serial number bilgileri.';
+      ? 'Serial numbers of every host on this Zabbix server, where available.'
+      : 'Serial numbers of the devices in the SAN SW, Servers, Storage and Tape categories, pulled from Zabbix.';
 
     buildTabs();
 
@@ -506,9 +507,9 @@ async function generateReport() {
     document.getElementById('dataSection').style.display = '';
     document.getElementById('emptyState').style.display = 'none';
 
-    const total = summary.TOPLAM || 0;
+    const total = summary.TOTAL || 0;
     document.getElementById('statTotal').textContent = total;
-    document.getElementById('statTotalSub').textContent = 'toplam kayıtlı cihaz';
+    document.getElementById('statTotalSub').textContent = 'devices registered in total';
 
     // Per-category stat cards only make sense in category mode; hide them in generic mode.
     document.querySelectorAll('.stat-card').forEach(c => {
@@ -522,7 +523,7 @@ async function generateReport() {
         const statEl  = document.getElementById('stat' + id);
         const statSub = document.getElementById('stat' + id + 'Sub');
         if (statEl)  statEl.textContent  = s.total || 0;
-        if (statSub) statSub.textContent = `${s.enabled||0} aktif, ${s.disabled||0} pasif`;
+        if (statSub) statSub.textContent = I18N.t('{0} active, {1} inactive', s.enabled||0, s.disabled||0);
       });
     }
 
@@ -543,9 +544,9 @@ async function generateReport() {
     renderEksik();
 
     document.getElementById('downloadBtn').disabled = false;
-    showToast(`${total} cihaz yüklendi`, 'success');
+    showToast(I18N.t('{0} devices loaded', total), 'success');
   } catch(e) {
-    showToast('Hata: ' + e.message, 'error');
+    showToast('Error: ' + e.message, 'error');
   } finally {
     hideLoading();
     document.getElementById('generateBtn').disabled = false;
@@ -570,7 +571,7 @@ function renderTable(cat) {
   const serialLabel = isTape ? 'Device Model' : 'Serial Number';
 
   if (!rows.length) {
-    document.getElementById('tableBody').innerHTML = `<tr><td colspan="6" class="no-data">Bu kategori için kayıt bulunamadı</td></tr>`;
+    document.getElementById('tableBody').innerHTML = `<tr><td colspan="6" class="no-data">No records for this category</td></tr>`;
     return;
   }
 
@@ -598,7 +599,7 @@ function renderEksik() {
 
   const cats = ['SAN SW','Servers','Storage','Tape'];
   document.getElementById('eksikHead').innerHTML = `<tr>
-    <th style="padding:0.75rem 1rem;font-size:0.75rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;border-bottom:1px solid rgba(239,68,68,0.15);">Lokasyon</th>
+    <th style="padding:0.75rem 1rem;font-size:0.75rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;border-bottom:1px solid rgba(239,68,68,0.15);">Location</th>
     ${cats.map(c=>`<th style="padding:0.75rem 1rem;font-size:0.75rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;border-bottom:1px solid rgba(239,68,68,0.15);text-align:center;">${c}</th>`).join('')}
   </tr>`;
 
@@ -608,8 +609,8 @@ function renderEksik() {
     return `<tr>
       <td style="padding:0.6rem 1rem;font-size:0.82rem;color:var(--text-secondary);border-bottom:1px solid rgba(255,255,255,0.04);">${esc(loc)}</td>
       ${cats.map(c => missing.includes(c)
-        ? `<td class="eksik-cell-no" style="padding:0.6rem 1rem;border-bottom:1px solid rgba(255,255,255,0.04);">YOK</td>`
-        : `<td class="eksik-cell-ok" style="padding:0.6rem 1rem;border-bottom:1px solid rgba(255,255,255,0.04);">VAR</td>`
+        ? `<td class="eksik-cell-no" style="padding:0.6rem 1rem;border-bottom:1px solid rgba(255,255,255,0.04);">MISSING</td>`
+        : `<td class="eksik-cell-ok" style="padding:0.6rem 1rem;border-bottom:1px solid rgba(255,255,255,0.04);">PRESENT</td>`
       ).join('')}
     </tr>`;
   }).filter(Boolean).join('');
@@ -625,27 +626,27 @@ function toggleEksik() {
 
 async function downloadExcel() {
   document.getElementById('downloadBtn').disabled = true;
-  showLoading('Excel dosyası oluşturuluyor...');
+  showLoading('Building the Excel file...');
   try {
     const res = await fetch('/api/download', { method:'POST', headers:{'Content-Type':'application/json'} });
-    if (!res.ok) throw new Error('İndirme başarısız');
+    if (!res.ok) throw new Error('Download failed');
     const blob = await res.blob();
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `Envanter_${new Date().toISOString().slice(0,10)}.xlsx`;
+    a.download = `Inventory_${new Date().toISOString().slice(0,10)}.xlsx`;
     a.click();
     URL.revokeObjectURL(url);
-    showToast('Excel indirildi', 'success');
+    showToast('Excel downloaded', 'success');
   } catch(e) {
-    showToast('İndirme hatası: ' + e.message, 'error');
+    showToast('Download error: ' + e.message, 'error');
   } finally {
     hideLoading();
     document.getElementById('downloadBtn').disabled = false;
   }
 }
 
-function showLoading(text='Yükleniyor...') {
+function showLoading(text='Loading...') {
   document.getElementById('loadingText').textContent = text;
   document.getElementById('loadingOverlay').classList.remove('hidden');
 }
