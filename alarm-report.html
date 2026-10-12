@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+<script src="demo.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zabbix Rapor</title>
+    <link rel="stylesheet" href="static/alarm/styles.css">
+    <link rel="stylesheet" href="static/alarm/report-styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://unpkg.com/jspdf@2.5.2/dist/jspdf.umd.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="static/favicon.svg">
+</head>
+
+<body>
+
+
+
+<style>
+  body{padding-left:248px !important}
+  @media(max-width:860px){body{padding-left:0 !important}#zrsSidebar{display:none !important}}
+  #zrsSidebar::-webkit-scrollbar{width:8px}
+  #zrsSidebar::-webkit-scrollbar-thumb{background:rgba(240,230,200,.16);border-radius:6px}
+</style>
+
+<aside id="zrsSidebar" style="position:fixed;left:0;top:0;width:248px;height:100vh;background:#14110b;border-right:1px solid rgba(240,230,200,.1);display:flex;flex-direction:column;z-index:500;font-family:'IBM Plex Sans',system-ui,sans-serif">
+  <div style="display:flex;align-items:center;gap:11px;padding:22px 22px 20px">
+    <div style="width:38px;height:38px;border-radius:11px;background:linear-gradient(150deg,#2a2410,#1f1b0c);border:1px solid rgba(245,158,11,.3);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h3l2.5-7 5 14 2.5-7H21"/></svg></div>
+    <div><div style="font-size:14px;font-weight:700;letter-spacing:-.01em;line-height:1.1;color:#f3efe6">Zabbix Report</div><div style="font-size:10.5px;color:#726c5e;letter-spacing:.05em;text-transform:uppercase;margin-top:2px">Studio</div></div>
+  </div>
+  <nav style="padding:6px 14px;flex:1;overflow-y:auto">
+    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">Genel</div>
+    <a href="index.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>Genel Bakış</a>
+    <a href="servers.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>Zabbix Sunucuları</a>
+    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">Raporlar</div>
+    <a href="alarm-report.html" data-on=1 style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;background:rgba(245,158,11,.14);color:#fbbf24;box-shadow:inset 2px 0 0 #f59e0b;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Alarm Raporu</a>
+    <a href="ack.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>ACK Raporu</a>
+    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">Nöbet</div>
+    <a href="nobet.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Nöbet Listesi</a>
+    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">Envanter</div>
+    <a href="tkodu.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>T-Kodu</a>
+    <a href="envanter.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V3a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v4"/></svg>Envanter</a>
+    <a href="cache.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>Cache</a>
+    
+    <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">Yönetim</div>
+    <a href="users.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Kullanıcılar</a>
+    
+  </nav>
+  <div style="padding:14px;border-top:1px solid rgba(240,230,200,.1)">
+    <div style="display:flex;align-items:center;gap:11px;padding:8px 10px;border-radius:10px;background:#1b1810;border:1px solid rgba(240,230,200,.1)">
+      <div style="width:34px;height:34px;border-radius:9px;background:linear-gradient(150deg,#f59e0b,#d97d06);display:flex;align-items:center;justify-content:center;color:#2a1e05;font-weight:700;font-size:13px;flex-shrink:0">A</div>
+      <div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#f3efe6">admin</div><div style="font-size:10.5px;color:#726c5e">Admin</div></div>
+      <a href="login.html" title="Çıkış" style="color:#726c5e;padding:6px;border-radius:7px;display:flex;text-decoration:none" onmouseover="this.style.color='#fb7a3c';this.style.background='rgba(251,122,60,.12)'" onmouseout="this.style.color='#726c5e';this.style.background='transparent'"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></a>
+    </div>
+  </div>
+</aside>
+
+    <!-- Toast -->
+    <div id="toast" class="toast hidden"></div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay hidden">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <span id="loadingText">Yükleniyor...</span>
+            <div id="progressContainer" class="progress-container" style="display:none;">
+                <div class="progress-bar-track">
+                    <div class="progress-bar-fill" id="progressBarFill" style="width:0%"></div>
+                </div>
+                <span class="progress-text" id="progressText">%0</span>
+                <span class="progress-detail" id="progressDetail"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="app-header">
+        <div class="header-left">
+            <div class="logo">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                    <polyline points="14 2 14 8 20 8" />
+                    <line x1="16" y1="13" x2="8" y2="13" />
+                    <line x1="16" y1="17" x2="8" y2="17" />
+                </svg>
+                <span>Zabbix Rapor</span>
+            </div>
+        </div>
+        <div class="header-right">
+            <span class="header-url" id="reportConnectedUrl"></span>
+            <a href="index.html" class="btn-back-dashboard" id="backToDashboard">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                    <polyline points="9 22 9 12 15 12 15 22" />
+                </svg>
+                <span>Dashboard'a Dön</span>
+                <svg class="btn-back-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    width="14" height="14">
+                    <path d="M19 12H5M12 19l-7-7 7-7" />
+                </svg>
+            </a>
+            <button class="btn btn-primary" id="exportReportBtn" style="display:none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="7 10 12 15 17 10" />
+                    <line x1="12" y1="15" x2="12" y2="3" />
+                </svg>
+                Excel'e Aktar
+            </button>
+            <button class="btn btn-primary" id="exportPdfBtn" style="display:none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                    <polyline points="14 2 14 8 20 8" />
+                    <line x1="16" y1="13" x2="8" y2="13" />
+                    <line x1="16" y1="17" x2="8" y2="17" />
+                </svg>
+                PDF Oluştur
+            </button>
+            <button class="btn btn-outline btn-small" id="reportLogoutBtn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                    <polyline points="16 17 21 12 16 7" />
+                    <line x1="21" y1="12" x2="9" y2="12" />
+                </svg>
+                Çıkış
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="report-main">
+        <!-- Filter Section -->
+        <section class="report-filters-panel">
+            <h2 class="filters-title" id="filtersToggle">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22">
+                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
+                </svg>
+                Rapor Filtreleri
+                <svg class="filters-chevron" id="filtersChevron" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2" width="20" height="20">
+                    <polyline points="6 9 12 15 18 9" />
+                </svg>
+            </h2>
+            <div class="filters-body" id="filtersBody">
+
+                <div class="filters-grid">
+                    <!-- Date Range -->
+                    <div class="filter-card">
+                        <h3>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"
+                                height="18">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                                <line x1="16" y1="2" x2="16" y2="6" />
+                                <line x1="8" y1="2" x2="8" y2="6" />
+                                <line x1="3" y1="10" x2="21" y2="10" />
+                            </svg>
+                            Tarih Aralığı
+                        </h3>
+                        <div class="filter-row">
+                            <div class="date-input-group">
+                                <label for="reportStartDate">Başlangıç</label>
+                                <input type="text" id="reportStartDate" placeholder="Tarih seçin...">
+                            </div>
+                            <span class="date-separator">→</span>
+                            <div class="date-input-group">
+                                <label for="reportEndDate">Bitiş</label>
+                                <input type="text" id="reportEndDate" placeholder="Tarih seçin...">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Host Groups -->
+                    <div class="filter-card filter-card-hostgroups">
+                        <h3>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"
+                                height="18">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                                <circle cx="9" cy="7" r="4" />
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                            </svg>
+                            Host Grupları
+                            <span class="selected-count" id="selectedGroupCount">0 seçili</span>
+                        </h3>
+                        <div class="host-group-actions" style="display:flex;gap:0.4rem;margin-bottom:0.5rem;flex-wrap:wrap">
+                            <button id="rptSelectAllBtn" onclick="rptSelectAll()" style="padding:0.3rem 0.75rem;font-size:0.75rem;font-weight:600;font-family:inherit;cursor:pointer;border-radius:8px;border:1px solid var(--border-color);background:rgba(245,158,11,0.1);color:#fbbf24;transition:0.15s ease" title="Tüm grupları seç / kaldır">Tümünü Seç</button>
+                            <button id="rptSelectVisibleBtn" onclick="rptSelectVisible()" style="padding:0.3rem 0.75rem;font-size:0.75rem;font-weight:600;font-family:inherit;cursor:pointer;border-radius:8px;border:1px solid var(--border-color);background:rgba(245,158,11,0.1);color:#fbbf24;transition:0.15s ease" title="Arama sonucundaki grupları seç">Görünenleri Seç</button>
+                            <button onclick="rptClearSel()" style="padding:0.3rem 0.75rem;font-size:0.75rem;font-weight:600;font-family:inherit;cursor:pointer;border-radius:8px;border:1px solid rgba(239,68,68,0.3);background:rgba(239,68,68,0.08);color:#fca5a5;transition:0.15s ease" title="Seçimi temizle">Temizle</button>
+                        </div>
+                        <div class="host-search-wrapper">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14"
+                                height="14">
+                                <circle cx="11" cy="11" r="8" />
+                                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                            </svg>
+                            <input type="text" id="reportHostSearch" placeholder="Ara... (Shift ile aralık seç)">
+                        </div>
+                        <div class="report-host-groups" id="reportHostGroups">
+                            <div class="empty-state">Yükleniyor...</div>
+                        </div>
+                    </div>
+
+                    <!-- Severity Filter -->
+                    <div class="filter-card">
+                        <h3>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"
+                                height="18">
+                                <polygon
+                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                            </svg>
+                            Seviye Filtresi
+                        </h3>
+                        <div class="severity-filter-list" id="reportSeverityFilter">
+                            <label class="severity-check disaster">
+                                <input type="checkbox" value="5" checked> <span>Disaster</span>
+                            </label>
+                            <label class="severity-check high">
+                                <input type="checkbox" value="4" checked> <span>High</span>
+                            </label>
+                            <label class="severity-check average">
+                                <input type="checkbox" value="3" checked> <span>Average</span>
+                            </label>
+                            <label class="severity-check warning">
+                                <input type="checkbox" value="2" checked> <span>Warning</span>
+                            </label>
+                            <label class="severity-check info">
+                                <input type="checkbox" value="1"> <span>Information</span>
+                            </label>
+                            <label class="severity-check notclassified">
+                                <input type="checkbox" value="0"> <span>Not Classified</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sla-option">
+                    <label class="sla-checkbox-label">
+                        <input type="checkbox" id="includeSlaReport">
+                        <span>SLA Availability Raporu Ekle</span>
+                    </label>
+                    <span class="sla-note">⚠ Bu seçenek aktifse rapor oluşturma süresi uzayabilir</span>
+                </div>
+
+                <div class="generate-row" style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+                    <button class="btn btn-primary btn-generate" id="generateReportBtn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                            <polyline points="14 2 14 8 20 8" />
+                            <line x1="16" y1="13" x2="8" y2="13" />
+                            <line x1="16" y1="17" x2="8" y2="17" />
+                        </svg>
+                        Rapor Oluştur
+                    </button>
+                    <button class="btn btn-outline btn-small" id="clearCacheBtn" title="Önbelleği temizle" style="font-size:12px;padding:6px 14px;border-color:#ef4444;color:#ef4444;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+                            <polyline points="3 6 5 6 21 6" />
+                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                        </svg>
+                        Önbelleği Temizle
+                    </button>
+                    <span id="cacheInfoText" style="font-size:12px;color:#888;margin-left:8px;"></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Report Content (hidden until generated) -->
+        <div id="reportContent" class="report-content hidden">
+            <!-- General Statistics -->
+            <section class="report-section">
+                <h2 class="section-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22">
+                        <path d="M21.21 15.89A10 10 0 1 1 8 2.83" />
+                        <path d="M22 12A10 10 0 0 0 12 2v10z" />
+                    </svg>
+                    Genel İstatistik
+                </h2>
+                <div class="stats-grid" id="generalStats"></div>
+            </section>
+
+            <!-- Severity Distribution -->
+            <section class="report-section">
+                <h2 class="section-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22">
+                        <polygon
+                            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                    </svg>
+                    Seviye Bazında Dağılım
+                </h2>
+                <div class="distribution-container">
+                    <div class="table-wrapper">
+                        <table class="report-table severity-table" id="severityTable">
+                            <thead>
+                                <tr>
+                                    <th>Seviye</th>
+                                    <th>Alarm Sayısı</th>
+                                    <th>Oran (%)</th>
+                                    <th>Host Sayısı</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="severityChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Mesai Distribution -->
+            <section class="report-section">
+                <h2 class="section-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22">
+                        <circle cx="12" cy="12" r="10" />
+                        <polyline points="12 6 12 12 16 14" />
+                    </svg>
+                    Mesai Saati Bazında Dağılım
+                </h2>
+                <p class="section-note">* Mesai saatleri tüm günler için 08:00 - 18:00 arası olarak hesaplanmıştır</p>
+                <div class="distribution-container">
+                    <div class="table-wrapper">
+                        <table class="report-table mesai-table" id="mesaiTable">
+                            <thead>
+                                <tr>
+                                    <th>Durum</th>
+                                    <th>Alarm Sayısı</th>
+                                    <th>Oran (%)</th>
+                                    <th>Açıklama</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="mesaiChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Host-Problem Combinations -->
+            <section class="report-section">
+                <h2 class="section-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                        <line x1="3" y1="9" x2="21" y2="9" />
+                        <line x1="9" y1="21" x2="9" y2="9" />
+                    </svg>
+                    Host-Problem Kombinasyonları (TOP 10)
+                    <button class="btn-excluded-toggle" id="showExcludedBtn" style="display:none;"
+                        title="Çıkarılanları Göster">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16"
+                            height="16">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                            <circle cx="12" cy="12" r="3" />
+                        </svg>
+                        Çıkarılanlar (<span id="excludedCount">0</span>)
+                    </button>
+                </h2>
+                <div class="distribution-container" id="hostProblemDistribution">
+                    <div class="table-wrapper">
+                        <table class="report-table hostproblem-table" id="hostProblemTable">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Host</th>
+                                    <th>Problem</th>
+                                    <th>Tekrar</th>
+                                    <th>İşlem</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div class="chart-wrapper" id="hostProblemChartWrapper">
+                        <button class="chart-expand-btn" id="chartExpandBtn" title="Büyüt">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16"
+                                height="16" class="icon-expand">
+                                <polyline points="15 3 21 3 21 9" />
+                                <line x1="21" y1="3" x2="14" y2="10" />
+                                <polyline points="9 21 3 21 3 15" />
+                                <line x1="3" y1="21" x2="10" y2="14" />
+                            </svg>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16"
+                                height="16" class="icon-collapse" style="display:none;">
+                                <polyline points="4 14 10 14 10 20" />
+                                <line x1="14" y1="10" x2="21" y2="3" />
+                                <polyline points="20 10 14 10 14 4" />
+                                <line x1="10" y1="14" x2="3" y2="21" />
+                            </svg>
+                        </button>
+                        <canvas id="hostProblemChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Top 10 Most Alarmed Devices -->
+            <section class="report-section">
+                <h2 class="section-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22">
+                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+                        <line x1="8" y1="21" x2="16" y2="21" />
+                        <line x1="12" y1="17" x2="12" y2="21" />
+                    </svg>
+                    En Çok Alarm Gelen Cihazlar (TOP 10)
+                    <button class="btn-excluded-toggle" id="showExcludedDevicesBtn" style="display:none;"
+                        title="Çıkarılanları Göster">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16"
+                            height="16">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                            <circle cx="12" cy="12" r="3" />
+                        </svg>
+                        Çıkarılanlar (<span id="excludedDevicesCount">0</span>)
+                    </button>
+                </h2>
+                <div class="distribution-container" id="topDevicesDistribution">
+                    <div class="table-wrapper">
+                        <table class="report-table hostproblem-table" id="topDevicesTable">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Host</th>
+                                    <th>Alarm Sayısı</th>
+                                    <th>İşlem</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div class="chart-wrapper" id="topDevicesChartWrapper">
+                        <button class="chart-expand-btn" id="chartExpandDevicesBtn" title="Büyüt">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16"
+                                height="16" class="icon-expand">
+                                <polyline points="15 3 21 3 21 9" />
+                                <line x1="21" y1="3" x2="14" y2="10" />
+                                <polyline points="9 21 3 21 3 15" />
+                                <line x1="3" y1="21" x2="10" y2="14" />
+                            </svg>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16"
+                                height="16" class="icon-collapse" style="display:none;">
+                                <polyline points="4 14 10 14 10 20" />
+                                <line x1="14" y1="10" x2="21" y2="3" />
+                                <polyline points="20 10 14 10 14 4" />
+                                <line x1="10" y1="14" x2="3" y2="21" />
+                            </svg>
+                        </button>
+                        <canvas id="topDevicesChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Excluded Devices Popup -->
+            <div id="excludedDevicesPopup" class="popup-overlay hidden">
+                <div class="popup-content">
+                    <div class="popup-header">
+                        <h3>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20"
+                                height="20">
+                                <path d="M12 20h9" />
+                                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+                            </svg>
+                            Çıkarılan Cihazlar
+                        </h3>
+                        <button class="popup-close" id="closeExcludedDevicesPopup">&times;</button>
+                    </div>
+                    <p class="popup-desc">Aşağıdaki cihazlar TOP 10 listesinden çıkarılmıştır. Tekrar eklemek için
+                        "Geri Ekle" butonuna basın.</p>
+                    <div class="popup-body" id="excludedDevicesList"></div>
+                    <div class="popup-footer">
+                        <button class="btn btn-outline btn-small" id="reAddAllDevicesBtn">Tümünü Geri Ekle</button>
+                        <button class="btn btn-primary btn-small" id="closeExcludedDevicesPopupBottom">Kapat</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Excluded Combinations Popup -->
+            <div id="excludedPopup" class="popup-overlay hidden">
+                <div class="popup-content">
+                    <div class="popup-header">
+                        <h3>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20"
+                                height="20">
+                                <path d="M12 20h9" />
+                                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+                            </svg>
+                            Çıkarılan Kombinasyonlar
+                        </h3>
+                        <button class="popup-close" id="closeExcludedPopup">&times;</button>
+                    </div>
+                    <p class="popup-desc">Aşağıdaki kombinasyonlar TOP 10 listesinden çıkarılmıştır. Tekrar eklemek için
+                        "Geri Ekle" butonuna basın.</p>
+                    <div class="popup-body" id="excludedList"></div>
+                    <div class="popup-footer">
+                        <button class="btn btn-outline btn-small" id="reAddAllBtn">Tümünü Geri Ekle</button>
+                        <button class="btn btn-primary btn-small" id="closeExcludedPopupBottom">Kapat</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLA Availability Report -->
+            <section class="report-section" id="slaSection" style="display:none;">
+                <h2 class="section-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                        <polyline points="22 4 12 14.01 9 11.01" />
+                    </svg>
+                    SLA Availability Raporu
+                    <span class="alarm-count-badge" id="slaCount">0</span>
+                    <button class="btn btn-outline btn-small" id="hideZeroSli" style="margin-left:auto;">%0 Olanları
+                        Gizle</button>
+                </h2>
+                <div class="table-wrapper">
+                    <table class="report-table sla-table" id="slaTable">
+                        <thead>
+                            <tr>
+                                <th>SLA Adı</th>
+                                <th>SLO (%)</th>
+                                <th>SLI (%)</th>
+                                <th>Uptime</th>
+                                <th>Downtime</th>
+                                <th>Durum</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div class="sla-empty-state hidden" id="slaEmptyState">
+                    <p>SLA tanımı bulunamadı veya seçilen tarih aralığında veri yok.</p>
+                </div>
+            </section>
+
+            <!-- Detailed Alarm List -->
+            <section class="report-section">
+                <h2 class="section-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                        <polyline points="14 2 14 8 20 8" />
+                        <line x1="16" y1="13" x2="8" y2="13" />
+                        <line x1="16" y1="17" x2="8" y2="17" />
+                    </svg>
+                    Detaylı Alarm Listesi
+                    <span class="alarm-count-badge" id="detailAlarmCount">0</span>
+                </h2>
+                <!-- Detail Table Filters -->
+                <div class="detail-filters" id="detailFilters">
+                    <div class="detail-filter-group">
+                        <button class="detail-filter-btn" id="filterSeverityBtn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14"
+                                height="14">
+                                <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
+                            </svg>
+                            Seviye <span class="filter-count" id="filterSeverityCount"></span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12"
+                                height="12" class="chevron">
+                                <polyline points="6 9 12 15 18 9" />
+                            </svg>
+                        </button>
+                        <div class="detail-filter-dropdown hidden" id="filterSeverityDropdown">
+                            <div class="dropdown-items" id="filterSeverityItems"></div>
+                        </div>
+                    </div>
+                    <div class="detail-filter-group">
+                        <button class="detail-filter-btn" id="filterHostBtn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14"
+                                height="14">
+                                <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
+                            </svg>
+                            Host <span class="filter-count" id="filterHostCount"></span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12"
+                                height="12" class="chevron">
+                                <polyline points="6 9 12 15 18 9" />
+                            </svg>
+                        </button>
+                        <div class="detail-filter-dropdown hidden" id="filterHostDropdown">
+                            <div class="dropdown-search">
+                                <input type="text" placeholder="Host ara..." id="filterHostSearch">
+                            </div>
+                            <div class="dropdown-items" id="filterHostItems"></div>
+                        </div>
+                    </div>
+                    <div class="detail-filter-group">
+                        <button class="detail-filter-btn" id="filterMesaiBtn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14"
+                                height="14">
+                                <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
+                            </svg>
+                            Mesai <span class="filter-count" id="filterMesaiCount"></span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12"
+                                height="12" class="chevron">
+                                <polyline points="6 9 12 15 18 9" />
+                            </svg>
+                        </button>
+                        <div class="detail-filter-dropdown hidden" id="filterMesaiDropdown">
+                            <div class="dropdown-items" id="filterMesaiItems"></div>
+                        </div>
+                    </div>
+                    <div class="detail-filter-group">
+                        <button class="detail-filter-btn" id="filterCategoryBtn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14"
+                                height="14">
+                                <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
+                            </svg>
+                            Kategori <span class="filter-count" id="filterCategoryCount"></span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12"
+                                height="12" class="chevron">
+                                <polyline points="6 9 12 15 18 9" />
+                            </svg>
+                        </button>
+                        <div class="detail-filter-dropdown hidden" id="filterCategoryDropdown">
+                            <div class="dropdown-items" id="filterCategoryItems"></div>
+                        </div>
+                    </div>
+                    <div class="detail-filter-search">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14"
+                            height="14">
+                            <circle cx="11" cy="11" r="8" />
+                            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                        </svg>
+                        <input type="text" placeholder="Problem ara... (ör: power, disk, agent)"
+                            id="problemSearchInput">
+                    </div>
+                    <div class="active-filters" id="activeFilters"></div>
+                    <button class="btn-clear-filters hidden" id="clearAllFilters">Tüm Filtreleri Temizle</button>
+                </div>
+                <div class="table-wrapper detail-table-wrapper">
+                    <table class="report-table detail-table" id="detailTable">
+                        <thead>
+                            <tr>
+                                <th>Seviye</th>
+                                <th>Tarih / Saat</th>
+                                <th>Host</th>
+                                <th>Problem</th>
+                                <th>Durum</th>
+                                <th>Süre</th>
+                                <th>Mesai Durumu</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="static/alarm/report.js"></script>
+</body>
+
+</html>
