@@ -221,13 +221,12 @@
   }
 
   const tkoduRnd = mulberry32(77);
-  const TKODU = Array.from({ length: 18 }, (_, i) => {
+  const TKODU = Array.from({ length: 40 }, (_, i) => {
     const host = HOSTS[rint(tkoduRnd, 0, HOSTS.length - 1)];
     const prob = weighted(tkoduRnd, PROBLEMS.filter(p => p.k.includes(host.kind)), p => p.w);
     return {
       triggerid: String(23100 + i * 11),
-      // every third trigger carries no code, so the search visibly filters
-      description: (i % 3 === 2 ? '' : '[T-Code T' + (1004 + i * 7) + '] ') + prob.n.replace('{p}', rint(tkoduRnd, 1, 24)),
+      description: prob.n.replace('{p}', rint(tkoduRnd, 1, 24)),
       status: tkoduRnd() < 0.83 ? 'Enabled' : 'Disabled',
       priority: prob.s,
       hosts: [{ name: host.name, status: host.enabled ? 'Enabled' : 'Disabled' }]
@@ -468,7 +467,7 @@
 
     ['POST', /^\/api\/tkodu$/, b => {
       const code = (b.code || '').trim().toLowerCase();
-      if (!code) return [400, { success: false, error: 'The search code cannot be empty.' }];
+      if (!code) return [400, { success: false, error: 'The search text cannot be empty.' }];
       const data = TKODU.filter(t => t.description.toLowerCase().includes(code));
       return { success: true, data, total: data.length };
     }],
@@ -575,7 +574,7 @@
         () => document.getElementById('generateReportBtn').click());
     }
     if (typeof window.fetchTkodu === 'function') {
-      document.getElementById('codeInput').value = 'T-Code';
+      document.getElementById('codeInput').value = 'link';
       window.fetchTkodu();
     }
     if (document.getElementById('coverageGrid') && typeof window.loadData === 'function') window.loadData(1);
