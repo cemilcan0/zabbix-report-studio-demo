@@ -435,7 +435,7 @@ function renderPagination(cur, total) {
 }
 
 async function clearCache() {
-  if (!confirm('The ENTIRE cache will be deleted!\nAre you sure?')) return;
+  if (!confirm('The cache of the active server will be deleted!\nAre you sure?')) return;
   const res = await fetch('/alarm/api/cache-clear',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'});
   const data = await res.json();
   if (data.success) { alert('Cache cleared.'); loadData(1); }

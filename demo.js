@@ -77,10 +77,10 @@
     { n: 'Fibre Channel port 0/{p}: Link down',             s: '4', k: ['stor'],                     w: 2,   d: [300, 10800] }
   ];
 
-  // Same rule as the backend: weekdays 08:00–18:00 local time.
+  // Same rule as mesai_for() in app.py; the hours are a setting (state.hours).
   function mesaiOf(clock) {
-    const d = new Date(clock * 1000), wd = d.getDay();
-    return (wd >= 1 && wd <= 5 && d.getHours() >= 8 && d.getHours() < 18) ? 'Mesai İçi' : 'Mesai Dışı';
+    const d = new Date(clock * 1000), h = state.hours;
+    return (h.days.includes((d.getDay() + 6) % 7) && d.getHours() >= h.start && d.getHours() < h.end) ? 'Mesai İçi' : 'Mesai Dışı';
   }
 
   // ── Sample alarms: last 60 days ──────────────────────────
@@ -96,7 +96,7 @@
       clock, r_clock: resolved ? clock + duration : 0,
       severity: prob.s, name: prob.n.replace('{p}', rint(rnd, 1, 24)),
       host: host.name, groupId: host.groupId,
-      resolved, duration: resolved ? duration : 0, mesai: mesaiOf(clock)
+      resolved, duration: resolved ? duration : 0
     });
   }
   EVENTS.sort((a, b) => a.clock - b.clock);
@@ -109,7 +109,7 @@
   // Public shape of an alarm-report row (drops the internal groupId).
   const reportRow = e => ({
     eventid: e.eventid, clock: e.clock, r_clock: e.r_clock, severity: e.severity,
-    name: e.name, host: e.host, resolved: e.resolved, duration: e.duration, mesai: e.mesai
+    name: e.name, host: e.host, resolved: e.resolved, duration: e.duration, mesai: mesaiOf(e.clock)
   });
 
   // ── Mutable state (kept for the browser tab) ─────────────
@@ -121,6 +121,7 @@
       { id: 2, name: 'DR Zabbix',   baseUrl: 'https://zabbix-dr.example.com', username: 'api-report', verifyTls: true },
       { id: 3, name: 'Lab Zabbix',  baseUrl: 'http://10.0.0.5',               username: 'Admin',      verifyTls: true }
     ],
+    hours: { start: 8, end: 18, days: [0, 1, 2, 3, 4] },
     nextScheduleId: 3,
     schedules: [
       { id: 1, name: 'Weekly infrastructure report', serverId: 1, frequency: 'weekly', hour: 8, weekday: 0, monthday: 1,
@@ -144,7 +145,7 @@
   const STATE_KEY = 'zrsDemoState';
   let state;
   try { state = JSON.parse(sessionStorage.getItem(STATE_KEY)); } catch (e) { state = null; }
-  if (!state || !state.servers || !state.nobet || !state.schedules) state = JSON.parse(JSON.stringify(DEFAULT_STATE));
+  if (!state || !state.servers || !state.nobet || !state.schedules || !state.hours) state = JSON.parse(JSON.stringify(DEFAULT_STATE));
   const saveState = () => { try { sessionStorage.setItem(STATE_KEY, JSON.stringify(state)); } catch (e) {} };
   let cacheCleared = false;
 
@@ -428,6 +429,11 @@
       cachedAt: NOW, age: 0, ttl: 300, fromCache: false
     })],
 
+    ['GET', /^\/api\/business-hours$/, () => ({ success: true, canEdit: true, hours: state.hours })],
+    ['POST', /^\/api\/business-hours$/, b => {
+      state.hours = { start: Number(b.start), end: Number(b.end), days: (b.days || []).map(Number) }; saveState();
+      return { success: true };
+    }],
     ['GET', /^\/api\/nobet$/, () => ({ success: true, canEdit: true, config: state.nobet })],
     ['POST', /^\/api\/nobet$/, b => {
       state.nobet = {

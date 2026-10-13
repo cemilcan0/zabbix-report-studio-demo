@@ -25,7 +25,13 @@ body{font-family:'IBM Plex Sans',-apple-system,sans-serif;background:radial-grad
 .fld{display:flex;flex-direction:column;gap:.4rem}
 .fld label{font-size:.78rem;color:var(--text-secondary);font-weight:500}
 input[type=date],input[type=time],input[type=text]{background:var(--bg-tertiary);border:1px solid var(--border-color);border-radius:10px;color:var(--text-primary);font-family:inherit;font-size:.9rem;padding:.55rem .7rem;transition:var(--transition)}
-input:focus{outline:none;border-color:var(--accent-primary)}
+select{background:var(--bg-tertiary);border:1px solid var(--border-color);border-radius:10px;color:var(--text-primary);font-family:inherit;font-size:.9rem;padding:.55rem .7rem}
+select option{background:#211d14;color:#fff}
+select:disabled{opacity:.55;cursor:not-allowed}
+.days{display:flex;gap:.3rem .9rem;flex-wrap:wrap;align-items:center;min-height:38px}
+.days label{display:inline-flex;align-items:center;gap:.35rem;font-size:.84rem;color:var(--text-secondary);cursor:pointer}
+.days input{accent-color:var(--accent-primary);width:15px;height:15px}
+input:focus,select:focus{outline:none;border-color:var(--accent-primary)}
 input:disabled{opacity:.55;cursor:not-allowed}
 table{width:100%;border-collapse:collapse;margin-top:.4rem}
 th{text-align:left;font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:var(--text-muted);font-weight:600;padding:.5rem .6rem;border-bottom:1px solid var(--border-color)}
@@ -136,9 +142,20 @@ td input{width:100%}
     <div style="margin-top:1rem"><button class="btn btn-ghost" id="addRow"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add day</button></div>
   </div>
 
-  <div class="actions">
+  <div class="actions" style="margin-bottom:2rem">
     <button class="btn btn-primary" id="saveBtn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>Save</button>
     <span id="cycleInfo" style="color:var(--text-muted);font-size:.82rem"></span>
+  </div>
+
+  <div class="card">
+    <h2>Business Hours</h2>
+    <p class="hint">Used by the Alarm Report and the scheduled reports to split alarms into business hours and after hours. Separate from the on-call shifts above.</p>
+    <div class="grid">
+      <div class="fld"><label>Start</label><select id="bhStart"></select></div>
+      <div class="fld"><label>End</label><select id="bhEnd"></select></div>
+      <div class="fld"><label>Days</label><div class="days" id="bhDays"></div></div>
+    </div>
+    <div class="actions" style="margin-top:1.1rem"><button class="btn btn-primary" id="bhSave">Save business hours</button></div>
   </div>
 </div>
 
@@ -233,6 +250,31 @@ async function save(){
   if(res.success){toast('On-call roster saved ✓',true)}
   else{toast(res.error||'Could not save',false)}
 }
+
+// ── Business hours ──
+const BH_DAYS=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+async function loadHours(){
+  const hh=h=>pad(h)+':00';
+  document.getElementById('bhStart').innerHTML=Array.from({length:24},(_,h)=>`<option value="${h}">${hh(h)}</option>`).join('');
+  document.getElementById('bhEnd').innerHTML=Array.from({length:24},(_,h)=>`<option value="${h+1}">${hh(h+1)}</option>`).join('');
+  document.getElementById('bhDays').innerHTML=BH_DAYS.map((d,i)=>`<label><input type="checkbox" value="${i}"> <span>${d}</span></label>`).join('');
+  const j=await (await fetch('/api/business-hours')).json();
+  if(!j.success)return;
+  document.getElementById('bhStart').value=j.hours.start;
+  document.getElementById('bhEnd').value=j.hours.end;
+  document.querySelectorAll('#bhDays input').forEach(i=>{i.checked=j.hours.days.includes(Number(i.value));i.disabled=!j.canEdit});
+  ['bhStart','bhEnd','bhSave'].forEach(id=>document.getElementById(id).disabled=!j.canEdit);
+}
+async function saveHours(){
+  const body={start:Number(document.getElementById('bhStart').value),end:Number(document.getElementById('bhEnd').value),
+    days:[...document.querySelectorAll('#bhDays input:checked')].map(i=>Number(i.value))};
+  if(body.end<=body.start){toast('The end must be after the start',false);return}
+  if(!body.days.length){toast('Select at least one day',false);return}
+  const res=await (await fetch('/api/business-hours',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)})).json();
+  if(res.success){toast('Business hours saved ✓',true)}else{toast(res.error||'Could not save',false)}
+}
+document.getElementById('bhSave').onclick=saveHours;
+loadHours();
 
 document.getElementById('addRow').onclick=()=>{addRow('','');updatePreview()};
 document.getElementById('saveBtn').onclick=save;

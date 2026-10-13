@@ -27,6 +27,7 @@ function categorizeProblem(problemName) {
 }
 
 const reportState = {
+    hours: { start: 8, end: 18, days: [0, 1, 2, 3, 4] },   // business hours (from /api/business-hours)
     sessionId: '',
     zabbixUrl: '',
     hostGroups: [],
@@ -114,6 +115,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.addEventListener('click', (e) => {
         if (!e.target.closest('.detail-filter-group')) closeAllDropdowns();
     });
+
+    try {
+        const hours = await (await fetch('/api/business-hours')).json();
+        if (hours.success) reportState.hours = hours.hours;
+    } catch (e) { /* keep the defaults */ }
 
     // Automatic Zabbix login
     try {
@@ -949,8 +955,8 @@ function renderGeneralStats(startDate, endDate) {
         kpi('total', 'Total Alarms', total.toLocaleString(I18N.locale), '#f59e0b', ICO.bell, '') +
         kpi('date', 'Start Date', `<span class="stat-value-sm">${startDate}</span>`, '#a59f91', ICO.calStart, '') +
         kpi('date', 'End Date', `<span class="stat-value-sm">${endDate}</span>`, '#a59f91', ICO.calEnd, '') +
-        kpi('mesai-ici', 'Business hours', mesaiIci.toLocaleString(I18N.locale), '#4CAF50', ICO.sun, `${pctText(mesaiIciPct)} · 08:00 – 18:00`) +
-        kpi('mesai-disi', 'After hours', mesaiDisi.toLocaleString(I18N.locale), '#f59e0b', ICO.moon, `${pctText(mesaiDisiPct)} · 18:00 – 08:00`);
+        kpi('mesai-ici', 'Business hours', mesaiIci.toLocaleString(I18N.locale), '#4CAF50', ICO.sun, `${pctText(mesaiIciPct)} · ${hoursRange()}`) +
+        kpi('mesai-disi', 'After hours', mesaiDisi.toLocaleString(I18N.locale), '#f59e0b', ICO.moon, pctText(mesaiDisiPct));
 }
 
 // ===== SEVERITY DISTRIBUTION =====
@@ -1054,18 +1060,19 @@ function renderMesaiDistribution() {
     const mesaiIci = data.filter(d => d.mesai === 'Mesai İçi').length;
     const mesaiDisi = total - mesaiIci;
 
+    document.getElementById('hoursNote').textContent = t('* Business hours: {0}, {1}', hoursDays(), hoursRange());
     document.querySelector('#mesaiTable tbody').innerHTML = `
         <tr>
             <td><strong>Business hours</strong></td>
             <td><strong>${mesaiIci.toLocaleString(I18N.locale)}</strong></td>
             <td>${total > 0 ? ((mesaiIci / total) * 100).toFixed(1) : '0.0'}%</td>
-            <td>08:00 - 18:00 (all days)</td>
+            <td>${hoursRange()} (${hoursDays()})</td>
         </tr>
         <tr>
             <td><strong>After hours</strong></td>
             <td><strong>${mesaiDisi.toLocaleString(I18N.locale)}</strong></td>
             <td>${total > 0 ? ((mesaiDisi / total) * 100).toFixed(1) : '0.0'}%</td>
-            <td>18:00 - 08:00</td>
+            <td>${t('Outside business hours')}</td>
         </tr>
         <tr style="border-top: 2px solid var(--border-color);">
             <td><strong>TOTAL</strong></td>
@@ -1951,7 +1958,7 @@ async function loadCacheStats() {
 }
 
 async function handleClearCache() {
-    if (!confirm('Clear the cache?\n\nAll cached report data will be deleted.\nThe next report will fetch everything from Zabbix again.')) {
+    if (!confirm('Clear the cache of the active server?\n\nIts cached report data will be deleted.\nThe next report will fetch everything from Zabbix again.')) {
         return;
     }
     try {
@@ -2089,4 +2096,17 @@ function renderComparison(cur, prev, prevFrom, prevTill) {
         <div class="table-container"><table class="report-table">${head(t('Metric'))}<tbody>${rows}</tbody></table></div>
         ${moverRows ? `<h3 style="font-size:.95rem;font-weight:600;margin:1.4rem 0 .6rem;color:var(--text-primary)">${t('Biggest changes by host')}</h3>
         <div class="table-container"><table class="report-table">${head(t('Host'))}<tbody>${moverRows}</tbody></table></div>` : ''}`;
+}
+
+// ===== BUSINESS HOURS =====
+function hoursRange() {
+    const hh = h => String(h).padStart(2, '0') + ':00';
+    return `${hh(reportState.hours.start)} – ${hh(reportState.hours.end)}`;
+}
+
+function hoursDays() {
+    const days = reportState.hours.days;
+    if (days.length === 7) return t('all days');
+    if (days.join() === '0,1,2,3,4') return t('weekdays');
+    return days.map(d => t(['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'][d])).join(', ');
 }
