@@ -78,6 +78,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('exportPdfBtn').addEventListener('click', exportPDF);
     document.getElementById('reportLogoutBtn').addEventListener('click', handleReportLogout);
     document.getElementById('clearCacheBtn').addEventListener('click', handleClearCache);
+    document.getElementById('compareBtn').addEventListener('click', comparePrevious);
 
     document.getElementById('filtersToggle').addEventListener('click', () => {
         document.querySelector('.report-filters-panel').classList.toggle('collapsed');
@@ -858,6 +859,8 @@ async function generateReport() {
         // normalizing, everything was counted as "Mesai Dışı".
         result.forEach(d => { d.mesai = normalizeMesai(d.mesai); });
         reportState.reportData = result;
+        reportState.range = { from: startTimestamp, till: endTimestamp };
+        resetComparison();
         reportState.excludedCombinations.clear();
         reportState.excludedDevices.clear();
         reportState.detailFilters.severity.clear();
@@ -1967,4 +1970,123 @@ async function handleClearCache() {
     } catch (e) {
         showToast('Could not clear the cache: ' + e.message, 'error');
     }
+}
+
+// ===== PREVIOUS PERIOD COMPARISON =====
+// Fetches the period of the same length right before the selected range (through
+// the same report job, so it is cached too) and shows what changed.
+function resetComparison() {
+    document.getElementById('compareBody').innerHTML =
+        `<p class="section-note">${t('Fetches the period of the same length right before the selected range and shows what changed.')}</p>`;
+}
+
+async function fetchReportRows(timeFrom, timeTill) {
+    const post = (path, body) => fetch(`${API_BASE}${path}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+    }).then(r => r.json());
+
+    const started = await post('/report-data', {
+        timeFrom, timeTill,
+        groupIds: Array.from(reportState.selectedGroups),
+        sessionId: reportState.sessionId
+    });
+    if (!started.success) throw new Error(started.error || 'Could not start the job');
+    for (;;) {
+        await new Promise(r => setTimeout(r, 1000));
+        const p = await post('/report-progress', { jobId: started.jobId });
+        if (p.status === 'error') throw new Error(p.error || 'An error occurred while generating the report');
+        if (p.status === 'cancelled' || p.status === 'unknown') throw new Error('Report cancelled');
+        if (p.status === 'done') break;
+    }
+    const result = await post('/report-result', { jobId: started.jobId });
+    if (!result.success) throw new Error(result.error || 'Could not fetch the result');
+    return result.data;
+}
+
+function periodStats(rows) {
+    const durations = rows.filter(d => d.resolved && d.duration > 0).map(d => d.duration).sort((a, b) => a - b);
+    const n = durations.length;
+    const bySeverity = {}, byHost = {};
+    rows.forEach(d => {
+        bySeverity[d.severity] = (bySeverity[d.severity] || 0) + 1;
+        byHost[d.host] = (byHost[d.host] || 0) + 1;
+    });
+    const inHours = rows.filter(d => d.mesai === 'Mesai İçi').length;
+    const resolved = rows.filter(d => d.resolved).length;
+    return {
+        total: rows.length, resolved, open: rows.length - resolved,
+        inHours, afterHours: rows.length - inHours,
+        hosts: Object.keys(byHost).length,
+        avg: n ? Math.round(durations.reduce((a, b) => a + b, 0) / n) : 0,
+        median: n ? (n % 2 ? durations[(n - 1) / 2] : Math.round((durations[n / 2 - 1] + durations[n / 2]) / 2)) : 0,
+        bySeverity, byHost
+    };
+}
+
+async function comparePrevious() {
+    const range = reportState.range;
+    if (!range) return;
+    const btn = document.getElementById('compareBtn');
+    const body = document.getElementById('compareBody');
+    btn.disabled = true;
+    body.innerHTML = `<p class="section-note">${t('Fetching the previous period...')}</p>`;
+    try {
+        const length = range.till - range.from;
+        const prevFrom = range.from - length, prevTill = range.from - 1;
+        const rows = await fetchReportRows(prevFrom, prevTill);
+        rows.forEach(d => { d.mesai = normalizeMesai(d.mesai); });
+        const prev = periodStats(rows.filter(d => reportState.selectedSeverities.has(d.severity)));
+        const cur = periodStats(reportState.filteredData);
+        renderComparison(cur, prev, prevFrom, prevTill);
+    } catch (error) {
+        resetComparison();
+        showToast('Could not compare: ' + error.message, 'error');
+    } finally {
+        btn.disabled = false;
+    }
+}
+
+function renderComparison(cur, prev, prevFrom, prevTill) {
+    const num = v => v.toLocaleString(I18N.locale);
+    // goodWhenDown: fewer alarms / shorter resolution is the good direction
+    const change = (c, p, goodWhenDown, fmt) => {
+        const diff = c - p;
+        if (!diff) return '<span style="color:var(--text-muted)">0</span>';
+        const good = goodWhenDown ? diff < 0 : diff > 0;
+        const sign = diff > 0 ? '+' : '−';
+        const pct = p ? ` (${sign}${pctText((Math.abs(diff) / p * 100).toFixed(1))})` : '';
+        return `<span style="color:${good ? '#4CAF50' : '#FF8800'};font-weight:600">${sign}${fmt(Math.abs(diff))}${pct}</span>`;
+    };
+    const row = (label, c, p, goodWhenDown, fmt = num) =>
+        `<tr><td>${label}</td><td>${fmt(p)}</td><td>${fmt(c)}</td><td>${change(c, p, goodWhenDown, fmt)}</td></tr>`;
+
+    let rows =
+        row(t('Total Alarms'), cur.total, prev.total, true) +
+        row(t('Resolved'), cur.resolved, prev.resolved, false) +
+        row(t('Still open'), cur.open, prev.open, true) +
+        row(t('Business hours'), cur.inHours, prev.inHours, true) +
+        row(t('After hours'), cur.afterHours, prev.afterHours, true) +
+        row(t('Affected hosts'), cur.hosts, prev.hosts, true) +
+        row(t('Average resolution time'), cur.avg, prev.avg, true, formatDuration) +
+        row(t('Median resolution time'), cur.median, prev.median, true, formatDuration);
+    ['5', '4', '3', '2', '1', '0'].forEach(sev => {
+        const c = cur.bySeverity[sev] || 0, p = prev.bySeverity[sev] || 0;
+        if (c || p) rows += row(t(SEVERITY_MAP[sev].name), c, p, true);
+    });
+
+    const hosts = new Set([...Object.keys(cur.byHost), ...Object.keys(prev.byHost)]);
+    const movers = [...hosts].map(h => ({ h, c: cur.byHost[h] || 0, p: prev.byHost[h] || 0 }))
+        .filter(m => m.c !== m.p)
+        .sort((a, b) => Math.abs(b.c - b.p) - Math.abs(a.c - a.p))
+        .slice(0, 8);
+    const moverRows = movers.map(m => row(escapeHtml(m.h), m.c, m.p, true)).join('');
+    const head = first => `<thead><tr><th>${first}</th><th>${t('Previous period')}</th><th>${t('Selected period')}</th><th>${t('Change')}</th></tr></thead>`;
+
+    document.getElementById('compareBody').innerHTML = `
+        <p class="section-note">${t('Previous period: {0} – {1}', formatDate(prevFrom), formatDate(prevTill))}</p>
+        <div class="table-container"><table class="report-table">${head(t('Metric'))}<tbody>${rows}</tbody></table></div>
+        ${moverRows ? `<h3 style="font-size:.95rem;font-weight:600;margin:1.4rem 0 .6rem;color:var(--text-primary)">${t('Biggest changes by host')}</h3>
+        <div class="table-container"><table class="report-table">${head(t('Host'))}<tbody>${moverRows}</tbody></table></div>` : ''}`;
 }

@@ -117,10 +117,20 @@
   const DEFAULT_STATE = {
     activeId: 1, nextId: 4,
     servers: [
-      { id: 1, name: 'Demo Zabbix', baseUrl: 'https://zabbix.example.com',    username: 'api-report' },
-      { id: 2, name: 'DR Zabbix',   baseUrl: 'https://zabbix-dr.example.com', username: 'api-report' },
-      { id: 3, name: 'Lab Zabbix',  baseUrl: 'http://10.0.0.5',               username: 'Admin' }
+      { id: 1, name: 'Demo Zabbix', baseUrl: 'https://zabbix.example.com',    username: 'api-report', verifyTls: true },
+      { id: 2, name: 'DR Zabbix',   baseUrl: 'https://zabbix-dr.example.com', username: 'api-report', verifyTls: true },
+      { id: 3, name: 'Lab Zabbix',  baseUrl: 'http://10.0.0.5',               username: 'Admin',      verifyTls: true }
     ],
+    nextScheduleId: 3,
+    schedules: [
+      { id: 1, name: 'Weekly infrastructure report', serverId: 1, frequency: 'weekly', hour: 8, weekday: 0, monthday: 1,
+        groupIds: [], groupNames: [], severities: ['2', '3', '4', '5'],
+        recipients: 'noc@example.com, it-managers@example.com', lang: 'en', enabled: true },
+      { id: 2, name: 'Monthly network report', serverId: 1, frequency: 'monthly', hour: 7, weekday: 0, monthday: 1,
+        groupIds: ['14', '15'], groupNames: ['Network / Switches', 'Network / Firewalls'], severities: ['3', '4', '5'],
+        recipients: 'network-team@example.com', lang: 'en', enabled: true }
+    ],
+    smtp: { host: 'smtp.example.com', port: 587, security: 'starttls', username: 'zabbix-reports', fromAddr: 'zabbix-reports@example.com', hasPassword: true },
     nobet: {
       cycleStart: isoDate(NOW - 30 * DAY), dayStartHour: 8, nightStartHour: 20,
       cycle: [
@@ -134,7 +144,7 @@
   const STATE_KEY = 'zrsDemoState';
   let state;
   try { state = JSON.parse(sessionStorage.getItem(STATE_KEY)); } catch (e) { state = null; }
-  if (!state || !state.servers || !state.nobet) state = JSON.parse(JSON.stringify(DEFAULT_STATE));
+  if (!state || !state.servers || !state.nobet || !state.schedules) state = JSON.parse(JSON.stringify(DEFAULT_STATE));
   const saveState = () => { try { sessionStorage.setItem(STATE_KEY, JSON.stringify(state)); } catch (e) {} };
   let cacheCleared = false;
 
@@ -242,17 +252,68 @@
   }
   async function inventoryWorkbook() {
     if (!window.XLSX) await loadScript('https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js');
+    const tr = I18N.lang === 'tr';
+    const head = tr ? ['Lokasyon', 'Seri Numarası', 'Ad', 'Hostname', 'IP Adresi', 'Durum']
+                    : ['Location', 'Serial Number', 'Name', 'Hostname', 'IP Address', 'Status'];
+    const status = v => (tr ? (v === 'Enabled' ? 'Aktif' : 'Pasif') : v);
     const rows = inventoryRows().map(r => ({
-      'Lokasyon': r.lokasyon, 'Serial Number': r.serial, 'Name': r.name,
-      'Hostname': r.hostname, 'IP Address': r.ip, 'Status': r.status
+      [head[0]]: r.lokasyon, [head[1]]: r.serial, [head[2]]: r.name,
+      [head[3]]: r.hostname, [head[4]]: r.ip, [head[5]]: status(r.status)
     }));
     const ws = XLSX.utils.json_to_sheet(rows);
     ws['!cols'] = [40, 30, 38, 38, 18, 12].map(wch => ({ wch }));
     const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, ALL_CAT);
+    XLSX.utils.book_append_sheet(wb, ws, tr ? 'Tüm Cihazlar' : ALL_CAT);
     return new Blob([XLSX.write(wb, { type: 'array', bookType: 'xlsx' })],
       { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
   }
+
+  // ── Scheduled reports (mirrors reporting.next_run / period_for) ──
+  function nextRun(s) {
+    const now = new Date();
+    const at = (y, mo, d) => new Date(y, mo, d, s.hour, 0, 0);
+    let c;
+    if (s.frequency === 'weekly') {
+      c = at(now.getFullYear(), now.getMonth(), now.getDate() + ((s.weekday - (now.getDay() + 6) % 7) + 7) % 7);
+      if (c <= now) c = at(c.getFullYear(), c.getMonth(), c.getDate() + 7);
+    } else if (s.frequency === 'monthly') {
+      const day = (y, mo) => Math.min(s.monthday, new Date(y, mo + 1, 0).getDate());
+      c = at(now.getFullYear(), now.getMonth(), day(now.getFullYear(), now.getMonth()));
+      if (c <= now) c = at(now.getFullYear(), now.getMonth() + 1, day(now.getFullYear(), now.getMonth() + 1));
+    } else {
+      c = at(now.getFullYear(), now.getMonth(), now.getDate());
+      if (c <= now) c = at(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+    }
+    return Math.floor(c / 1000);
+  }
+  function periodFor(frequency) {
+    const now = new Date();
+    let end = new Date(now.getFullYear(), now.getMonth(), now.getDate()), start;
+    if (frequency === 'monthly') { end = new Date(now.getFullYear(), now.getMonth(), 1); start = new Date(now.getFullYear(), now.getMonth() - 1, 1); }
+    else start = new Date(end.getFullYear(), end.getMonth(), end.getDate() - (frequency === 'weekly' ? 7 : 1));
+    return [Math.floor(start / 1000), Math.floor(end / 1000) - 1];
+  }
+  function scheduleRow(s) {
+    const server = state.servers.find(x => x.id === s.serverId);
+    return Object.assign({ lastRun: 0, lastStatus: '' }, s,
+      { serverName: server ? server.name : '', nextRun: nextRun(s) });
+  }
+  function scheduleError(b) {
+    if (!b.name) return 'A name is required.';
+    const mails = (b.recipients || '').split(/[\s,;]+/).filter(Boolean);
+    if (!mails.length) return 'At least one recipient is required.';
+    const bad = mails.find(m => !/^[^@]+@[^@]+\.[^@]+$/.test(m));
+    if (bad) return 'Invalid e-mail address: ' + bad;
+    if (!(b.severities || []).length) return 'Select at least one severity';
+    return null;
+  }
+  const scheduleFields = b => ({
+    name: b.name, serverId: Number(b.serverId), frequency: b.frequency, hour: Number(b.hour),
+    weekday: Number(b.weekday), monthday: Number(b.monthday),
+    groupIds: (b.groups || []).map(g => String(g.id)), groupNames: (b.groups || []).map(g => g.name),
+    severities: b.severities, recipients: (b.recipients || '').split(/[\s,;]+/).filter(Boolean).join(', '),
+    lang: b.lang || 'en', enabled: b.enabled !== false
+  });
 
   // ── Background jobs (report / ACK), finished after a few polls ──
   const jobs = {};
@@ -282,12 +343,12 @@
 
   const ROUTES = [
     ['GET', /^\/api\/servers$/, () => ({
-      success: true, activeId: state.activeId,
+      success: true, activeId: state.activeId, canManage: true,
       servers: state.servers.map(s => Object.assign({ isActive: s.id === state.activeId }, s))
     })],
     ['POST', /^\/api\/servers$/, b => {
       if (!b.name || !b.url || !b.username) return [400, { success: false, error: 'Name, URL and username are required.' }];
-      const s = { id: state.nextId++, name: b.name, baseUrl: b.url.replace(/\/(api_jsonrpc\.php)?$/i, ''), username: b.username };
+      const s = { id: state.nextId++, name: b.name, baseUrl: b.url.replace(/\/(api_jsonrpc\.php)?$/i, ''), username: b.username, verifyTls: b.verifyTls !== false };
       state.servers.push(s); saveState();
       return { success: true, id: s.id };
     }],
@@ -305,6 +366,7 @@
     }],
     ['POST', /^\/api\/servers\/(\d+)\/delete$/, (b, m) => {
       state.servers = state.servers.filter(s => s.id !== Number(m[1]));
+      state.schedules = state.schedules.filter(s => s.serverId !== Number(m[1]));
       if (state.activeId === Number(m[1])) state.activeId = null;
       saveState();
       return { success: true };
@@ -313,10 +375,54 @@
       const s = serverById(m[1]);
       if (!s) return [404, { success: false, error: 'Server not found.' }];
       if (!b.name || !b.url || !b.username) return [400, { success: false, error: 'Name, URL and username are required.' }];
-      Object.assign(s, { name: b.name, baseUrl: b.url.replace(/\/(api_jsonrpc\.php)?$/i, ''), username: b.username });
+      Object.assign(s, { name: b.name, baseUrl: b.url.replace(/\/(api_jsonrpc\.php)?$/i, ''), username: b.username, verifyTls: b.verifyTls !== false });
       saveState();
       return { success: true };
     }],
+
+    ['GET', /^\/api\/schedules$/, () => ({
+      success: true, isAdmin: true, smtpConfigured: !!state.smtp.host, activeServerId: state.activeId,
+      servers: state.servers.map(s => ({ id: s.id, name: s.name })),
+      schedules: state.schedules.map(scheduleRow)
+    })],
+    ['POST', /^\/api\/schedules$/, b => {
+      const err = scheduleError(b);
+      if (err) return [400, { success: false, error: err }];
+      state.schedules.push(Object.assign({ id: state.nextScheduleId++ }, scheduleFields(b))); saveState();
+      return { success: true };
+    }],
+    ['POST', /^\/api\/schedules\/hostgroups$/, () => ok(GROUPS.map(g => ({ id: g.id, name: g.name })))],
+    ['POST', /^\/api\/schedules\/(\d+)\/delete$/, (b, m) => {
+      state.schedules = state.schedules.filter(s => s.id !== Number(m[1])); saveState();
+      return { success: true };
+    }],
+    ['POST', /^\/api\/schedules\/(\d+)\/run$/, (b, m) => {
+      const s = state.schedules.find(x => x.id === Number(m[1]));
+      if (!s) return [404, { success: false, error: 'Schedule not found.' }];
+      const p = periodFor(s.frequency);
+      const n = eventsBetween(p[0], p[1], s.groupIds).filter(e => s.severities.includes(e.severity)).length;
+      s.lastRun = Math.floor(Date.now() / 1000);
+      s.lastStatus = 'Sent to ' + s.recipients.split(',').length + ' recipients — ' + n + ' alarms';
+      saveState();
+      return { success: true };
+    }],
+    ['POST', /^\/api\/schedules\/(\d+)$/, (b, m) => {
+      const s = state.schedules.find(x => x.id === Number(m[1]));
+      if (!s) return [404, { success: false, error: 'Schedule not found.' }];
+      const err = scheduleError(b);
+      if (err) return [400, { success: false, error: err }];
+      Object.assign(s, scheduleFields(b)); saveState();
+      return { success: true };
+    }],
+    ['GET', /^\/api\/smtp$/, () => ({ success: true, config: state.smtp })],
+    ['POST', /^\/api\/smtp$/, b => {
+      if (!b.host || !b.port) return [400, { success: false, error: 'SMTP host and a valid port are required.' }];
+      state.smtp = { host: b.host, port: Number(b.port), security: b.security, username: b.username || '', fromAddr: b.fromAddr || '',
+                     hasPassword: !!b.password || state.smtp.hasPassword };
+      saveState();
+      return { success: true };
+    }],
+    ['POST', /^\/api\/smtp\/test$/, () => ({ success: true })],
 
     ['GET', /^\/api\/dashboard\/stats$/, () => ({
       success: true, data: dashboardStats(), server: 'Demo Zabbix',

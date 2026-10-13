@@ -174,6 +174,10 @@
     tr:hover td { background:rgba(255,255,255,0.02); color:var(--text-primary); }
 
     .badge-admin { display:inline-block; padding:0.2rem 0.7rem; background:rgba(245,158,11,0.15); color:#c4b5fd; border:1px solid rgba(245,158,11,0.3); border-radius:20px; font-size:0.72rem; font-weight:700; }
+    .badge-viewer { display:inline-block; padding:0.2rem 0.7rem; background:rgba(116,153,255,0.12); color:#a5b4fc; border:1px solid rgba(116,153,255,0.3); border-radius:20px; font-size:0.72rem; font-weight:700; }
+    .btn-reset-sm { display:inline-flex; align-items:center; gap:0.35rem; padding:0.35rem 0.75rem; margin-right:0.4rem; background:rgba(245,158,11,0.1); color:#fbbf24; border:1px solid rgba(245,158,11,0.3); border-radius:8px; font-size:0.78rem; font-weight:600; font-family:inherit; cursor:pointer; }
+    .btn-reset-sm:hover { background:rgba(245,158,11,0.2); }
+    .role-note { color:var(--text-muted); font-size:0.8rem; margin-top:0.9rem; line-height:1.5; }
     .badge-user  { display:inline-block; padding:0.2rem 0.7rem; background:rgba(16,185,129,0.12); color:#6ee7b7; border:1px solid rgba(16,185,129,0.25); border-radius:20px; font-size:0.72rem; font-weight:700; }
 
     .user-avatar {
@@ -216,6 +220,9 @@
     <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">Reports</div>
     <a href="alarm-report.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Alarm Report</a>
     <a href="ack.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>ACK Report</a>
+    
+    <a href="schedules.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg>Scheduled Reports</a>
+    
     <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">On-call</div>
     <a href="nobet.html"  style="display:flex;align-items:center;gap:11px;padding:10px 12px;margin-bottom:2px;border-radius:9px;font-size:13.5px;font-weight:500;text-decoration:none;transition:background .12s;color:#c7c0b0;" onmouseover="if(!this.getAttribute('data-on'))this.style.background='rgba(240,230,200,.05)'" onmouseout="if(!this.getAttribute('data-on'))this.style.background='transparent'"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>On-call Roster</a>
     <div style="font-size:10px;font-weight:600;color:#6e685a;letter-spacing:.1em;text-transform:uppercase;padding:14px 10px 8px">Inventory</div>
@@ -231,6 +238,7 @@
     <div style="display:flex;align-items:center;gap:11px;padding:8px 10px;border-radius:10px;background:#1b1810;border:1px solid rgba(240,230,200,.1)">
       <div style="width:34px;height:34px;border-radius:9px;background:linear-gradient(150deg,#f59e0b,#d97d06);display:flex;align-items:center;justify-content:center;color:#2a1e05;font-weight:700;font-size:13px;flex-shrink:0">A</div>
       <div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#f3efe6">admin</div><div style="font-size:10.5px;color:#726c5e">Admin</div></div>
+      <a href="change-password.html" title="Change password" style="color:#726c5e;padding:6px;border-radius:7px;display:flex;text-decoration:none" onmouseover="this.style.color='#fbbf24';this.style.background='rgba(245,158,11,.12)'" onmouseout="this.style.color='#726c5e';this.style.background='transparent'"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="4.5"/><path d="M10.7 12.3L21 2"/><path d="M17 6l3 3"/><path d="M14 9l2 2"/></svg></a>
       <a href="login.html" title="Sign out" style="color:#726c5e;padding:6px;border-radius:7px;display:flex;text-decoration:none" onmouseover="this.style.color='#fb7a3c';this.style.background='rgba(251,122,60,.12)'" onmouseout="this.style.color='#726c5e';this.style.background='transparent'"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></a>
     </div>
   </div>
@@ -272,7 +280,7 @@
   <div class="stats">
     <div class="stat-card">
       <div class="stat-label">Total Users</div>
-      <div class="stat-value">5</div>
+      <div class="stat-value">6</div>
     </div>
     <div class="stat-card">
       <div class="stat-label">Admin</div>
@@ -281,6 +289,10 @@
     <div class="stat-card">
       <div class="stat-label">User</div>
       <div class="stat-value">3</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Viewer</div>
+      <div class="stat-value">1</div>
     </div>
   </div>
 
@@ -302,12 +314,13 @@
         </div>
         <div class="form-group">
           <label>Password</label>
-          <input type="text" name="password" placeholder="a strong password" required>
+          <input type="text" name="password" placeholder="temporary password" minlength="8" autocomplete="off" required>
         </div>
         <div class="form-group" style="max-width:150px;">
           <label>Role</label>
           <select name="role">
             <option value="user">User</option>
+            <option value="viewer">Viewer</option>
             <option value="admin">Admin</option>
           </select>
         </div>
@@ -319,6 +332,7 @@
         </button>
       </div>
     </form>
+    <p class="role-note">The user is asked to choose a new password at first sign-in. A viewer can see the reports of the servers added by admins but cannot change anything.</p>
   </div>
 
   <!-- USER TABLE -->
@@ -354,6 +368,43 @@
       </thead>
       <tbody>
         
+        <tr class="user-row" data-name="noc.screen">
+          <td style="color:var(--text-muted);font-size:0.8rem;">6</td>
+          <td>
+            <div class="user-cell">
+              <div class="user-avatar">N</div>
+              <span style="font-weight:600;color:var(--text-primary);">noc.screen</span>
+            </div>
+          </td>
+          <td class="protected">Must be changed at next sign-in</td>
+          <td>
+            
+              <span class="badge-viewer">VIEWER</span>
+            
+          </td>
+          <td style="color:var(--text-muted);font-size:0.8rem;">02.09.2026 10:15</td>
+          <td>
+            
+            <form method="POST" action="#" style="display:inline;" onsubmit="return askNewPassword(this, 'noc.screen')">
+              <input type="hidden" name="password">
+              <button type="submit" class="btn-reset-sm">Reset password</button>
+            </form>
+            
+            
+            <form method="POST" action="#" style="display:inline;" onsubmit="return confirm(I18N.t('Delete the user {0}?', 'noc.screen'))">
+              <button type="submit" class="btn-danger-sm">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13">
+                  <polyline points="3 6 5 6 21 6"/>
+                  <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+                  <path d="M10 11v6"/><path d="M14 11v6"/>
+                </svg>
+                Delete
+              </button>
+            </form>
+            
+          </td>
+        </tr>
+        
         <tr class="user-row" data-name="s.celik">
           <td style="color:var(--text-muted);font-size:0.8rem;">5</td>
           <td>
@@ -362,7 +413,7 @@
               <span style="font-weight:600;color:var(--text-primary);">s.celik</span>
             </div>
           </td>
-          <td class="pass-cell">••••••••</td>
+          <td class="protected">Set by the user</td>
           <td>
             
               <span class="badge-user">USER</span>
@@ -370,6 +421,12 @@
           </td>
           <td style="color:var(--text-muted);font-size:0.8rem;">06.05.2026 16:22</td>
           <td>
+            
+            <form method="POST" action="#" style="display:inline;" onsubmit="return askNewPassword(this, 's.celik')">
+              <input type="hidden" name="password">
+              <button type="submit" class="btn-reset-sm">Reset password</button>
+            </form>
+            
             
             <form method="POST" action="#" style="display:inline;" onsubmit="return confirm(I18N.t('Delete the user {0}?', 's.celik'))">
               <button type="submit" class="btn-danger-sm">
@@ -393,7 +450,7 @@
               <span style="font-weight:600;color:var(--text-primary);">e.demir</span>
             </div>
           </td>
-          <td class="pass-cell">••••••••</td>
+          <td class="protected">Set by the user</td>
           <td>
             
               <span class="badge-admin">ADMIN</span>
@@ -401,6 +458,12 @@
           </td>
           <td style="color:var(--text-muted);font-size:0.8rem;">18.03.2026 11:40</td>
           <td>
+            
+            <form method="POST" action="#" style="display:inline;" onsubmit="return askNewPassword(this, 'e.demir')">
+              <input type="hidden" name="password">
+              <button type="submit" class="btn-reset-sm">Reset password</button>
+            </form>
+            
             
             <form method="POST" action="#" style="display:inline;" onsubmit="return confirm(I18N.t('Delete the user {0}?', 'e.demir'))">
               <button type="submit" class="btn-danger-sm">
@@ -424,7 +487,7 @@
               <span style="font-weight:600;color:var(--text-primary);">m.kaya</span>
             </div>
           </td>
-          <td class="pass-cell">••••••••</td>
+          <td class="protected">Set by the user</td>
           <td>
             
               <span class="badge-user">USER</span>
@@ -432,6 +495,12 @@
           </td>
           <td style="color:var(--text-muted);font-size:0.8rem;">03.02.2026 14:12</td>
           <td>
+            
+            <form method="POST" action="#" style="display:inline;" onsubmit="return askNewPassword(this, 'm.kaya')">
+              <input type="hidden" name="password">
+              <button type="submit" class="btn-reset-sm">Reset password</button>
+            </form>
+            
             
             <form method="POST" action="#" style="display:inline;" onsubmit="return confirm(I18N.t('Delete the user {0}?', 'm.kaya'))">
               <button type="submit" class="btn-danger-sm">
@@ -455,7 +524,7 @@
               <span style="font-weight:600;color:var(--text-primary);">a.yilmaz</span>
             </div>
           </td>
-          <td class="pass-cell">••••••••</td>
+          <td class="protected">Set by the user</td>
           <td>
             
               <span class="badge-user">USER</span>
@@ -463,6 +532,12 @@
           </td>
           <td style="color:var(--text-muted);font-size:0.8rem;">03.02.2026 14:05</td>
           <td>
+            
+            <form method="POST" action="#" style="display:inline;" onsubmit="return askNewPassword(this, 'a.yilmaz')">
+              <input type="hidden" name="password">
+              <button type="submit" class="btn-reset-sm">Reset password</button>
+            </form>
+            
             
             <form method="POST" action="#" style="display:inline;" onsubmit="return confirm(I18N.t('Delete the user {0}?', 'a.yilmaz'))">
               <button type="submit" class="btn-danger-sm">
@@ -486,7 +561,7 @@
               <span style="font-weight:600;color:var(--text-primary);">admin</span>
             </div>
           </td>
-          <td class="pass-cell">••••••••</td>
+          <td class="protected">Set by the user</td>
           <td>
             
               <span class="badge-admin">ADMIN</span>
@@ -494,6 +569,7 @@
           </td>
           <td style="color:var(--text-muted);font-size:0.8rem;">12.01.2026 09:30</td>
           <td>
+            
             
             <span class="protected">🔒 Protected</span>
             
@@ -506,6 +582,12 @@
 </div>
 
 <script>
+function askNewPassword(form, name) {
+  const pw = prompt(I18N.t('Temporary password for {0} (at least 8 characters):', name));
+  if (!pw) return false;
+  form.password.value = pw;
+  return true;
+}
 function filterTable() {
   const q = document.getElementById('searchInput').value.toLowerCase();
   document.querySelectorAll('.user-row').forEach(row => {
